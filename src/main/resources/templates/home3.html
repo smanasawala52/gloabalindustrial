@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microphone Capture Example</title>
+</head>
+<body>
+
+<h1>Microphone Capture Example</h1>
+
+<button id="recordButton">🎤 Record</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let recordButton = document.getElementById('recordButton');
+
+    let audioChunks = [];
+    let mediaRecorder;
+    let stream;
+
+    let isRecording = false;
+
+    recordButton.addEventListener('click', toggleRecording);
+
+    async function toggleRecording() {
+        if (!isRecording) {
+            startRecording();
+        } else {
+            stopRecording();
+            //await sendAudioData();
+        }
+        isRecording = !isRecording;
+        updateButtonState();
+    }
+
+    async function startRecording() {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+
+            mediaRecorder.ondataavailable = function(event) {
+                if (event.data.size > 0) {
+                    audioChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = function() {
+            	sendAudioData();
+                // Do nothing on stop, as we're handling it in sendAudioData
+            };
+
+            mediaRecorder.start();
+        } catch (error) {
+            console.error('Error accessing microphone:', error);
+        }
+    }
+
+    function stopRecording() {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            mediaRecorder.stop();
+            stream.getTracks().forEach(track => track.stop());
+        }
+    }
+
+    async function sendAudioData() {
+        let audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        let formData = new FormData();
+        formData.append('audioData', audioBlob); // Match the parameter name in your Spring Boot controller
+
+        try {
+            let response = await fetch('/capture', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                console.log('Audio data sent successfully.');
+                
+                window.location.href = response.url;
+            	window.location.replace(response.url);
+            	window.location.assign(response.url);
+            } else {
+                console.error('Failed to send audio data. Status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error sending audio data:', error);
+        } finally {
+            audioChunks = [];
+        }
+    }
+
+    function updateButtonState() {
+        recordButton.textContent = isRecording ? '🛑 Stop Recording' : '🎤 Record';
+    }
+});
+</script>
+
+</body>
+</html>
