@@ -27,13 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 public class MicrophoneCaptureController {
 
     private final String WHISPER_ASR_API_URL = "https://api.openai.com/v1/audio/transcriptions";
-    @Value("${api.key}")
-    private String myToken;
 
     @PostMapping(value = "/capture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String captureAudio(@RequestParam("audioData") MultipartFile audioData, Model model) {
         byte[] audioBytes;
-        System.out.println(System.getenv("API_KEY"));
         try {
             audioBytes = audioData.getBytes();
             MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
