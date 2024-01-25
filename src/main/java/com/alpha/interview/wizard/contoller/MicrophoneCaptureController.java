@@ -49,7 +49,7 @@ public class MicrophoneCaptureController {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-            headers.setBearerAuth(myToken);
+            headers.setBearerAuth(System.getenv("API_KEY"));
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(parts, headers);
 
             RestTemplate restTemplate = new RestTemplate();
