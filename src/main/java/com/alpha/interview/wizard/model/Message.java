@@ -1,9 +1,10 @@
 package com.alpha.interview.wizard.model;
 
 public class Message {
-	String role;
-    String content;
-
+	private String role;
+    private String content;
+    private byte[] audioData;
+    public Message() {}
     public Message(String role, String content) {
         this.role = role;
         this.content = content;
@@ -23,5 +24,16 @@ public class Message {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public byte[] getAudioData() {
+		return audioData;
+	}
+	public void setAudioData(byte[] audioData) {
+		this.audioData = audioData;
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Role: "+ role+" content: "+content +" audioData: "+audioData;
 	}
 }

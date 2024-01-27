@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mediaRecorder.ondataavailable = function(event) {
                 if (event.data.size > 0) {
                     audioChunks.push(event.data);
+                    sendAudioData();
                 }
             };
 
@@ -49,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
             	sendAudioData();
                 // Do nothing on stop, as we're handling it in sendAudioData
             };
-
             mediaRecorder.start();
         } catch (error) {
             console.error('Error accessing microphone:', error);

@@ -1,6 +1,6 @@
 package com.alpha.interview.wizard.contoller;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,55 +15,66 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+
+import com.alpha.interview.wizard.model.Message;
+import com.alpha.interview.wizard.service.WhisperApiService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 
 @Controller
 public class MicrophoneCaptureController {
 
-    private final String WHISPER_ASR_API_URL = "https://api.openai.com/v1/audio/transcriptions";
+	@Autowired
+	private WhisperApiService whisperApiService;
 
-    @PostMapping(value = "/capture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String captureAudio(@RequestParam("audioData") MultipartFile audioData, Model model) {
-        byte[] audioBytes;
+	@MessageMapping("/audio")
+    @SendTo("/topic/audioStream")
+    public String handleAudio(String jsonString) {
+		ObjectMapper objectMapper = new ObjectMapper();
+        // Convert the JSON string to a Java object
+        Message myObject = null;
+		try {
+			myObject = objectMapper.readValue(jsonString, Message.class);
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+        // Handle the received audio data (you may want to save it, process it, etc.)
+        try {
+        	System.out.println("Received audio data: " + myObject.getAudioData().length + " bytes");
+            String encodedMessage = whisperApiService.getText(myObject.getAudioData());
+            System.out.println("Redirecting to: " + encodedMessage);
+            return encodedMessage;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return "";
+    }
+    
+    @PostMapping("/audioData")
+    public String captureAudio(@RequestParam("audioData") MultipartFile audioData) {
+    	System.out.println("Received audio data: " + audioData.getSize() + " bytes");
+    	byte[] audioBytes;
         try {
             audioBytes = audioData.getBytes();
-            MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
-            ByteArrayResource resource = new ByteArrayResource(audioBytes) {
-                @Override
-                public String getFilename() {
-                    return "C:\\openAI.mp3";
-                }
-            };
-            parts.add("file", resource);
-            parts.add("model", "whisper-1");
-            parts.add("response_format", "text");
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-            headers.setBearerAuth(System.getenv("API_KEY"));
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(parts, headers);
-
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> responseEntity = restTemplate.exchange(WHISPER_ASR_API_URL, HttpMethod.POST, requestEntity, String.class);
-            String message = responseEntity.getBody();
-			String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8.toString());
-            encodedMessage = encodedMessage.replace("%0A", "");
-            String redirectUrl = "https://www.globalindustrial.com/searchResult?q=" + encodedMessage;
-            System.out.println("Redirecting to: " + redirectUrl);
-            model.addAttribute("encodedMessage", encodedMessage);
-            model.addAttribute("redirectUrl", redirectUrl);
-            return "redirect:"+redirectUrl;
-//            return new ModelAndView("redirect:/redirect-template");
+            String encodedMessage = whisperApiService.getText(audioBytes);
+            System.out.println("Redirecting to: " + encodedMessage);
+            return encodedMessage;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "";
-//        return new ModelAndView("redirect:/");
+		return "";
     }
 }
