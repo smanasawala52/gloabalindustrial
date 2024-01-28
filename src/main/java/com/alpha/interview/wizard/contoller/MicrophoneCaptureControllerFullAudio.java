@@ -21,23 +21,6 @@ public class MicrophoneCaptureControllerFullAudio {
 	@Qualifier("GoogleSpeechToTextApi")
 	private SpeechToTextService speechToTextService;
 
-	@PostMapping(value = "/capture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public String captureAudio(
-			@RequestParam("audioData") MultipartFile audioData) {
-		byte[] audioBytes;
-		try {
-			audioBytes = audioData.getBytes();
-			String encodedMessage = speechToTextService.getText(audioBytes);
-			String redirectUrl = "https://www.globalindustrial.com/searchResult?q="
-					+ encodedMessage;
-			// System.out.println("Redirecting to: " + redirectUrl);
-			return "redirect:" + redirectUrl;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "";
-		// return new ModelAndView("redirect:/");
-	}
 	@PostMapping(value = "/captureAudioStream", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> captureAudioStream(
 			@RequestParam("audioData") MultipartFile audioData) {

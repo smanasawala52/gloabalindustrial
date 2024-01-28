@@ -1262,17 +1262,19 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('audioData', audioBlob); // Match the parameter name in your Spring Boot controller
 
         try {
-            let response = await fetch('/capture', {
+            let response = await fetch('/captureAudioStream', {
                 method: 'POST',
                 body: formData
             });
-
             if (response.ok) {
-                console.log('Audio data sent successfully.');
+            	let message = await response.text(); // Get the message as text
+	            document.getElementById('search-input').innerHTML = message;
+                var redirectUrl = 'https://www.globalindustrial.com/searchResult?q='+message;
+            	console.log('Audio data sent successfully. ' + message);
                 
-                window.location.href = response.url;
-            	window.location.replace(response.url);
-            	window.location.assign(response.url);
+                window.location.href = redirectUrl;
+            	window.location.replace(redirectUrl);
+            	window.location.assign(redirectUrl);
             } else {
                 console.error('Failed to send audio data. Status:', response.status);
             }
