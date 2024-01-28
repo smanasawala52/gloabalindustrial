@@ -12,7 +12,7 @@ public class WebSocketController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public Message greeting(Message message) {
-    	System.out.println("Reached here: " + message);
+    	// System.out.println("Reached here: " + message);
     	Message returnMessage = new Message("Admin", message.getContent());
         return returnMessage;
     }

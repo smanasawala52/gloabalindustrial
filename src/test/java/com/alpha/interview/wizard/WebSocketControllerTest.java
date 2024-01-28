@@ -42,18 +42,18 @@ public class WebSocketControllerTest {
         	@Override
         	public void handleFrame(StompHeaders headers, Object payload) {
         	    Message receivedPayload = (Message) payload;
-        	    System.out.println("Received payload: " + receivedPayload);
+        	    // System.out.println("Received payload: " + receivedPayload);
         	    latch.countDown();
         	}
         	@Override
         	public void handleException(StompSession session, StompCommand command, StompHeaders headers,
         			byte[] payload, Throwable exception) {
-        		System.out.println("handleException error:"+ exception.getMessage());
-        		System.out.println(exception);
+        		// System.out.println("handleException error:"+ exception.getMessage());
+        		// System.out.println(exception);
         	}
         	@Override
         	public void handleTransportError(StompSession session, Throwable exception) {
-        		System.out.println("Transport error:"+ exception.getMessage());
+        		// System.out.println("Transport error:"+ exception.getMessage());
         		exception.printStackTrace();
         	    // Handle error, potentially retry or notify user
         	}
@@ -69,7 +69,7 @@ public class WebSocketControllerTest {
                     @Override
                     public void handleFrame(StompHeaders headers, Object payload) {
                         Message receivedMessage = (Message) payload;
-                        System.out.println("receivedMessage: "+ receivedMessage);
+                        // System.out.println("receivedMessage: "+ receivedMessage);
                         assertEquals(message.getContent(), receivedMessage.getContent());
                         latch.countDown();
                     }
@@ -81,7 +81,7 @@ public class WebSocketControllerTest {
         };
         String webSocketEndpointUrl = "ws://localhost:" + port + "/gs-guide-websocket";
         webSocketEndpointUrl = "ws://localhost:" + port + "/ws";
-        System.out.println("url: " + webSocketEndpointUrl);
+        // System.out.println("url: " + webSocketEndpointUrl);
         stompClient.connect(webSocketEndpointUrl, sessionHandler);
 
         // Wait for the response for up to 10 seconds

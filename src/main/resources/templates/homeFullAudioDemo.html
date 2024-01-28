@@ -11,6 +11,7 @@
 
 <button id="startButton">Start Recording</button>
 <button id="stopButton" disabled>Stop Recording</button>
+<div id="messages"></div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -66,17 +67,16 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('audioData', audioBlob); // Match the parameter name in your Spring Boot controller
 
         try {
-            let response = await fetch('/capture', {
+            let response = await fetch('/captureAudioStream', {
                 method: 'POST',
                 body: formData
             });
             console.log(response.url);
 
             if (response.ok) {
-                console.log('Audio data sent successfully.');
-            	window.location.href = response.url;
-            	window.location.replace(response.url);
-            	window.location.assign(response.url);
+            	let message = await response.text();
+            	showMessage(message);
+                console.log('Audio data sent successfully. ' + message);
             } else {
                 console.error('Failed to send audio data. Status:', response.status);
             }
@@ -85,6 +85,14 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
             audioChunks = [];
         }
+    }
+    function showMessage(message) {
+        const messages = document.getElementById('messages');
+        const p = document.createElement('span');
+        //p.style.wordWrap = 'break-word';
+        p.appendChild(document.createTextNode(message));
+        p.appendChild(document.createTextNode('\u00A0'));
+        messages.appendChild(p);
     }
 });
 </script>

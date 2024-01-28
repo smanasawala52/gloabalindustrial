@@ -21,6 +21,7 @@ public class SpeechToTextConfig {
 	public RecognitionConfig recognitionConfig() {
 		return RecognitionConfig.newBuilder()
 				.setEncoding(RecognitionConfig.AudioEncoding.MP3)
-				.setSampleRateHertz(48000).setLanguageCode("en-US").build();
+				.setSampleRateHertz(48000).setLanguageCode("en-US")
+				.setModel("phone_call").build();
 	}
 }

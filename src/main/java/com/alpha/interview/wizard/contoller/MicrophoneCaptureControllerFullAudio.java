@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,9 +30,8 @@ public class MicrophoneCaptureControllerFullAudio {
 			String encodedMessage = speechToTextService.getText(audioBytes);
 			String redirectUrl = "https://www.globalindustrial.com/searchResult?q="
 					+ encodedMessage;
-			System.out.println("Redirecting to: " + redirectUrl);
+			// System.out.println("Redirecting to: " + redirectUrl);
 			return "redirect:" + redirectUrl;
-			// return new ModelAndView("redirect:/redirect-template");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -38,16 +39,16 @@ public class MicrophoneCaptureControllerFullAudio {
 		// return new ModelAndView("redirect:/");
 	}
 	@PostMapping(value = "/captureAudioStream", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public String captureAudioStream(
+	public ResponseEntity<?> captureAudioStream(
 			@RequestParam("audioData") MultipartFile audioData) {
 		byte[] audioBytes;
 		try {
 			audioBytes = audioData.getBytes();
 			String encodedMessage = speechToTextService.getText(audioBytes);
-			return encodedMessage;
+			return ResponseEntity.ok().body(encodedMessage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "";
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 }

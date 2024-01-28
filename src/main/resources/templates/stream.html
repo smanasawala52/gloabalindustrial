@@ -28,7 +28,7 @@
             };
 
             mediaRecorder.onstop = () => {
-                //sendAudio();
+                sendAudio();
             };
         })
         .catch(error => {
@@ -55,18 +55,20 @@
     	console.log('Reached here sendAudio ' + audioChunks.length);
         if (audioChunks.length > 0) {
         	let audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        	//audioChunks = [];
             let formData = new FormData();
             formData.append('audioData', audioBlob); // Match the parameter name in your Spring Boot controller
 
             try {
-                let response = await fetch('/capture', {
+                let response = await fetch('/captureAudioStream', {
                     method: 'POST',
                     body: formData
                 });
 
                 if (response.ok) {
-                	showMessage(decodeURIComponent(response.url.replace('+',' ').replace('%20',' ')).replace('https://www.globalindustrial.com/searchResult?q=',''));
-                    console.log('Audio data sent successfully.' + response.url);
+                	let message = await response.text(); // Get the message as text
+                    showMessage(message);
+                	console.log('Audio data sent successfully. ' + message);
                 } else {
                     console.error('Failed to send audio data. Status:', response.status);
                 }

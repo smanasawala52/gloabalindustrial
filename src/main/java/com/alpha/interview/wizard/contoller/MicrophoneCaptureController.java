@@ -42,11 +42,11 @@ public class MicrophoneCaptureController {
 		// Handle the received audio data (you may want to save it, process it,
 		// etc.)
 		try {
-			System.out.println("Received audio data: "
-					+ myObject.getAudioData().length + " bytes");
+			// System.out.println("Received audio data: "
+			// + myObject.getAudioData().length + " bytes");
 			String encodedMessage = speechToTextService
 					.getText(myObject.getAudioData());
-			System.out.println("Redirecting to: " + encodedMessage);
+			// System.out.println("Redirecting to: " + encodedMessage);
 			return encodedMessage;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -58,13 +58,13 @@ public class MicrophoneCaptureController {
 	@SendTo("/topic/audioStream")
 	public String captureAudio(
 			@RequestParam("audioData") MultipartFile audioData) {
-		System.out.println(
-				"Received audio data: " + audioData.getSize() + " bytes");
+		// System.out.println(
+		// "Received audio data: " + audioData.getSize() + " bytes");
 		byte[] audioBytes;
 		try {
 			audioBytes = audioData.getBytes();
 			String encodedMessage = speechToTextService.getText(audioBytes);
-			System.out.println("Redirecting to: " + encodedMessage);
+			// System.out.println("Redirecting to: " + encodedMessage);
 			return encodedMessage;
 		} catch (IOException e) {
 			e.printStackTrace();
