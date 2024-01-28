@@ -10,16 +10,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class WhisperApiService {
+@Component("WhisperApi")
+public class WhisperApiService implements SpeechToTextService {
 	
 	private final String WHISPER_ASR_API_URL = "https://api.openai.com/v1/audio/transcriptions";
 	public String getText(byte[] audioBytes) {
+		long stTime = System.currentTimeMillis();
 		String encodedMessage=""; 
 		try {
 		 MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
@@ -51,6 +54,7 @@ public class WhisperApiService {
 		} catch (Exception e) {
             e.printStackTrace();
         }
+		System.out.println("time taken: " + (System.currentTimeMillis()-stTime));
 		return encodedMessage;
 	}
 
