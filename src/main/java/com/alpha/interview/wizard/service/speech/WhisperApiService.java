@@ -1,4 +1,4 @@
-package com.alpha.interview.wizard.service;
+package com.alpha.interview.wizard.service.speech;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
@@ -43,7 +43,7 @@ public class WhisperApiService implements SpeechToTextService {
 					WHISPER_ASR_API_URL, HttpMethod.POST, requestEntity,
 					String.class);
 			encodedMessage = responseEntity.getBody();
-			System.out.println(encodedMessage);
+			// System.out.println(encodedMessage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

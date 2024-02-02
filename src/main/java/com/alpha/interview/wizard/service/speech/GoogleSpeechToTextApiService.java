@@ -1,4 +1,4 @@
-package com.alpha.interview.wizard.service;
+package com.alpha.interview.wizard.service.speech;
 
 import java.util.List;
 
@@ -27,7 +27,8 @@ public class GoogleSpeechToTextApiService implements SpeechToTextService {
 		long stTime = System.currentTimeMillis();
 		String encodedMessage = "";
 		try {
-			// System.out.println("Audio Bytes Length: " + audioBytes.length);
+			// // System.out.println("Audio Bytes Length: " +
+			// audioBytes.length);
 			RecognitionAudio recognitionAudio = RecognitionAudio.newBuilder()
 					.setContent(ByteString.copyFrom(audioBytes)).build();
 
@@ -43,7 +44,7 @@ public class GoogleSpeechToTextApiService implements SpeechToTextService {
 			// .copyFrom(audioBytes)))
 			// .build());
 
-			// // System.out.println(response);
+			// // // System.out.println(response);
 			List<SpeechRecognitionResult> results = response.getResultsList();
 
 			StringBuilder transcript = new StringBuilder();
@@ -52,7 +53,7 @@ public class GoogleSpeechToTextApiService implements SpeechToTextService {
 			}
 
 			encodedMessage = transcript.toString();
-			System.out.println(encodedMessage);
+			// System.out.println(encodedMessage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

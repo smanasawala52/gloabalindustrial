@@ -2,13 +2,15 @@ package com.alpha.interview.wizard.model;
 
 public class Message {
 	private String role;
-    private String content;
-    private byte[] audioData;
-    public Message() {}
-    public Message(String role, String content) {
-        this.role = role;
-        this.content = content;
-    }
+	private String content;
+	private byte[] audioData;
+	private String question;
+	public Message() {
+	}
+	public Message(String role, String content) {
+		this.role = role;
+		this.content = content;
+	}
 
 	public String getRole() {
 		return role;
@@ -34,6 +36,13 @@ public class Message {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Role: "+ role+" content: "+content +" audioData: "+audioData;
+		return "Role: " + role + " content: " + content + " audioData: "
+				+ audioData + " question: " + question;
+	}
+	public String getQuestion() {
+		return question;
+	}
+	public void setQuestion(String question) {
+		this.question = question;
 	}
 }

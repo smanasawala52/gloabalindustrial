@@ -1,4 +1,4 @@
-package com.alpha.interview.wizard.service;
+package com.alpha.interview.wizard.service.speech;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -61,7 +61,7 @@ public class AssemblyAIApiService implements SpeechToTextService {
 			File file1 = new File("C:\\openAI.mp3");
 			transcribe = aai.transcripts().transcribe(tempAudioFile.toFile());
 			encodedMessage = transcribe.getText().get();
-			System.out.println(encodedMessage);
+			// System.out.println(encodedMessage);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
