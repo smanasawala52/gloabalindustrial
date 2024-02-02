@@ -2,7 +2,9 @@ package com.alpha.interview.wizard.service.chat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,7 @@ import com.alpha.interview.wizard.service.mall.MallService;
 
 import io.github.sashirestela.openai.SimpleOpenAI;
 import io.github.sashirestela.openai.domain.chat.ChatRequest;
+import io.github.sashirestela.openai.domain.chat.ChatResponse;
 import io.github.sashirestela.openai.domain.chat.message.ChatMsg;
 import io.github.sashirestela.openai.domain.chat.message.ChatMsgAssistant;
 import io.github.sashirestela.openai.domain.chat.message.ChatMsgSystem;
@@ -50,9 +53,9 @@ public class OpenAIChatService implements ChatService {
 				.message(new ChatMsgUser(mallModelJson)).temperature(0.0)
 				.maxTokens(300).build();
 
-		var futureChat = openAI.chatCompletions()
-				.createStream(chatRequestFirst);
-		var chatResponse = futureChat.join();
+		CompletableFuture<Stream<ChatResponse>> futureChat = openAI
+				.chatCompletions().createStream(chatRequestFirst);
+		Stream<ChatResponse> chatResponse = futureChat.join();
 		List<String> response = chatResponse
 				.filter(chatResp -> chatResp.firstContent() != null)
 				.map(chatResp -> chatResp.firstContent())
@@ -114,8 +117,8 @@ public class OpenAIChatService implements ChatService {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			var futureChat = openAI.chatCompletions()
-					.create(chatRequestSession);
+			CompletableFuture<ChatResponse> futureChat = openAI
+					.chatCompletions().create(chatRequestSession);
 			String chatResponseOpenA1 = futureChat.join().firstContent();
 			// System.out.println(chatResponseOpenA1);
 			currentMessage.setContent(chatResponseOpenA1);
