@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('audioData', audioBlob); // Match the parameter name in your Spring Boot controller
 
         try {
-            let response = await fetch('/captureAudioStream', {
+            let response = await fetch('/mall/captureAudioStream', {
                 method: 'POST',
                 body: formData
             });

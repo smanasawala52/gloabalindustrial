@@ -1,4 +1,4 @@
-package com.alpha.interview.wizard.contoller;
+package com.alpha.interview.wizard.contoller.mall;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alpha.interview.wizard.model.MallModel;
+import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.service.mall.MallService;
 
 @RestController

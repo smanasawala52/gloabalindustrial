@@ -1,9 +1,12 @@
-package com.alpha.interview.wizard.model;
+package com.alpha.interview.wizard.model.mall;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -21,19 +24,12 @@ import lombok.ToString;
 @Entity
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
-public class Shop {
+public class MallModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
-	private String category;
-	private String founded;
-	private String starProducts;
-	private String delivery;
-	private String location;
-	private String howToReach;
-	private String sales;
-	private String additionalDetails;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Shop> shops;
 }

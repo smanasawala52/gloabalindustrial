@@ -4,20 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Vivo Mall</title>
+    <link rel="stylesheet" href="/css/mall-styles.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
-	    
 </head>
-<body>
+<body class="mall-body">
 
-<h1>Vivo Mall</h1>
-<input type="text" name="query" id="query" tabindex="0" onfocus="document.getElementById('query').value = '';
-"/><button id="executeQueryButton" tabindex="1">Search</button>
-<button id="recordButton" tabindex="2">🎤 Record</button>
-<button id="resetButton" tabindex="3" style="display:none;">Reset Chat</button>
-<br>
-<div id="audioContainer" style="display:none;"></div>
-<div id="messages"></div>
+    <header class="mall-header">
+        <h1>Vivo Mall AI Assistant</h1>
+    </header>
+
+    <div class="mall-search">
+        <input type="text" name="query" id="query" tabindex="0" onfocus="document.getElementById('query').value = '';" />
+        <button id="executeQueryButton" tabindex="1">Search</button>
+        <button id="recordButton" tabindex="2">🎤 Record</button>
+        <button id="resetButton" tabindex="3" style="display:none;">Reset Chat</button>
+    </div>
+
+    <div id="audioContainer" style="display:none;"></div>
+    <div id="messages" class="mall-messages"></div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -42,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
     executeQueryButton.addEventListener('click', executeQuery);
     resetButton.addEventListener('click', executeResetChat);
     async function executeResetChat(){
-    	let response = await fetch('/resetChatSession', {
+    	let response = await fetch('/mall/resetChatSession', {
             method: 'GET'
         });
     	resetButton.style = "display:none;";
@@ -55,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Match the parameter name in your Spring Boot controller
 
     	try {
-            let response = await fetch('/captureQuery', {
+            let response = await fetch('/mall/captureQuery', {
                 method: 'POST',
                 body: formData
             });
@@ -118,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('audioData', audioBlob); // Match the parameter name in your Spring Boot controller
 
         try {
-            let response = await fetch('/captureAudioStream', {
+            let response = await fetch('/mall/captureAudioStream', {
                 method: 'POST',
                 body: formData
             });

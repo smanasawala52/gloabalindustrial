@@ -10,6 +10,11 @@ public class HomepageController {
 		return "homeMall";
 	}
 
+	@GetMapping("/ipl")
+	public String showHomeIPL() {
+		return "homeIPL";
+	}
+
 	@GetMapping("/global")
 	public String showHomeGlobalIndustrial() {
 		return "homeGlobalIndustrial";

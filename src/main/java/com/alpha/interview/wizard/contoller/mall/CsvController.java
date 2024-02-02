@@ -1,6 +1,5 @@
-package com.alpha.interview.wizard.contoller;
+package com.alpha.interview.wizard.contoller.mall;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,18 +8,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.alpha.interview.wizard.service.chat.ChatService;
 import com.alpha.interview.wizard.service.mall.CsvService;
+import com.alpha.interview.wizard.service.mall.MallService;
 
 @Controller
-@RequestMapping("/csv")
+@RequestMapping("/mall/csv")
 public class CsvController {
 
 	@Autowired
 	private CsvService csvService;
 	@Autowired
-	@Qualifier("OpenAIChat")
-	private ChatService chatService;
+	private MallService mallService;
 
 	@GetMapping("/upload-form")
 	public String showUploadForm() {
@@ -33,20 +31,20 @@ public class CsvController {
 		if (file.isEmpty()) {
 			redirectAttributes.addFlashAttribute("message",
 					"Please select a CSV file to upload.");
-			return "redirect:/csv/upload-form";
+			return "redirect:/mall/csv/upload-form";
 		}
 
 		try {
 			csvService.processCsvFile(file);
 			redirectAttributes.addFlashAttribute("message",
 					"CSV file uploaded and processed successfully.");
-			return chatService.initializeChat();
+			return mallService.initializeChat();
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("message",
 					"Error processing CSV file: " + e.getMessage());
 		}
 
-		return "redirect:/csv/upload-success";
+		return "redirect:/mall/csv/upload-success";
 	}
 
 	@GetMapping("/upload-success")

@@ -1,6 +1,7 @@
 package com.alpha.interview.wizard.contoller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,11 +10,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alpha.interview.wizard.service.chat.ChatService;
+import com.alpha.interview.wizard.service.SectorService;
+import com.alpha.interview.wizard.service.SectorServiceMapInitializer;
 import com.alpha.interview.wizard.service.speech.SpeechToTextService;
 @Controller
 public class MicrophoneCaptureControllerFullAudio {
@@ -22,38 +25,47 @@ public class MicrophoneCaptureControllerFullAudio {
 	@Qualifier("GoogleSpeechToTextApi")
 	private SpeechToTextService speechToTextService;
 
-	@Autowired
-	@Qualifier("OpenAIChat")
-	private ChatService chatService;
+	private final Map<String, SectorService> serviceMap;
 
-	@PostMapping(value = "/captureAudioStream", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@Autowired
+	public MicrophoneCaptureControllerFullAudio(
+			SectorServiceMapInitializer serviceMapInitializer) {
+		this.serviceMap = serviceMapInitializer.getServiceMap();
+	}
+
+	@PostMapping(value = "/{type}/captureAudioStream", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> captureAudioStream(
+			@PathVariable("type") String type,
 			@RequestParam("audioData") MultipartFile audioData) {
 		byte[] audioBytes;
 		try {
 			audioBytes = audioData.getBytes();
 			String encodedMessage = speechToTextService.getText(audioBytes);
+			SectorService sectorService = serviceMap.get(type);
 			return ResponseEntity.ok()
-					.body(chatService.getResponse(encodedMessage));
+					.body(sectorService.getResponse(encodedMessage));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 
-	@PostMapping(value = "/captureQuery", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> captureQuery(@RequestParam("query") String query) {
+	@PostMapping(value = "/{type}/captureQuery", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> captureQuery(@PathVariable("type") String type,
+			@RequestParam("query") String query) {
 		try {
-			return ResponseEntity.ok().body(chatService.getResponse(query));
+			SectorService sectorService = serviceMap.get(type);
+			return ResponseEntity.ok().body(sectorService.getResponse(query));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 
-	@GetMapping("/resetChatSession")
-	public String showHomeMall() {
-		chatService.resetChatSession();
+	@GetMapping("/{type}/resetChatSession")
+	public String showHomeMall(@PathVariable("type") String type) {
+		SectorService sectorService = serviceMap.get(type);
+		sectorService.resetChatSession();
 		return "redirect:/";
 	}
 }

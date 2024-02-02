@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alpha.interview.wizard.model.MallModel;
-import com.alpha.interview.wizard.model.Shop;
-import com.alpha.interview.wizard.repository.MallModelRepository;
+import com.alpha.interview.wizard.model.mall.MallModel;
+import com.alpha.interview.wizard.model.mall.Shop;
 import com.alpha.interview.wizard.repository.ShopRepository;
+import com.alpha.interview.wizard.repository.mall.MallModelRepository;
 
 @Service
 public class CsvService {

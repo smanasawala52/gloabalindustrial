@@ -1,18 +1,19 @@
 package com.alpha.interview.wizard.service.chat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.alpha.interview.wizard.model.MallModel;
+import com.alpha.interview.wizard.model.ChatRequestModel;
 import com.alpha.interview.wizard.model.Message;
-import com.alpha.interview.wizard.service.mall.MallService;
+import com.alpha.interview.wizard.service.SectorTypeConstants;
 
 import io.github.sashirestela.openai.SimpleOpenAI;
 import io.github.sashirestela.openai.domain.chat.ChatRequest;
@@ -27,30 +28,19 @@ public class OpenAIChatService implements ChatService {
 	private String apiKey;
 	protected SimpleOpenAI openAI;
 	private String modelIdToUse = "gpt-3.5-turbo-1106";
-	private final MallService mallService;
-	private ChatRequest chatRequestFirst;
-	private ChatRequest chatRequestSession;
-
-	@Autowired
-	public OpenAIChatService(MallService mallService) {
-		this.mallService = mallService;
-	}
+	private Map<SectorTypeConstants, ChatRequestModel> chatRequestModels = new HashMap<>();
 
 	@Override
-	public String initializeChat() {
-		List<MallModel> mallModels = mallService.getAllMallModels();
-		if (mallModels.isEmpty()) {
-			return "redirect:/csv/upload-success";
-		}
-		String mallModelJson = mallModels.toString();
+	public void initializeChat(String initSystemMessage, String inputJson,
+			SectorTypeConstants sector) {
+		ChatRequest chatRequestSession = null;
 		apiKey = System.getenv("API_KEY");
 		openAI = SimpleOpenAI.builder().apiKey(apiKey).build();
 		modelIdToUse = "gpt-3.5-turbo-1106";
 
-		chatRequestFirst = ChatRequest.builder().model(modelIdToUse).message(
-				new ChatMsgSystem("This Chat will Read all Mall Raw Data and "
-						+ "will provide answers to users questions in an interactive session manner."))
-				.message(new ChatMsgUser(mallModelJson)).temperature(0.0)
+		ChatRequest chatRequestFirst = ChatRequest.builder().model(modelIdToUse)
+				.message(new ChatMsgSystem(initSystemMessage))
+				.message(new ChatMsgUser(inputJson)).temperature(0.0)
 				.maxTokens(300).build();
 
 		CompletableFuture<Stream<ChatResponse>> futureChat = openAI
@@ -78,67 +68,77 @@ public class OpenAIChatService implements ChatService {
 		}
 
 		//
-		resetChatSession();
-		return "redirect:/";
+		ChatRequestModel chatRequestModel = new ChatRequestModel();
+		chatRequestModel.setChatRequestFirst(chatRequestFirst);
+		chatRequestModel.setChatRequestSession(chatRequestSession);
+		chatRequestModels.put(sector, chatRequestModel);
+		resetChatSession(sector);
 	}
 
-	public void resetChatSession() {
+	@Override
+	public void resetChatSession(SectorTypeConstants sector) {
 		try {
-			System.out.println(
-					"Before adding User: " + chatRequestFirst.getMessages());
+			ChatRequestModel chatRequestModel = chatRequestModels.get(sector);
+			System.out.println("Before adding User resetChatSession: "
+					+ chatRequestModel.getChatRequestFirst().getMessages());
 			// chatRequest.getMessages().add(new ChatMsgUser(input));
 			List<ChatMsg> messages = new ArrayList<>(
-					chatRequestFirst.getMessages());
-			chatRequestSession = ChatRequest.builder().model(modelIdToUse)
-					.messages(messages).temperature(0.0).maxTokens(300).build();
-			System.out.println(
-					"After adding User: " + chatRequestSession.getMessages());
+					chatRequestModel.getChatRequestFirst().getMessages());
+			ChatRequest chatRequestSession = ChatRequest.builder()
+					.model(modelIdToUse).messages(messages).temperature(0.0)
+					.maxTokens(300).build();
+			chatRequestModel.setChatRequestSession(chatRequestSession);
+			System.out.println("After adding User resetChatSession: "
+					+ chatRequestModel.getChatRequestSession().getMessages());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Message getResponse(String input) {
+	@Override
+	public Message getResponse(String input, SectorTypeConstants sector) {
 		Message currentMessage = new Message();
 		if (input != null && !input.isEmpty()) {
 			currentMessage.setQuestion(input);
+			ChatRequestModel chatRequestModel = chatRequestModels.get(sector);
 			try {
-				System.out.println("Before adding User: "
-						+ chatRequestSession.getMessages());
+				System.out.println("Before adding User: " + chatRequestModel
+						.getChatRequestSession().getMessages());
 				// chatRequest.getMessages().add(new ChatMsgUser(input));
 				List<ChatMsg> messages = new ArrayList<>(
-						chatRequestSession.getMessages());
+						chatRequestModel.getChatRequestSession().getMessages());
 				messages.add(new ChatMsgUser(input));
-				chatRequestSession = ChatRequest.builder().model(modelIdToUse)
-						.messages(messages).temperature(0.0).maxTokens(300)
-						.build();
-				System.out.println("After adding User: "
-						+ chatRequestSession.getMessages());
+				ChatRequest chatRequestSession = ChatRequest.builder()
+						.model(modelIdToUse).messages(messages).temperature(0.0)
+						.maxTokens(300).build();
+				chatRequestModel.setChatRequestSession(chatRequestSession);
+				System.out.println("After adding User: " + chatRequestModel
+						.getChatRequestSession().getMessages());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			CompletableFuture<ChatResponse> futureChat = openAI
-					.chatCompletions().create(chatRequestSession);
+					.chatCompletions()
+					.create(chatRequestModel.getChatRequestSession());
 			String chatResponseOpenA1 = futureChat.join().firstContent();
 			// System.out.println(chatResponseOpenA1);
 			currentMessage.setContent(chatResponseOpenA1);
 			try {
-				System.out.println("Before adding Assistant: "
-						+ chatRequestSession.getMessages());
+				System.out
+						.println("Before adding Assistant: " + chatRequestModel
+								.getChatRequestSession().getMessages());
 				List<ChatMsg> messages = new ArrayList<>(
-						chatRequestSession.getMessages());
+						chatRequestModel.getChatRequestSession().getMessages());
 				messages.add(new ChatMsgAssistant(chatResponseOpenA1));
-				chatRequestSession = ChatRequest.builder().model(modelIdToUse)
-						.messages(messages).temperature(0.0).maxTokens(300)
-						.build();
-				// chatRequest.getMessages()
-				// .add(new ChatMsgAssistant(chatResponse.firstContent()));
-				System.out.println("After adding Assistant: "
-						+ chatRequestSession.getMessages());
+				ChatRequest chatRequestSession = ChatRequest.builder()
+						.model(modelIdToUse).messages(messages).temperature(0.0)
+						.maxTokens(300).build();
+				chatRequestModel.setChatRequestSession(chatRequestSession);
+				System.out.println("After adding Assistant: " + chatRequestModel
+						.getChatRequestSession().getMessages());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			// return chatResponse.firstContent();
 		}
 		return currentMessage;
 	}
