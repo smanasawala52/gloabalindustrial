@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/interview-helper-1.0.1.jar
+web: java -jar target/interview-helper-1.0.1.jar
