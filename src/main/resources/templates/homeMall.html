@@ -6,6 +6,7 @@
     <title>Welcome to Vivo Mall</title>
     <link rel="stylesheet" href="/css/mall-styles.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="/css/index.css">
 	<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 </head>
 <body class="mall-body">
@@ -19,6 +20,10 @@
         <button id="executeQueryButton" tabindex="1">Search</button>
         <button id="recordButton" tabindex="2">🎤 Record</button>
         <button id="resetButton" tabindex="3" style="display:none;">Reset Chat</button>
+        <br>
+    <video id="heygenVideo" width="320" height="180">
+	    <!-- The video source will be set dynamically -->
+	  </video>
     </div>
     <div class="mall-messages">
 		Couple of Demo Questions to be asked:
@@ -73,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
             	let message = await response.text();
             	showMessage(message);
             	convertToSpeech(JSON.parse(message).content);
+            	generateVideo(JSON.parse(message).content);
                 console.log('Text data sent successfully. ' + message);
             } else {
                 console.error('Failed to send text data. Status:', response.status);
@@ -136,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             	let message = await response.text();
             	showMessage(message);
             	convertToSpeech(JSON.parse(message).content);
+                generateVideo(JSON.parse(message).content);
                 console.log('Audio data sent successfully. ' + message);
             } else {
                 console.error('Failed to send audio data. Status:', response.status);
@@ -171,8 +178,91 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error:', error));
     }
+    async function generateVideo(inputText) {
+        //const apiKey = 'NjBmMDEyYzFjNTBlNDg2ZmIyYTQ2M2I3NGNlNWFmZmUtMTcwNzA2NTUyOA=='; // ktrophy
+        const apiKey = 'OWI4MzM3YTMxNTZhNGJjMzkwYWExZWFiOGI3ZmNlZDUtMTcwNzA2Njg2MA=='; // NB
+        const apiUrl = 'https://api.heygen.com/v1/video.generate';
 
+        const requestBody = {
+            background: '#ffffff',
+            clips: [{
+                avatar_id: 'Daisy-inskirt-20220818',
+                avatar_style: 'normal',
+                input_text: inputText,
+                offset: {
+                    x: 0,
+                    y: 0
+                },
+                scale: 1,
+                voice_id: '1bd001e7e50f421d891986aad5158bc8'
+            }],
+            ratio: '16:9',
+            test: true,
+            version: 'v1alpha'
+        };
 
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'X-Api-Key': apiKey,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log(result);
+
+            apiUrl1 = 'https://api.heygen.com/v1/video_status.get?video_id=' + result.data.video_id;
+            var status = '';
+            var videoUrl = '';
+            try {
+	            while (videoUrl == ''){
+	                const response = await fetch(apiUrl1, {
+	                    method: 'GET',
+	                    headers: {
+	                        'X-Api-Key': apiKey
+	                    }
+	                });
+	
+	                if (!response.ok) {
+	                    throw new Error(`HTTP error! Status: ${response.status}`);
+	                }
+	
+	                const result = await response.json();
+	                if(result.data.status == 'completed'){
+	                	videoUrl = result.data.video_url;
+	                	break;
+	                }
+	                await new Promise(resolve => setTimeout(resolve, 1000));
+	            }
+                displayVideo(videoUrl);
+                // Handle the generated video data as needed
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        } catch (error1) {
+            console.error('Error:', error1.message);
+        }
+    }
+
+        function displayVideo(videoUrl) {
+            const videoElement = document.getElementById('heygenVideo');
+            const sourceElement = document.createElement('source');
+
+            sourceElement.src = videoUrl;
+            sourceElement.type = 'video/mp4'; // Adjust the type based on the video format
+
+            videoElement.appendChild(sourceElement);
+            videoElement.load();
+            videoElement.play();
+            audioContainer.innerHTML = '';
+        }
     function showMessage(message) {
     	resetButton.style = "display:block;";
         const messages = document.getElementById('messages');
