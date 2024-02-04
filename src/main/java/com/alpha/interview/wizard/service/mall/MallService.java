@@ -1,5 +1,6 @@
 package com.alpha.interview.wizard.service.mall;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,9 @@ public class MallService implements SectorService {
 		}
 		String initSystemMessage = "This Chat will Read all Mall Raw Data and "
 				+ "will provide answers to users questions in an interactive session manner.";
-		chatService.initializeChat(initSystemMessage, mallModels.toString(),
+		List<String> input = new ArrayList<String>();
+		mallModels.stream().forEach(match -> input.add(String.valueOf(match)));
+		chatService.initializeChat(initSystemMessage, input,
 				SectorTypeConstants.MALL);
 		return "redirect:/";
 	}

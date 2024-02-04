@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,6 +30,7 @@ import com.alpha.interview.wizard.service.SectorService;
 import com.alpha.interview.wizard.service.SectorTypeConstants;
 import com.alpha.interview.wizard.service.chat.ChatService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 @Component("IPLService")
 @Service
@@ -56,11 +58,14 @@ public class IPLDataLoadService implements SectorService {
 		try {
 			List<File> files = Files.list(Paths.get(dirLocation))
 					.map(Path::toFile).collect(Collectors.toList());
+			objectMapper.setPropertyNamingStrategy(
+					PropertyNamingStrategy.SNAKE_CASE);
+
 			for (File file : files) {
 				try {
 					MatchInputJson value = objectMapper.readValue(
 							new File(file.getPath()), MatchInputJson.class);
-					// System.out.println(value);
+					System.out.println(value);
 					Match match = new MatchBuilder()
 							.setId(Long.valueOf(
 									file.getName().replace(".json", "")))
@@ -103,6 +108,9 @@ public class IPLDataLoadService implements SectorService {
 
 	public MatchInputJson getMatch(Long key) {
 		try {
+			objectMapper.setPropertyNamingStrategy(
+					PropertyNamingStrategy.SNAKE_CASE);
+
 			MatchInputJson value = objectMapper.readValue(
 					new File(dirLocation + "/" + key + ".json"),
 					MatchInputJson.class);
@@ -121,7 +129,10 @@ public class IPLDataLoadService implements SectorService {
 	public String initializeChat() {
 		String initSystemMessage = "This Chat will Read all IPL Matches Raw Data and "
 				+ "will provide answers to users questions in an interactive session manner.";
-		chatService.initializeChat(initSystemMessage, matches.toString(),
+		List<String> input = new ArrayList<String>();
+		matches.stream().forEach(match -> input.add(String.valueOf(match)));
+
+		chatService.initializeChat(initSystemMessage, input,
 				SectorTypeConstants.IPL);
 		return "redirect:/ipl";
 	}

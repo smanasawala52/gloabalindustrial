@@ -31,34 +31,40 @@ public class OpenAIChatService implements ChatService {
 	private Map<SectorTypeConstants, ChatRequestModel> chatRequestModels = new HashMap<>();
 
 	@Override
-	public void initializeChat(String initSystemMessage, String inputJson,
+	public void initializeChat(String initSystemMessage, List<String> inputJson,
 			SectorTypeConstants sector) {
 		ChatRequest chatRequestSession = null;
 		apiKey = System.getenv("API_KEY");
 		openAI = SimpleOpenAI.builder().apiKey(apiKey).build();
 		modelIdToUse = "gpt-3.5-turbo-1106";
+		List<ChatMsg> messages = new ArrayList<>();
+		for (String input : inputJson) {
+			System.out.println(input);
+			ChatRequest chatRequestFirstTemp = ChatRequest.builder()
+					.model(modelIdToUse)
+					.message(new ChatMsgSystem(initSystemMessage))
+					.message(new ChatMsgUser(input)).temperature(0.0)
+					.maxTokens(300).build();
 
+			CompletableFuture<Stream<ChatResponse>> futureChat = openAI
+					.chatCompletions().createStream(chatRequestFirstTemp);
+			Stream<ChatResponse> chatResponse = futureChat.join();
+			List<String> response = chatResponse
+					.filter(chatResp -> chatResp.firstContent() != null)
+					.map(chatResp -> chatResp.firstContent())
+					.collect(Collectors.toList());
+			messages.addAll(chatRequestFirstTemp.getMessages());
+		}
 		ChatRequest chatRequestFirst = ChatRequest.builder().model(modelIdToUse)
-				.message(new ChatMsgSystem(initSystemMessage))
-				.message(new ChatMsgUser(inputJson)).temperature(0.0)
-				.maxTokens(300).build();
-
-		CompletableFuture<Stream<ChatResponse>> futureChat = openAI
-				.chatCompletions().createStream(chatRequestFirst);
-		Stream<ChatResponse> chatResponse = futureChat.join();
-		List<String> response = chatResponse
-				.filter(chatResp -> chatResp.firstContent() != null)
-				.map(chatResp -> chatResp.firstContent())
-				.collect(Collectors.toList());
+				.messages(messages).temperature(0.0).maxTokens(300).build();
 		// System.out.println(String.join(",", response));
 		try {
 			System.out.println("Before adding Assistant: "
 					+ chatRequestFirst.getMessages());
 			// chatRequest.getMessages()
 			// .add(new ChatMsgAssistant(String.join(",", response)));
-			List<ChatMsg> messages = new ArrayList<>(
-					chatRequestFirst.getMessages());
-			messages.add(new ChatMsgAssistant(String.join(",", response)));
+			messages = new ArrayList<>(chatRequestFirst.getMessages());
+			// messages.add(new ChatMsgAssistant(String.join(",", response)));
 			chatRequestFirst = ChatRequest.builder().model(modelIdToUse)
 					.messages(messages).temperature(0.0).maxTokens(300).build();
 			System.out.println("After adding Assistant: "
