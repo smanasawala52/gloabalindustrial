@@ -27,7 +27,7 @@ import io.github.sashirestela.openai.domain.chat.message.ChatMsgUser;
 public class OpenAIChatService implements ChatService {
 	private String apiKey;
 	protected SimpleOpenAI openAI;
-	private String modelIdToUse = "gpt-3.5-turbo-1106";
+	private String modelIdToUse = "davinci-002";
 	private Map<SectorTypeConstants, ChatRequestModel> chatRequestModels = new HashMap<>();
 
 	@Override
