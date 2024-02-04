@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -50,7 +48,6 @@ public class IPLDataLoadService implements SectorService {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	@PostConstruct
 	public void loadMatchData() throws Exception {
 		System.out.println("Dataloading started");
 
