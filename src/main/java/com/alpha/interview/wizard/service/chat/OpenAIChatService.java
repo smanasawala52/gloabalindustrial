@@ -39,6 +39,11 @@ public class OpenAIChatService implements ChatService {
 		openAI = SimpleOpenAI.builder().apiKey(apiKey).build();
 		modelIdToUse = "gpt-3.5-turbo-1106";
 
+		System.out.println("===================================");
+		System.out.println(inputJson);
+		System.out.println("===================================");
+		System.out.println(inputJson.size());
+		System.out.println("===================================");
 		List<String> subLists = new ArrayList<>();
 		int subListSize = 10;
 		for (int i = 0; i < inputJson.size(); i += subListSize) {
@@ -47,7 +52,7 @@ public class OpenAIChatService implements ChatService {
 		}
 
 		List<ChatMsg> messages = new ArrayList<>();
-		for (String input : inputJson) {
+		for (String input : subLists) {
 			System.out.println(input);
 			ChatRequest chatRequestFirstTemp = ChatRequest.builder()
 					.model(modelIdToUse)
