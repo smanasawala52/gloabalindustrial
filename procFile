@@ -1,0 +1,1 @@
+web: java -jar target/interview-helper-1.0.1.jar
