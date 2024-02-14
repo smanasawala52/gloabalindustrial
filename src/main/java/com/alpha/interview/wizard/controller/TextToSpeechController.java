@@ -1,4 +1,4 @@
-package com.alpha.interview.wizard.contoller;
+package com.alpha.interview.wizard.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

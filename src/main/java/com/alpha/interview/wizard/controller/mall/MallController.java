@@ -1,4 +1,4 @@
-package com.alpha.interview.wizard.contoller.mall;
+package com.alpha.interview.wizard.controller.mall;
 
 import java.util.List;
 

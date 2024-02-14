@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import com.alpha.interview.wizard.contoller.WebSocketController;
+import com.alpha.interview.wizard.controller.WebSocketController;
 import com.alpha.interview.wizard.model.Message;
 
 import java.lang.reflect.Type;

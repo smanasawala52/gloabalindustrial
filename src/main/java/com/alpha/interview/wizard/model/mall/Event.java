@@ -1,15 +1,11 @@
 package com.alpha.interview.wizard.model.mall;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 import com.alpha.interview.wizard.constants.mall.ActiveStatusConstants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -28,29 +24,17 @@ import lombok.ToString;
 @Entity
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
-public class Shop {
-
+public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String founded;
-	@ManyToMany
-	@JoinTable(name = "shop_category", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private List<Category> categories;
-	@ManyToMany
-	@JoinTable(name = "shop_brand", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "brand_id"))
-	private List<Brand> brands;
-	private String floor;
-	private String shopNumber;
-	private String location;
-	private String howToReach;
-
 	private String name;
 	private String description;
 	private String imgUrl;
-	private boolean featured;
 	private String additionalDetails;
+	private Date startDate;
+	private Date endDate;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
@@ -65,48 +49,6 @@ public class Shop {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getFounded() {
-		return founded;
-	}
-	public void setFounded(String founded) {
-		this.founded = founded;
-	}
-	public List<Category> getCategories() {
-		return categories;
-	}
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-	public List<Brand> getBrands() {
-		return brands;
-	}
-	public void setBrands(List<Brand> brands) {
-		this.brands = brands;
-	}
-	public String getFloor() {
-		return floor;
-	}
-	public void setFloor(String floor) {
-		this.floor = floor;
-	}
-	public String getShopNumber() {
-		return shopNumber;
-	}
-	public void setShopNumber(String shopNumber) {
-		this.shopNumber = shopNumber;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	public String getHowToReach() {
-		return howToReach;
-	}
-	public void setHowToReach(String howToReach) {
-		this.howToReach = howToReach;
 	}
 	public String getName() {
 		return name;
@@ -126,17 +68,23 @@ public class Shop {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	public boolean isFeatured() {
-		return featured;
-	}
-	public void setFeatured(boolean featured) {
-		this.featured = featured;
-	}
 	public String getAdditionalDetails() {
 		return additionalDetails;
 	}
 	public void setAdditionalDetails(String additionalDetails) {
 		this.additionalDetails = additionalDetails;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 	public int getActiveStatusKey() {
 		return activeStatusKey;

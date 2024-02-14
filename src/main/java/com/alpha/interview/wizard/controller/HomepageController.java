@@ -1,4 +1,4 @@
-package com.alpha.interview.wizard.contoller;
+package com.alpha.interview.wizard.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 

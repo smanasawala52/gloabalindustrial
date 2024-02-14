@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Form</title>
+    <!-- Include jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <form id="shopForm" action="/shop/save" method="POST">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br>
+        
+        <label for="categories">Categories:</label><br>
+        <select id="categories" name="categories" multiple>
+            <!-- Categories options will be added dynamically via JavaScript -->
+        </select><br>
+        
+        <label for="brands">Brands:</label><br>
+        <select id="brands" name="brands" multiple>
+            <!-- Brands options will be added dynamically via JavaScript -->
+        </select><br>
+        
+        <label for="updateTimestamp">Update Timestamp:</label><br>
+        <input type="datetime-local" id="updateTimestamp" name="updateTimestamp" required><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+    <!-- JavaScript to fetch and populate categories and brands dynamically -->
+    <script>
+        $(document).ready(function() {
+            // Fetch categories and populate the dropdown
+            $.get("/category/all", function(categories) {
+                $.each(categories, function(index, category) {
+                    $("#categories").append("<option value='" + category.id + "'>" + category.name + "</option>");
+                });
+            });
+
+            // Fetch brands and populate the dropdown
+            $.get("/brand/all", function(brands) {
+                $.each(brands, function(index, brand) {
+                    $("#brands").append("<option value='" + brand.id + "'>" + brand.name + "</option>");
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+<div th:fragment="content">
+    <h2>Token Generation Result</h2>
+    <p th:if="${token}">Token generated successfully: <strong th:text="${token}"></strong></p>
+    <p th:unless="${token}">Token generation failed. Please check your credentials.</p>
+</div>

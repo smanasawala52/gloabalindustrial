@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Form</title>
+</head>
+<body>
+    <form id="parkingForm" action="/parking/save" method="POST">
+        <label for="floor">Floor:</label><br>
+        <input type="text" id="floor" name="floor" required><br>
+        
+        <label for="block">Block:</label><br>
+        <input type="text" id="block" name="block" required><br>
+        
+        <label for="additionalDetails">Additional Details:</label><br>
+        <textarea id="additionalDetails" name="additionalDetails"></textarea><br>
+        
+        <label for="updateTimestamp">Update Timestamp:</label><br>
+        <input type="datetime-local" id="updateTimestamp" name="updateTimestamp" required><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

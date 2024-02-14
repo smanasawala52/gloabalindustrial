@@ -1,4 +1,4 @@
-package com.alpha.interview.wizard.repository;
+package com.alpha.interview.wizard.repository.mall;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Form</title>
+    <!-- Include jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <form id="categoryForm" action="/category/save" method="POST">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br>
+        
+        <label for="subcategoryId">Subcategory:</label><br>
+        <select id="subcategoryId" name="subcategoryId">
+            <option value="">Select Subcategory</option>
+            <!-- Subcategory options will be added dynamically via JavaScript -->
+        </select>
+        <button type="button" id="newSubcategoryBtn">New Subcategory</button><br>
+        <div id="subcategoryFormContainer"></div>
+        
+        <label for="updateTimestamp">Update Timestamp:</label><br>
+        <input type="datetime-local" id="updateTimestamp" name="updateTimestamp" required><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+    <!-- JavaScript to handle creating a new subcategory via AJAX -->
+    <script>
+        $(document).ready(function() {
+            // Handle click on New Subcategory button
+            $("#newSubcategoryBtn.subcategory-form").submit(function() {
+                var newSubcategoryName = prompt("Enter the name of the new subcategory:");
+                if (newSubcategoryName) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/category/newSubcategory",
+                        contentType: "application/json",
+                        data: JSON.stringify({ "name": newSubcategoryName }),
+                        success: function(response) {
+                            // Add new subcategory option to the dropdown
+                            $("#subcategoryId").append("<option value='" + response.id + "'>" + response.name + "</option>");
+                            // Select the newly added subcategory
+                            $("#subcategoryId").val(response.id);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error creating new subcategory:", error);
+                            alert("An error occurred while creating the new subcategory. Please try again.");
+                        }
+                    });
+                }
+            });
+            $("#newSubcategoryBtn").click(function() {
+                // Load subcategory form directly on button click
+                $("#subcategoryFormContainer").load("/subcategory/form");
+            });
+
+            // Fetch subcategories and populate the dropdown
+            $.get("/subcategory/all", function(subcategories) {
+                $.each(subcategories, function(index, subcategory) {
+                    $("#subcategoryId").append("<option value='" + subcategory.id + "'>" + subcategory.name + "</option>");
+                });
+            });
+        });
+    </script>
+</body>
+</html>

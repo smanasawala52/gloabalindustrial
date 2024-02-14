@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">    
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>    
+    <title>Interview Wizard</title>
+</head>
+<body>
+    <!-- Include the header -->
+    <div th:fragment="header"></div>
+
+    <!-- Main content goes here -->
+    <div th:replace="${'content/' + contentTemplate} :: content"></div>
+
+    <!-- Include the footer -->
+    <div th:fragment="footer"></div>
+</body>
+</html>

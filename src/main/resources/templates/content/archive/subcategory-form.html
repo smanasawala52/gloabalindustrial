@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubCategory Form</title>
+</head>
+<body>
+    <form id="subcategory-form" action="/subcategory/save" method="POST">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br>
+        
+        <label for="featured">Featured:</label><br>
+        <input type="checkbox" id="featured" name="featured"><br>
+        
+        <label for="additionalDetails">Additional Details:</label><br>
+        <textarea id="additionalDetails" name="additionalDetails"></textarea><br>
+        
+        <label for="activeStatusKey">Active Status Key:</label><br>
+        <input type="number" id="activeStatusKey" name="activeStatusKey" value="1"><br>
+        
+        <label for="updateTimestamp">Update Timestamp:</label><br>
+        <input type="datetime-local" id="updateTimestamp" name="updateTimestamp" required><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alpha.interview.wizard.model.mall.Category;
 import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.Shop;
-import com.alpha.interview.wizard.repository.ShopRepository;
 import com.alpha.interview.wizard.repository.mall.MallModelRepository;
+import com.alpha.interview.wizard.repository.mall.ShopRepository;
 
 @Service
 public class CsvService {
@@ -41,13 +42,18 @@ public class CsvService {
 				Shop shop = new Shop();
 				try {
 					shop.setName(record.get(0));
-					shop.setCategory(record.get("Category"));
+					List<Category> categories = new ArrayList<Category>();
+
+					Category category = new Category();
+					category.setName(record.get("Category"));
+					categories.add(category);
+					shop.setCategories(categories);
 					shop.setFounded(record.get("Founded"));
-					shop.setStarProducts(record.get("Star_Products"));
-					shop.setDelivery(record.get("Delivery"));
+					// shop.setStarProducts(record.get("Star_Products"));
+					// shop.setDelivery(record.get("Delivery"));
 					shop.setLocation(record.get("Location"));
 					shop.setHowToReach(record.get("How_to_Reach"));
-					shop.setSales(record.get("Sales"));
+					// shop.setSales(record.get("Sales"));
 					try {
 						shop.setAdditionalDetails(
 								record.get("Additional_Details"));

@@ -3,13 +3,12 @@ package com.alpha.interview.wizard.model.mall;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.alpha.interview.wizard.constants.mall.ActiveStatusConstants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -28,19 +27,13 @@ import lombok.ToString;
 @Entity
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
-public class Shop {
+public class Attraction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	private String founded;
-	@ManyToMany
-	@JoinTable(name = "shop_category", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Category> categories;
-	@ManyToMany
-	@JoinTable(name = "shop_brand", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "brand_id"))
-	private List<Brand> brands;
 	private String floor;
 	private String shopNumber;
 	private String location;
@@ -60,29 +53,18 @@ public class Shop {
 	public void setCreateTimestamp(Date createTimestamp) {
 		this.createTimestamp = createTimestamp;
 	}
+
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getFounded() {
-		return founded;
-	}
-	public void setFounded(String founded) {
-		this.founded = founded;
-	}
 	public List<Category> getCategories() {
 		return categories;
 	}
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
-	}
-	public List<Brand> getBrands() {
-		return brands;
-	}
-	public void setBrands(List<Brand> brands) {
-		this.brands = brands;
 	}
 	public String getFloor() {
 		return floor;
