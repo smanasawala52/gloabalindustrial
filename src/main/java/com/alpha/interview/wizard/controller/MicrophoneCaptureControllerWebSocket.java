@@ -1,9 +1,10 @@
 package com.alpha.interview.wizard.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alpha.interview.wizard.model.Message;
 import com.alpha.interview.wizard.service.speech.SpeechToTextService;
+import com.alpha.interview.wizard.service.speech.SpeechToTextServiceMapInitializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,9 +21,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class MicrophoneCaptureControllerWebSocket {
 
+	@Value("${speech.to.text.service.impl}")
+	private String speechToTextServiceImpl;
+
+	private final Map<String, SpeechToTextService> speechToTextServiceMap;
 	@Autowired
-	@Qualifier("GoogleSpeechToTextApi")
-	private SpeechToTextService speechToTextService;
+	public MicrophoneCaptureControllerWebSocket(
+			SpeechToTextServiceMapInitializer serviceMapInitializer) {
+		this.speechToTextServiceMap = serviceMapInitializer.getServiceMap();
+	}
 
 	@MessageMapping("/audio")
 	@SendTo("/topic/audioStream")
@@ -44,7 +52,8 @@ public class MicrophoneCaptureControllerWebSocket {
 		try {
 			// // System.out.println("Received audio data: "
 			// + myObject.getAudioData().length + " bytes");
-			String encodedMessage = speechToTextService
+			String encodedMessage = speechToTextServiceMap
+					.get(speechToTextServiceImpl)
 					.getText(myObject.getAudioData());
 			// // System.out.println("Redirecting to: " + encodedMessage);
 			return encodedMessage;
@@ -63,7 +72,8 @@ public class MicrophoneCaptureControllerWebSocket {
 		byte[] audioBytes;
 		try {
 			audioBytes = audioData.getBytes();
-			String encodedMessage = speechToTextService.getText(audioBytes);
+			String encodedMessage = speechToTextServiceMap
+					.get(speechToTextServiceImpl).getText(audioBytes);
 			// // System.out.println("Redirecting to: " + encodedMessage);
 			return encodedMessage;
 		} catch (IOException e) {

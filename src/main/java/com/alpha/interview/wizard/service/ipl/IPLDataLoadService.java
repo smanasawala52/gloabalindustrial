@@ -11,11 +11,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ import com.alpha.interview.wizard.model.ipl.Venue;
 import com.alpha.interview.wizard.service.SectorService;
 import com.alpha.interview.wizard.service.SectorTypeConstants;
 import com.alpha.interview.wizard.service.chat.ChatService;
+import com.alpha.interview.wizard.service.chat.ChatServiceMapInitializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
@@ -36,6 +38,15 @@ public class IPLDataLoadService implements SectorService {
 	private List<Match> matches = new CopyOnWriteArrayList<>();
 	private List<Venue> venues = new CopyOnWriteArrayList<>();
 	private String dirLocation = "ipl_json";
+
+	@Value("${chat.service.impl}")
+	private String chatServiceImpl;
+
+	private final Map<String, ChatService> chatServiceMap;
+	@Autowired
+	public IPLDataLoadService(ChatServiceMapInitializer serviceMapInitializer) {
+		this.chatServiceMap = serviceMapInitializer.getServiceMap();
+	}
 
 	public List<Match> getMatches() {
 		return matches;
@@ -118,10 +129,6 @@ public class IPLDataLoadService implements SectorService {
 		return null;
 	}
 
-	@Autowired
-	@Qualifier("OpenAIChat")
-	private ChatService chatService;
-
 	@Override
 	public String initializeChat() {
 		String initSystemMessage = "This Chat will Read all IPL Matches Raw Data and "
@@ -129,18 +136,19 @@ public class IPLDataLoadService implements SectorService {
 		List<String> input = new ArrayList<String>();
 		matches.stream().forEach(match -> input.add(String.valueOf(match)));
 
-		chatService.initializeChat(initSystemMessage, input,
-				SectorTypeConstants.IPL);
+		chatServiceMap.get(chatServiceImpl).initializeChat(initSystemMessage,
+				input, SectorTypeConstants.IPL);
 		return "redirect:/ipl";
 	}
 	@Override
 	public Message getResponse(String input) {
-		return chatService.getResponse(input, getIdentity());
+		return chatServiceMap.get(chatServiceImpl).getResponse(input,
+				getIdentity());
 	}
 
 	@Override
 	public void resetChatSession() {
-		chatService.resetChatSession(getIdentity());
+		chatServiceMap.get(chatServiceImpl).resetChatSession(getIdentity());
 	}
 
 	@Override

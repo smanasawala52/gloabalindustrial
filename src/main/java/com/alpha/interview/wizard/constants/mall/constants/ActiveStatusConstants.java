@@ -1,4 +1,4 @@
-package com.alpha.interview.wizard.constants.mall;
+package com.alpha.interview.wizard.constants.mall.constants;
 
 public enum ActiveStatusConstants {
 	ACTIVE(1), INACTIVE(2);

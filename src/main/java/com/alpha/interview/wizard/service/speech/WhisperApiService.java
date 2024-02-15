@@ -51,5 +51,8 @@ public class WhisperApiService implements SpeechToTextService {
 				+ (System.currentTimeMillis() - stTime));
 		return encodedMessage;
 	}
-
+	@Override
+	public SpeechToTextServiceTypeConstants getIdentity() {
+		return SpeechToTextServiceTypeConstants.WHISPER;
+	}
 }

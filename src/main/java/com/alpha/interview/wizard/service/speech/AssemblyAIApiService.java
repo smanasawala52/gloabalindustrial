@@ -71,4 +71,9 @@ public class AssemblyAIApiService implements SpeechToTextService {
 		return encodedMessage;
 	}
 
+	@Override
+	public SpeechToTextServiceTypeConstants getIdentity() {
+		return SpeechToTextServiceTypeConstants.ASSEMBLYAI;
+	}
+
 }

@@ -145,4 +145,9 @@ public class OpenAIChatService implements ChatService {
 		}
 		return currentMessage;
 	}
+
+	@Override
+	public ChatServiceTypeConstants getIdentity() {
+		return ChatServiceTypeConstants.OpenAIChatService;
+	}
 }

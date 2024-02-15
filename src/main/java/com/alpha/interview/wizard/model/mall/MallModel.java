@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.alpha.interview.wizard.constants.mall.ActiveStatusConstants;
+import com.alpha.interview.wizard.constants.mall.constants.ActiveStatusConstants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 

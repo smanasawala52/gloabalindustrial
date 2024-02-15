@@ -7,14 +7,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alpha.interview.wizard.constants.mall.ImageTypeConstants;
+import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
+import com.alpha.interview.wizard.model.mall.constants.ImageServiceTypeConstants;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 
 @Service
 @Component("GCPImageService")
-public class GCPImageService implements ImageUpload {
+public class GCPImageService implements ImageService {
 
 	private final Storage storage;
 	@Value("${gcs.bucketName}")
@@ -42,5 +43,10 @@ public class GCPImageService implements ImageUpload {
 			throws IOException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ImageServiceTypeConstants getIdentity() {
+		return ImageServiceTypeConstants.GCP;
 	}
 }

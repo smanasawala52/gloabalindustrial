@@ -12,11 +12,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alpha.interview.wizard.constants.mall.ImageTypeConstants;
+import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
+import com.alpha.interview.wizard.model.mall.constants.ImageServiceTypeConstants;
 
 @Service
 @Component("UploadImageService")
-public class UploadImageService implements ImageUpload {
+public class UploadImageService implements ImageService {
 
 	@Value("${local.image.upload.dir}")
 	private String uploadDir;
@@ -25,6 +26,7 @@ public class UploadImageService implements ImageUpload {
 	public String uploadImageFile(MultipartFile file,
 			ImageTypeConstants imageType, String name) throws Exception {
 		// Generate a unique file name
+		System.out.println("Reached here UploadImageService: uploadImageFile ");
 		String fileName = cleanUp(name) + ".jpg";
 		fileName = fileName.toLowerCase();
 		try {
@@ -58,5 +60,9 @@ public class UploadImageService implements ImageUpload {
 			e.printStackTrace();
 		}
 		return Files.readAllBytes(Paths.get("/mall/noImage.jpg"));
+	}
+	@Override
+	public ImageServiceTypeConstants getIdentity() {
+		return ImageServiceTypeConstants.LOCAL;
 	}
 }

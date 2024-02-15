@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +18,22 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alpha.interview.wizard.service.SectorService;
 import com.alpha.interview.wizard.service.SectorServiceMapInitializer;
 import com.alpha.interview.wizard.service.speech.SpeechToTextService;
+import com.alpha.interview.wizard.service.speech.SpeechToTextServiceMapInitializer;
 @Controller
 public class MicrophoneCaptureControllerFullAudio {
 
-	@Autowired
-	@Qualifier("GoogleSpeechToTextApi")
-	private SpeechToTextService speechToTextService;
+	@Value("${speech.to.text.service.impl}")
+	private String speechToTextServiceImpl;
 
+	private final Map<String, SpeechToTextService> speechToTextServiceMap;
 	private final Map<String, SectorService> serviceMap;
 
 	@Autowired
 	public MicrophoneCaptureControllerFullAudio(
+			SpeechToTextServiceMapInitializer speechToTextServiceMapInitializer,
 			SectorServiceMapInitializer serviceMapInitializer) {
+		this.speechToTextServiceMap = speechToTextServiceMapInitializer
+				.getServiceMap();
 		this.serviceMap = serviceMapInitializer.getServiceMap();
 	}
 
@@ -40,7 +44,8 @@ public class MicrophoneCaptureControllerFullAudio {
 		byte[] audioBytes;
 		try {
 			audioBytes = audioData.getBytes();
-			String encodedMessage = speechToTextService.getText(audioBytes);
+			String encodedMessage = speechToTextServiceMap
+					.get(speechToTextServiceImpl).getText(audioBytes);
 			SectorService sectorService = serviceMap.get(type);
 			return ResponseEntity.ok()
 					.body(sectorService.getResponse(encodedMessage));

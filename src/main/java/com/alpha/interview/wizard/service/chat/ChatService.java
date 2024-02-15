@@ -10,4 +10,5 @@ public interface ChatService {
 			SectorTypeConstants sector);
 	public Message getResponse(String input, SectorTypeConstants sector);
 	public void resetChatSession(SectorTypeConstants sector);
+	public ChatServiceTypeConstants getIdentity();
 }

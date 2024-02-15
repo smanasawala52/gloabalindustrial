@@ -1,5 +1,6 @@
-package com.alpha.interview.wizard.service.speech;
+package com.alpha.interview.wizard.service.text;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.google.cloud.texttospeech.v1.AudioConfig;
@@ -11,7 +12,8 @@ import com.google.cloud.texttospeech.v1.VoiceSelectionParams;
 import com.google.protobuf.ByteString;
 
 @Service
-public class TextToSpeechService {
+@Component("GoogleTextToSpeechApi")
+public class GoogleTextToSpeechService implements TextToSpeechService {
 
 	public byte[] convertToSpeech(String text) {
 		try (TextToSpeechClient textToSpeechClient = TextToSpeechClient
@@ -36,5 +38,10 @@ public class TextToSpeechService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public TextToSpeechServiceTypeConstants getIdentity() {
+		return TextToSpeechServiceTypeConstants.GCP;
 	}
 }

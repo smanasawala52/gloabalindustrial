@@ -4,9 +4,10 @@ import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alpha.interview.wizard.constants.mall.ImageTypeConstants;
+import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
+import com.alpha.interview.wizard.model.mall.constants.ImageServiceTypeConstants;
 
-public interface ImageUpload {
+public interface ImageService {
 	public String uploadImageFile(MultipartFile file,
 			ImageTypeConstants imageType, String name) throws Exception;
 	public byte[] getImage(ImageTypeConstants imageType, String name)
@@ -33,4 +34,5 @@ public interface ImageUpload {
 		}
 		return null;
 	}
+	public ImageServiceTypeConstants getIdentity();
 }

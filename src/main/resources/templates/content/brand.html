@@ -87,6 +87,26 @@
         }
     	// Enable inline editing
     	$('#brandTableBody').on('click', '.edit-button', function() {
+	    	var $row = $(this).closest('tr'); // Get the parent row
+	
+		    // Toggle between displaying plain text and input fields
+		    $row.find('.editable').each(function() {
+		        var $td = $(this);
+		        var $input = $td.find('.editable-field');
+		
+		        // Check if the input field already exists
+		        if ($input.length) {
+		            // If input field exists, switch back to displaying plain text
+		            $td.text($input.val());
+		        } else {
+		            // If input field doesn't exist, create and append input field
+		            var value = $td.text().trim();
+		            var $inputField = $('<input type="text" class="editable-field">').val(value);
+		            $td.empty().append($inputField);
+		        }
+		    });
+    	});
+    	$('#brandTableBody').on('click', '.save-button', function() {
     		console.log('editable')
     	    var $this = $(this);
     	    var field = $this.data('field');

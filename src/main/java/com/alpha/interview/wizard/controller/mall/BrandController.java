@@ -1,12 +1,13 @@
 package com.alpha.interview.wizard.controller.mall;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,24 +28,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alpha.interview.wizard.constants.mall.ImageTypeConstants;
+import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.model.mall.Brand;
-import com.alpha.interview.wizard.model.mall.util.ImageUpload;
+import com.alpha.interview.wizard.model.mall.util.ImageService;
+import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
 import com.alpha.interview.wizard.repository.mall.BrandRepository;
 
 @Controller
 @RequestMapping("/brand")
 public class BrandController {
 
-	private final BrandRepository brandRepository;
+	@Autowired
+	private BrandRepository brandRepository;
 	private int PAGE_SIZE = 2;
-	@Autowired
-	@Qualifier("UploadImageService")
-	private ImageUpload uploadService;
+	@Value("${image.service.impl}")
+	private String imageServiceImpl;
 
+	private final Map<String, ImageService> imageServiceMap;
 	@Autowired
-	public BrandController(BrandRepository brandRepository) {
-		this.brandRepository = brandRepository;
+	public BrandController(ImageServiceMapInitializer serviceMapInitializer) {
+		this.imageServiceMap = serviceMapInitializer.getServiceMap();
 	}
 
 	@GetMapping("/")
@@ -69,15 +72,11 @@ public class BrandController {
 		}
 		try {
 			// Process image upload
-			// Save the file to your desired location or cloud storage
-			// For example, you can save it to a folder on your server or upload
-			// it to Google Drive
-			// Here, I'm assuming you have a method to handle file upload and
-			// return the file path
 			String imageUrl = null;
 			try {
-				imageUrl = uploadService.uploadImageFile(file,
-						ImageTypeConstants.BRAND, brand.getName());
+				imageUrl = imageServiceMap.get(imageServiceImpl)
+						.uploadImageFile(file, ImageTypeConstants.BRAND,
+								brand.getName());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -123,22 +122,14 @@ public class BrandController {
 		if (file != null && !file.isEmpty()) {
 			try {
 				try {
-					String imageUrl = uploadService.uploadImageFile(file,
-							ImageTypeConstants.BRAND, brand.getName());
+					String imageUrl = imageServiceMap.get(imageServiceImpl)
+							.uploadImageFile(file, ImageTypeConstants.BRAND,
+									brand.getName());
 					brand.setImgUrl(imageUrl);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				// String fileName = UUID.randomUUID().toString() + "_"
-				// + file.getOriginalFilename();
-				// Path filePath = Paths.get(uploadDir).resolve(fileName)
-				// .toAbsolutePath();
-				// Files.copy(file.getInputStream(), filePath,
-				// StandardCopyOption.REPLACE_EXISTING);
-				// String imageUrl = "/image/" + fileName;
-				// // Adjust the URL based on your image serving endpoint
-				// brand.setImgUrl(imageUrl);
 			} catch (Exception e) {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 						.body(null);

@@ -62,4 +62,8 @@ public class GoogleSpeechToTextApiService implements SpeechToTextService {
 		return encodedMessage;
 	}
 
+	@Override
+	public SpeechToTextServiceTypeConstants getIdentity() {
+		return SpeechToTextServiceTypeConstants.GCP;
+	}
 }
