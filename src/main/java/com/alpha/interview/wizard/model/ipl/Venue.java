@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.alpha.interview.wizard.controller.mall.util.MallUtil;
+
 public class Venue {
 	private long id;
 	private String name;
@@ -63,7 +65,7 @@ public class Venue {
 	 *            the name to set
 	 */
 	public void setName(String name) {
-		this.name = name;
+		this.name = MallUtil.formatName(name);
 	}
 
 	/**

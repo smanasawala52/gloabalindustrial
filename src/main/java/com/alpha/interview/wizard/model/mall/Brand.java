@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
@@ -44,7 +45,7 @@ public class Brand {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.name = MallUtil.formatName(name);
 	}
 	public String getDescription() {
 		return description;

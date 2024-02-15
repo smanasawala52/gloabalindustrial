@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.alpha.interview.wizard.constants.mall.constants.ActiveStatusConstants;
+import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
@@ -37,6 +38,7 @@ public class SubCategory {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<SubCategory> subCategories;
 	private boolean featured;
+	private String imgUrl;
 	private String additionalDetails;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
@@ -57,7 +59,7 @@ public class SubCategory {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.name = MallUtil.formatName(name);
 	}
 	public String getDescription() {
 		return description;
@@ -94,6 +96,12 @@ public class SubCategory {
 	}
 	public void setUpdateTimestamp(Date updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 }

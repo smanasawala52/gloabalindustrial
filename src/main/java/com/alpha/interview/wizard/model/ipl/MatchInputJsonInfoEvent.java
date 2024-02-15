@@ -1,5 +1,7 @@
 package com.alpha.interview.wizard.model.ipl;
 
+import com.alpha.interview.wizard.controller.mall.util.MallUtil;
+
 public class MatchInputJsonInfoEvent {
 	private String name;
 	private String matchNumber;
@@ -11,7 +13,7 @@ public class MatchInputJsonInfoEvent {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = MallUtil.formatName(name);
 	}
 
 	public String getMatchNumber() {
@@ -40,7 +42,7 @@ public class MatchInputJsonInfoEvent {
 
 	@Override
 	public String toString() {
-		return "MatchInputJsonInfoEvent [name=" + name + ", matchNumber=" + matchNumber + ", group=" + group
-				+ ", stage=" + stage + "]";
+		return "MatchInputJsonInfoEvent [name=" + name + ", matchNumber="
+				+ matchNumber + ", group=" + group + ", stage=" + stage + "]";
 	}
 }

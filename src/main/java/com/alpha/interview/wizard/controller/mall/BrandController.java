@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
+import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.alpha.interview.wizard.model.mall.Brand;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
@@ -65,7 +66,8 @@ public class BrandController {
 			return new ResponseEntity<>(bindingResult.getAllErrors(),
 					HttpStatus.BAD_REQUEST);
 		}
-		Brand existingBrand = brandRepository.findByName(brand.getName());
+		Brand existingBrand = brandRepository
+				.findByName(MallUtil.formatName(brand.getName()));
 		if (existingBrand != null) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(
 					"Brand with name '" + brand.getName() + "' already exists");
