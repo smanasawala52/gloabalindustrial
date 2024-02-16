@@ -37,6 +37,7 @@ public class Category {
 	private String description;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<SubCategory> subCategories;
+	private String imgUrl;
 	private boolean featured;
 	private String additionalDetails;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
@@ -95,6 +96,12 @@ public class Category {
 	}
 	public void setUpdateTimestamp(Date updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 }
