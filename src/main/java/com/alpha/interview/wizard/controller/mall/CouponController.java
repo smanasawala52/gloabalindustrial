@@ -41,7 +41,7 @@ public class CouponController {
 
 	@Autowired
 	private CouponRepository couponRepository;
-	private int PAGE_SIZE = 2;
+	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
 

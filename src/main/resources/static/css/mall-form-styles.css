@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.brand-form {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.brand-table {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.brand-table th {
+    background-color: #f8f9fa;
+}
+
+.brand-table img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Custom CSS to position modal within the table */
+#imageModal .modal-content {
+    max-width: 90%;
+}
+
+#imageModal .modal-dialog {
+    margin: auto;
+}
+
+@media (min-width: 768px) {
+    #imageModal .modal-content {
+        max-width: 50%;
+    }
+}

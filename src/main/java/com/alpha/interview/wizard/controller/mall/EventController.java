@@ -41,7 +41,7 @@ public class EventController {
 
 	@Autowired
 	private EventRepository eventRepository;
-	private int PAGE_SIZE = 2;
+	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
 

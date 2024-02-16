@@ -40,7 +40,7 @@ public class ParkingController {
 
 	@Autowired
 	private ParkingRepository parkingRepository;
-	private int PAGE_SIZE = 2;
+	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
 
