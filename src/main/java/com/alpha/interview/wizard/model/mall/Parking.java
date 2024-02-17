@@ -32,6 +32,7 @@ public class Parking {
 
 	private String floor;
 	private String block;
+	private String displayName;
 	private String imgUrl;
 	private String additionalDetails;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
@@ -84,5 +85,11 @@ public class Parking {
 	}
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }

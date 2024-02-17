@@ -32,6 +32,7 @@ public class Product {
 
 	private String name;
 	private String description;
+	private String displayName;
 	private String imgUrl;
 	private boolean featured;
 	private String additionalDetails;
@@ -91,5 +92,11 @@ public class Product {
 	}
 	public void setUpdateTimestamp(Date updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }

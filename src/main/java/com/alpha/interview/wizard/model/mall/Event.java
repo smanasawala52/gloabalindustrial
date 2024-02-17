@@ -32,6 +32,7 @@ public class Event {
 
 	private String name;
 	private String description;
+	private String displayName;
 	private String imgUrl;
 	private String additionalDetails;
 	private Date startDate;
@@ -98,5 +99,11 @@ public class Event {
 	}
 	public void setUpdateTimestamp(Date updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }

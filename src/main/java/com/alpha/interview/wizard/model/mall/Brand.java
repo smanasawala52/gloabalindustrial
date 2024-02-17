@@ -31,6 +31,7 @@ public class Brand {
 
 	private String name;
 	private String description;
+	private String displayName;
 	private String imgUrl;
 	private String additionalDetails;
 	private Date updateTimestamp;
@@ -76,5 +77,11 @@ public class Brand {
 	}
 	public void setCreateTimestamp(Date createTimestamp) {
 		this.createTimestamp = createTimestamp;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }

@@ -36,6 +36,7 @@ public class MallModel {
 	private String city;
 	private String name;
 	private String description;
+	private String displayName;
 
 	private String location;
 	private int floors;
@@ -145,5 +146,11 @@ public class MallModel {
 	}
 	public void setOtherAttractions(List<OtherAttraction> otherAttractions) {
 		this.otherAttractions = otherAttractions;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }

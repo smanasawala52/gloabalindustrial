@@ -35,6 +35,7 @@ public class Category {
 	private Long id;
 	private String name;
 	private String description;
+	private String displayName;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<SubCategory> subCategories;
 	private String imgUrl;
@@ -102,6 +103,12 @@ public class Category {
 	}
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
 }

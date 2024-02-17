@@ -64,7 +64,8 @@ public class BrandController {
 			@ModelAttribute("brand") @Valid Brand brand,
 			@RequestParam("imageFile") MultipartFile file,
 			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || brand.getName() == null
+				|| (brand.getName() != null && brand.getName().isEmpty())) {
 			return new ResponseEntity<>(bindingResult.getAllErrors(),
 					HttpStatus.BAD_REQUEST);
 		}
@@ -73,6 +74,10 @@ public class BrandController {
 		if (existingBrand != null) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(
 					"Brand with name '" + brand.getName() + "' already exists");
+		}
+		if (brand.getDisplayName() == null || (brand.getDisplayName() != null
+				&& brand.getDisplayName().isEmpty())) {
+			brand.setDisplayName(brand.getName());
 		}
 		try {
 			// Process image upload
@@ -118,11 +123,38 @@ public class BrandController {
 		return ResponseEntity.ok(brands);
 	}
 
+	@PostMapping("/save/{id}")
+	public ResponseEntity<?> saveBrandImage(@PathVariable Long id,
+			@RequestParam("imageFile") MultipartFile file) {
+		Brand existingBrand = brandRepository.getById(id);
+		if (existingBrand != null) {
+			try {
+				// Process image upload
+				String imageUrl = null;
+				try {
+					imageUrl = imageServiceMap.get(imageServiceImpl)
+							.uploadImageFile(file, ImageTypeConstants.BRAND,
+									existingBrand.getName());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				existingBrand.setImgUrl(imageUrl);
+			} catch (Exception e) {
+				// Handle file upload error
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body("Error occurred while uploading image");
+			}
+
+			existingBrand.setUpdateTimestamp(new Date());
+			brandRepository.save(existingBrand);
+		}
+		return ResponseEntity.ok().build();
+	}
+
 	@PatchMapping("/update/{id}")
 	public ResponseEntity<Brand> updateBrand(@PathVariable Long id,
-			@RequestParam(value = "imageFile", required = false) MultipartFile file,
 			@RequestBody Map<String, Object> updates) {
-
 		Optional<Brand> brandOptional = brandRepository.findById(id);
 		if (!brandOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
@@ -139,21 +171,6 @@ public class BrandController {
 				e.printStackTrace(); // Handle exception properly
 			}
 		});
-
-		// Upload new image if provided
-		if (file != null && !file.isEmpty()) {
-			try {
-				String imageUrl = imageServiceMap.get(imageServiceImpl)
-						.uploadImageFile(file, ImageTypeConstants.BRAND,
-								brand.getName());
-				brand.setImgUrl(imageUrl);
-			} catch (Exception e) {
-				e.printStackTrace(); // Handle exception properly
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-						.body(null);
-			}
-		}
-
 		brand.setUpdateTimestamp(new Date());
 		// Save updated brand
 		brandRepository.save(brand);
