@@ -1,5 +1,6 @@
 package com.alpha.interview.wizard.controller.mall;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -20,13 +21,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
@@ -54,7 +56,7 @@ public class OtherAttractionController {
 
 	@GetMapping("/")
 	public String login(Model model) {
-		model.addAttribute("contentTemplate", "other-attraction");
+		model.addAttribute("contentTemplate", "otherAttraction");
 		return "common";
 	}
 
@@ -63,7 +65,9 @@ public class OtherAttractionController {
 			@ModelAttribute("otherAttraction") @Valid OtherAttraction otherAttraction,
 			@RequestParam("imageFile") MultipartFile file,
 			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || otherAttraction.getName() == null
+				|| (otherAttraction.getName() != null
+						&& otherAttraction.getName().isEmpty())) {
 			return new ResponseEntity<>(bindingResult.getAllErrors(),
 					HttpStatus.BAD_REQUEST);
 		}
@@ -74,12 +78,18 @@ public class OtherAttractionController {
 					.body("OtherAttraction with name '"
 							+ otherAttraction.getName() + "' already exists");
 		}
+		if (otherAttraction.getDisplayName() == null
+				|| (otherAttraction.getDisplayName() != null
+						&& otherAttraction.getDisplayName().isEmpty())) {
+			otherAttraction.setDisplayName(otherAttraction.getName());
+		}
 		try {
 			// Process image upload
 			String imageUrl = null;
 			try {
 				imageUrl = imageServiceMap.get(imageServiceImpl)
-						.uploadImageFile(file, ImageTypeConstants.BRAND,
+						.uploadImageFile(file,
+								ImageTypeConstants.OTHER_ATTRACTION,
 								otherAttraction.getName());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -100,49 +110,81 @@ public class OtherAttractionController {
 
 	@GetMapping("/all")
 	public ResponseEntity<Page<OtherAttraction>> getAllOtherAttractions(
+			@RequestParam(defaultValue = "", name = "name", required = false) String name,
 			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
 		if (cp <= 0) {
 			cp = 0;
 		}
 		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
 				Sort.by("name").ascending());
-		Page<OtherAttraction> otherAttractions = otherAttractionRepository
-				.findAll(pageable);
+		Page<OtherAttraction> otherAttractions = null;
+		if (name != null && !name.isEmpty()) {
+			String escapedName = HtmlUtils.htmlEscape(name);
+			otherAttractions = otherAttractionRepository
+					.findAllByNameContaining(escapedName.toLowerCase(),
+							pageable);
+		} else {
+			otherAttractions = otherAttractionRepository.findAll(pageable);
+		}
 		return ResponseEntity.ok(otherAttractions);
 	}
 
-	@PutMapping("/update/{id}")
+	@PostMapping("/save/{id}")
+	public ResponseEntity<?> saveOtherAttractionImage(@PathVariable Long id,
+			@RequestParam("imageFile") MultipartFile file) {
+		OtherAttraction existingOtherAttraction = otherAttractionRepository
+				.getById(id);
+		if (existingOtherAttraction != null) {
+			try {
+				// Process image upload
+				String imageUrl = null;
+				try {
+					imageUrl = imageServiceMap.get(imageServiceImpl)
+							.uploadImageFile(file,
+									ImageTypeConstants.OTHER_ATTRACTION,
+									existingOtherAttraction.getName());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				existingOtherAttraction.setImgUrl(imageUrl);
+			} catch (Exception e) {
+				// Handle file upload error
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body("Error occurred while uploading image");
+			}
+
+			existingOtherAttraction.setUpdateTimestamp(new Date());
+			otherAttractionRepository.save(existingOtherAttraction);
+		}
+		return ResponseEntity.ok().build();
+	}
+
+	@PatchMapping("/update/{id}")
 	public ResponseEntity<OtherAttraction> updateOtherAttraction(
-			@PathVariable Long id,
-			@RequestParam(value = "imageFile", required = false) MultipartFile file,
-			@RequestBody OtherAttraction updatedOtherAttraction) {
+			@PathVariable Long id, @RequestBody Map<String, Object> updates) {
 		Optional<OtherAttraction> otherAttractionOptional = otherAttractionRepository
 				.findById(id);
 		if (!otherAttractionOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		OtherAttraction otherAttraction = otherAttractionOptional.get();
-		// Update fields
-		otherAttraction.setName(updatedOtherAttraction.getName());
-		otherAttraction.setDescription(updatedOtherAttraction.getDescription());
-		// Upload new image if provided
-		if (file != null && !file.isEmpty()) {
-			try {
-				try {
-					String imageUrl = imageServiceMap.get(imageServiceImpl)
-							.uploadImageFile(file, ImageTypeConstants.BRAND,
-									otherAttraction.getName());
-					otherAttraction.setImgUrl(imageUrl);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-						.body(null);
-			}
-		}
 
+		// Update fields using reflection
+		updates.forEach((key, value) -> {
+			try {
+				Field field = otherAttraction.getClass().getDeclaredField(key);
+				field.setAccessible(true);
+				field.set(otherAttraction, value);
+			} catch (NoSuchFieldException | IllegalAccessException e) {
+				e.printStackTrace(); // Handle exception properly
+			}
+		});
+		if (otherAttraction.getDisplayName() == null
+				|| (otherAttraction.getDisplayName() != null
+						&& otherAttraction.getDisplayName().isEmpty())) {
+			otherAttraction.setDisplayName(otherAttraction.getName());
+		}
 		otherAttraction.setUpdateTimestamp(new Date());
 		// Save updated otherAttraction
 		otherAttractionRepository.save(otherAttraction);

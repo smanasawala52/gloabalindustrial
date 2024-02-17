@@ -1,10 +1,20 @@
-<div th:fragment="content">
+<div th:fragment="header">
     <header>
         <h1>Mall Entry Forms</h1>
-        <nav>
+        <nav id="mall-nav">
             <ul>
-                <li><a th:href="@{/home}">Home</a></li>
-                <li><a th:href="@{/user/all}">All Users</a></li>
+                <li><a th:href="@{/mallmodel/}">Home</a></li>
+                <li><a th:href="@{/attraction/}">Attractions</a></li>
+                <li><a th:href="@{/webImage/}">Images</a></li>
+                <li><a th:href="@{/shop/}">Shops</a></li>
+                <li><a th:href="@{/otherattraction/}">Other Attractions</a></li>
+                <li><a th:href="@{/event/}">Events</a></li>
+                <li><a th:href="@{/parking/}">Parking</a></li>
+                <li><a th:href="@{/product/}">Products</a></li>
+                <li><a th:href="@{/coupon/}">Coupons</a></li>
+                <li><a th:href="@{/brand/}">Brands</a></li>
+                <li><a th:href="@{/category/}">Categories</a></li>
+                <li><a th:href="@{/subcategory/}">Sub Categories</a></li>
                 <!-- Add more navigation links as needed -->
             </ul>
         </nav>

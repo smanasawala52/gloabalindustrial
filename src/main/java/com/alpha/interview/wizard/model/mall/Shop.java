@@ -3,13 +3,13 @@ package com.alpha.interview.wizard.model.mall;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.alpha.interview.wizard.constants.mall.constants.ActiveStatusConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
@@ -36,11 +36,11 @@ public class Shop {
 	private Long id;
 
 	private String founded;
-	@ManyToMany
-	@JoinTable(name = "shop_category", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Category> categories;
-	@ManyToMany
-	@JoinTable(name = "shop_brand", joinColumns = @JoinColumn(name = "shop_id"), inverseJoinColumns = @JoinColumn(name = "brand_id"))
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Brand> brands;
 	private String floor;
 	private String shopNumber;
@@ -56,6 +56,15 @@ public class Shop {
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
+	@Transient
+	private boolean linked = false;
+
+	public boolean isLinked() {
+		return linked;
+	}
+	public void setLinked(boolean linked) {
+		this.linked = linked;
+	}
 	public Date getCreateTimestamp() {
 		return createTimestamp;
 	}

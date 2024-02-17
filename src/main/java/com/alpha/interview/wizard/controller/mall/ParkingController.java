@@ -1,5 +1,6 @@
 package com.alpha.interview.wizard.controller.mall;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -20,9 +21,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,7 +62,9 @@ public class ParkingController {
 			@ModelAttribute("parking") @Valid Parking parking,
 			@RequestParam("imageFile") MultipartFile file,
 			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || getDisplayName(parking) == null
+				|| (getDisplayName(parking) != null
+						&& getDisplayName(parking).isEmpty())) {
 			return new ResponseEntity<>(bindingResult.getAllErrors(),
 					HttpStatus.BAD_REQUEST);
 		}
@@ -69,16 +72,21 @@ public class ParkingController {
 				.findByFloorAndBlock(parking.getFloor(), parking.getBlock());
 		if (existingParking != null) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
-					.body("Parking with floor and block '" + parking.getFloor()
-							+ "_" + parking.getBlock() + "' already exists");
+					.body("Parking with name '" + getDisplayName(parking)
+							+ "' already exists");
+		}
+		if (parking.getDisplayName() == null
+				|| (parking.getDisplayName() != null
+						&& parking.getDisplayName().isEmpty())) {
+			parking.setDisplayName(getDisplayName(parking));
 		}
 		try {
 			// Process image upload
 			String imageUrl = null;
 			try {
 				imageUrl = imageServiceMap.get(imageServiceImpl)
-						.uploadImageFile(file, ImageTypeConstants.BRAND,
-								parking.getFloor() + "_" + parking.getBlock());
+						.uploadImageFile(file, ImageTypeConstants.PARKING,
+								getDisplayName(parking));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -98,49 +106,83 @@ public class ParkingController {
 
 	@GetMapping("/all")
 	public ResponseEntity<Page<Parking>> getAllParkings(
+			@RequestParam(defaultValue = "", name = "name", required = false) String name,
 			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
 		if (cp <= 0) {
 			cp = 0;
 		}
 		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
-				Sort.by("name").ascending());
+				Sort.by("floor").ascending());
 		Page<Parking> parkings = parkingRepository.findAll(pageable);
 		return ResponseEntity.ok(parkings);
 	}
 
-	@PutMapping("/update/{id}")
+	@PostMapping("/save/{id}")
+	public ResponseEntity<?> saveParkingImage(@PathVariable Long id,
+			@RequestParam("imageFile") MultipartFile file) {
+		Parking existingParking = parkingRepository.getById(id);
+		if (existingParking != null) {
+			try {
+				// Process image upload
+				String imageUrl = null;
+				try {
+					imageUrl = imageServiceMap.get(imageServiceImpl)
+							.uploadImageFile(file, ImageTypeConstants.PARKING,
+									getDisplayName(existingParking));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				existingParking.setImgUrl(imageUrl);
+			} catch (Exception e) {
+				// Handle file upload error
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body("Error occurred while uploading image");
+			}
+
+			existingParking.setUpdateTimestamp(new Date());
+			parkingRepository.save(existingParking);
+		}
+		return ResponseEntity.ok().build();
+	}
+
+	@PatchMapping("/update/{id}")
 	public ResponseEntity<Parking> updateParking(@PathVariable Long id,
-			@RequestParam(value = "imageFile", required = false) MultipartFile file,
-			@RequestBody Parking updatedParking) {
+			@RequestBody Map<String, Object> updates) {
 		Optional<Parking> parkingOptional = parkingRepository.findById(id);
 		if (!parkingOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		Parking parking = parkingOptional.get();
-		// Update fields
-		// Upload new image if provided
-		if (file != null && !file.isEmpty()) {
-			try {
-				try {
-					String imageUrl = imageServiceMap.get(imageServiceImpl)
-							.uploadImageFile(file, ImageTypeConstants.BRAND,
-									parking.getFloor() + "_"
-											+ parking.getBlock());
-					parking.setImgUrl(imageUrl);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-						.body(null);
-			}
-		}
 
+		// Update fields using reflection
+		updates.forEach((key, value) -> {
+			try {
+				Field field = parking.getClass().getDeclaredField(key);
+				field.setAccessible(true);
+				field.set(parking, value);
+			} catch (NoSuchFieldException | IllegalAccessException e) {
+				e.printStackTrace(); // Handle exception properly
+			}
+		});
+		if (parking.getDisplayName() == null
+				|| (parking.getDisplayName() != null
+						&& parking.getDisplayName().isEmpty())) {
+			parking.setDisplayName(getDisplayName(parking));
+		}
 		parking.setUpdateTimestamp(new Date());
 		// Save updated parking
 		parkingRepository.save(parking);
 		return ResponseEntity.ok(parking);
+	}
+
+	private String getDisplayName(Parking parking) {
+		StringBuilder sb = new StringBuilder(100);
+		sb.append(parking.getFloor());
+		if (parking.getBlock() != null && !parking.getBlock().isEmpty()) {
+			sb.append(parking.getBlock());
+		}
+		return sb.toString();
 	}
 
 	@DeleteMapping("/delete/{id}")

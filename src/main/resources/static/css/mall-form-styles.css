@@ -1,3 +1,24 @@
+#mall-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#mall-nav ul li {
+    display: inline;
+}
+
+#mall-nav ul li a {
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+#mall-nav ul li a:hover {
+    background-color: lightgray;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;

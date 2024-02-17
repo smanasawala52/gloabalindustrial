@@ -1,0 +1,404 @@
+<div th:fragment="content">
+	<div class="container">
+		<h2>Mall Management</h2>
+		<button id="createNewBtn" class="btn btn-primary">Create New</button>
+		<br>
+		<div class="row mb-2">
+			<div class="col-md-4">
+				<form id="newmallModelForm" style="display: none;">
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input type="text" class="form-control" id="name" name="name" placeholder="Enter mall name">
+					</div>
+					<div class="form-group">
+						<label for="name">Country</label>
+						<input type="text" class="form-control" id="country" name="country" placeholder="Enter mall Country">
+					</div>
+					<div class="form-group">
+						<label for="name">City</label>
+						<input type="text" class="form-control" id="city" name="city" placeholder="Enter mall city">
+					</div>
+					<div class="form-group">
+						<label for="displayName">Display Name</label>
+						<input type="text" class="form-control" id="displayName" name="displayName"
+							placeholder="Enter mall display name if there are any special chars other wise same as name">
+					</div>
+					<div class="form-group">
+						<label for="description">Description</label>
+						<input type="text" class="form-control" id="description" name="description"
+							placeholder="Enter mall description">
+					</div>
+					<div class="form-group">
+						<label for="description">Location</label>
+						<input type="text" class="form-control" id="location" name="location"
+							placeholder="Enter mall location">
+					</div>
+					<div class="form-group">
+						<label for="description">Floors</label>
+						<input type="text" class="form-control" id="floors" name="floors"
+							placeholder="Enter mall floors">
+					</div>
+					<div class="form-group">
+						<label for="imageFile">Image</label>
+						<input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/jpeg, image/png, image/jpg">
+					</div>
+					<div class="form-group">
+						<label for="additionalDetails">Additional Details</label>
+						<textarea class="form-control" id="additionalDetails" name="additionalDetails" rows="3"
+							placeholder="Enter additional details"></textarea>
+					</div>
+					<button type="submit" class="btn btn-success">Save</button>
+				</form>
+			</div>
+		</div>
+		<hr>
+		<div class="search-container">
+		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search mallModels...">
+		    <button id="resetButton" class="reset-button">&times;</button>
+		</div>
+		<hr>
+		<div class="mallModel-table table-responsive">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Country</th>
+						<th>City</th>
+						<th>Display Name</th>
+						<th>Description</th>
+						<th>Image</th>
+						<th>Additional Details</th>
+                        <th>Floors</th>
+                        <th>Location</th>
+                        <th>Go To</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="mallModelTableBody">
+					<!-- Data will be dynamically populated here -->
+				</tbody>
+			</table>
+		</div>
+		<!-- Page navigation -->
+		<nav aria-label="Page navigation">
+			<ul class="pagination" id="paginationNav">
+				<!-- Pagination buttons will be dynamically added here -->
+			</ul>
+		</nav>
+	</div>
+
+	<!-- Bootstrap modal for displaying image -->
+	<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="imageModalLabel">mallModel Image</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<img src="" alt="mallModel Image" class="img-fluid" id="modalImage">
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function () {
+			// Event handler for the "View" button to open image popup
+			$(document).on('click', '.view-image-btn', function () {
+				var imgUrl = $(this).data('imgurl');
+				$('#modalImage').attr('src', imgUrl);
+				$('#imageModal').modal('show');
+			});
+
+			$('#searchInput').on('input', function() {
+		        var searchValue = $(this).val().trim();
+		        if (searchValue.length > 0) {
+		            $('#resetButton').css('display', 'block');
+		        } else {
+		            $('#resetButton').css('display', 'none');
+		        }
+		        loadData(0);
+		    });
+
+		    $('#resetButton').on('click', function() {
+		        $('#searchInput').val('');
+		        $('#resetButton').css('display', 'none');
+		        loadData(0);
+		    });
+
+			var currentPage = 0;
+			var navTotalPages = 0;
+
+			// Function to load mallModel data
+			function loadData(page) {
+				var searchValue = $('#searchInput').val().trim();
+				$.ajax({
+					url: "/mallModel/all?cp=" + page+"&name="+searchValue,
+					type: "GET",
+					success: function (data) {
+						// Populate grid with data
+						populateTable(data.content);
+						// Update current page
+						currentPage = page;
+						// Add pagination buttons
+						addPaginationButtons(data.totalPages);
+					},
+					error: function (xhr, status, error) {
+						alert('Failed to load mallModel data: ' + error);
+					}
+				});
+			}
+
+			// Function to populate the table with mallModel data
+			function populateTable(data) {
+				var tableBody = $('#mallModelTableBody');
+				tableBody.empty(); // Clear existing data
+
+				$.each(data, function (index, mallModel) {
+					var row = 	'<tr>' +
+									'<td>' + mallModel.id + '</td>' +
+									'<td class="editable" data-type="text" data-field="name" data-id="' + mallModel.id + '" data-value="'+mallModel.name+'">' + mallModel.name + '</td>' +
+									'<td class="editable" data-type="text" data-field="country" data-id="' + mallModel.id + '" data-value="'+mallModel.country+'">' + mallModel.country + '</td>' +
+									'<td class="editable" data-type="text" data-field="city" data-id="' + mallModel.id + '" data-value="'+mallModel.city+'">' + mallModel.city + '</td>' +
+									'<td class="editable" data-type="text" data-field="displayName" data-id="' + mallModel.id + '" data-value="'+mallModel.displayName+'">' + mallModel.displayName + '</td>' +
+									'<td class="editable" data-type="text" data-field="description" data-id="' + mallModel.id + '" data-value="'+mallModel.description+'">' + mallModel.description + '</td>' +
+									'<td data-id="' + mallModel.id + '" data-value="'+mallModel.imgUrl+'">' +
+										'<img src="' + mallModel.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + mallModel.imgUrl + '">'+
+										'<br><button class="btn btn-primary edit-image-btn" data-id="' + mallModel.id + '" data-imgurl="' + mallModel.imgUrl + '">Edit Image</button>' +
+										'<br><div id="image_update_div_' + mallModel.id + '" style="display:none">'+
+											'<form id="image_update_form_' + mallModel.id + '" class="image_update_form" action="/mallModel/update/' + mallModel.id + '" data-id="'+mallModel.id+'" method="patch" enctype="multipart/form-data">'+
+											'<input type="hidden" name="id_' + mallModel.id + '" value="' + mallModel.id + '" />'+
+											'<input type="file" class="form-control-file" id="imageFile_' + mallModel.id + '" name="imageFile" accept="image/*" />'+
+											'</form>'+
+											'<br><button type="submit" class="btn btn-success submit-edit-image-btn" data-id="' + mallModel.id + '">Save</button>'+
+										'</div>'+
+									'</td>' +
+									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + mallModel.id + '" data-value="'+mallModel.additionalDetails+'">' + mallModel.additionalDetails + '</td>' +
+                                    '<td class="editable" data-type="text" data-field="floors" data-id="' + mallModel.id + '" data-value="'+mallModel.floors+'">' + mallModel.floors + '</td>' +
+                                    '<td class="editable" data-type="text" data-field="location" data-id="' + mallModel.id + '" data-value="'+mallModel.location+'">' + mallModel.location + '</td>' +
+                                    '<td><a href="/mallModel/shop/' + mallModel.id + '" class="btn btn-success">Shops</a>&nbsp;<a href="/mallModel/attraction/' + mallModel.id + '" class="btn btn-success">Attractions</a>&nbsp;'+
+                                    '<a href="/mallModel/parking/' + mallModel.id + '" class="btn btn-success">Parking</a>&nbsp;<a href="/mallModel/event/' + mallModel.id + '" class="btn btn-success">Events</a>&nbsp;'+
+                                    '<a href="/mallModel/otherAttraction/' + mallModel.id + '" class="btn btn-success">Other Attractions</a>&nbsp;'+
+                                    '</td>'+
+                                    '<td>' +
+									'<button class="btn btn-info edit-button" data-id="' + mallModel.id + '">Edit</button>&nbsp;' +
+									'<button class="btn btn-danger delete-button" data-id="' + mallModel.id + '">Delete</button>' +
+									'</td>' +
+								'</tr>';
+					tableBody.append(row);
+				});
+			}
+			function appendNamesCommaSeparated(objects) {
+		        var names = "";
+		        $.each(objects, function(index, object) {
+		            if (index > 0) {
+		                names += ", "; // Add comma if it's not the first name
+		            }
+		            names += object.name; // Append name
+		        });
+		        return names;
+		    }
+			$('#mallModelTableBody').on('click', '.edit-image-btn', function (event) {
+				var mallModelId = $(this).data('id');
+				$('#mallModelTableBody #image_update_div_'+mallModelId).css('display', 'block');
+				
+			});
+
+			$('#mallModelTableBody').on('click', '.submit-edit-image-btn', function (event) {
+				event.preventDefault(); // Prevent the form from submitting normally
+				var mallModelId = $(this).data('id');
+// 				$('#mallModelTableBody #image_update_form_'+mallModelId).submit();
+				var formData = new FormData($('#image_update_form_' + mallModelId)[0]);
+
+				$.ajax({
+					url: '/mallModel/save/'+mallModelId,
+					type: 'POST',
+					data: formData,
+					async: false,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function (response) {
+						// Handle success response
+						console.log(response);
+						// If needed, refresh the table to display the new data
+						loadData(currentPage);
+					},
+					error: function (xhr, status, error) {
+						// Handle error response
+						console.error(xhr.responseText);
+					}
+				});
+				$('#mallModelTableBody #image_update_div_'+mallModelId).css('display', 'none');
+			});
+			
+			// Enable inline editing
+			$('#mallModelTableBody').on('click', '.edit-button', function (event) {
+				event.preventDefault();
+				var $row = $(this).closest('tr'); // Get the parent row
+
+				// Toggle between displaying plain text and input fields
+				$row.find('.editable').not('[data-field="name"]','[data-type="featured"]','[data-type="activeStatusKey"]').each(function () {
+					var $td = $(this);
+					var $input = $td.find('.editable-field');
+					var $fieldValue = $td.data('value');
+					var $field = $td.data('field');
+
+					// Check if the input field already exists
+					if ($input.length) {
+						// If input field exists, switch back to displaying plain text
+						$td.text($input.val());
+					} else {
+						// If input field doesn't exist, create and append input field
+						var value = $td.text().trim();
+						var $inputField;
+						if ($td.data('type') === 'file') { // Check if it's a file input
+							$inputField = $('<input type="file" class="editable-field" name="'+$field+'" data-field="'+$field+'" form-control-file" id="imageFile" name="imageFile" accept="image/*">');
+						} else if ($td.data('type') === 'textarea') { // Check if it's a textarea input
+							$inputField = $('<textarea class="editable-field" name="'+$field+'" data-field="'+$field+'"></textarea>').val($fieldValue);
+						} else {
+							$inputField = $('<input type="text" class="editable-field" name="'+$field+'" data-field="'+$field+'">').val($fieldValue);
+						}
+						$td.empty().append($inputField);
+					}
+				});
+
+				// Change button text to "Save"
+				$(this).text('Save').removeClass('edit-button').addClass('save-button');
+			});
+
+
+			// Save edited data
+			$('#mallModelTableBody').on('click', '.save-button', function () {
+				var $row = $(this).closest('tr');
+			    var id = $row.find('.editable').data('id');
+			    var newData = {};
+
+				// Collect new data from input fields
+				$row.find('.editable-field').each(function () {
+					var field = $(this).data('field');
+					newData[field] = $(this).val();
+				});
+
+				// Get the name field value separately and add it to newData
+				var name = $row.find('.editable[data-field="name"]').text().trim();
+				newData['name'] = name;
+
+				// Perform AJAX request to update the mallModel
+				$.ajax({
+					url: '/mallModel/update/' + id, // Change this to your update endpoint
+					type: 'PATCH',
+					contentType: 'application/json', // Specify content type as JSON
+					data: JSON.stringify(newData),   // Convert JavaScript object to JSON string
+					//data: newData,
+					success: function (response) {
+						// Update the table with the new data if update is successful
+						console.log(response);
+						console.log(newData)
+						loadData(currentPage);
+					},
+					error: function (xhr, status, error) {
+						alert('Failed to update mallModel: ' + error);
+					}
+				});
+
+				// Change button text back to "Edit"
+				$(this).text('Edit').removeClass('save-button').addClass('edit-button');
+			});
+
+			// Handle deletion
+			$('#mallModelTableBody').on('click', '.delete-button', function () {
+				var id = $(this).data('id');
+				var confirmDelete = confirm('Are you sure you want to delete this mallModel?');
+
+				if (confirmDelete) {
+					// Perform AJAX request to delete the mallModel
+					$.ajax({
+						url: '/mallModel/delete/' + id, // Change this to your delete endpoint
+						type: 'DELETE',
+						success: function (response) {
+							// Remove the row from the table if deletion is successful
+							loadData(currentPage);
+						},
+						error: function (xhr, status, error) {
+							alert('Failed to delete mallModel: ' + error);
+						}
+					});
+				}
+			});
+
+			// Handle new mallModel form submission
+			$('#newmallModelForm').submit(function (event) {
+				event.preventDefault(); // Prevent the form from submitting normally
+				var formData = new FormData($(this)[0]);
+
+				$.ajax({
+					url: '/mallModel/save',
+					type: 'POST',
+					data: formData,
+					async: false,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function (response) {
+						// Handle success response
+						console.log(response);
+						// Empty form on success
+						$('#newmallModelForm')[0].reset();
+						// If needed, refresh the table to display the new data
+						loadData(currentPage);
+					},
+					error: function (xhr, status, error) {
+						// Handle error response
+						console.error(xhr.responseText);
+					}
+				});
+			});
+
+			// Show/hide create new mallModel form
+			$('#createNewBtn').click(function () {
+				$('#newmallModelForm').toggle();
+			});
+
+			// Initial data load
+			//
+			// Function to add pagination buttons
+			function addPaginationButtons(totalPages) {
+				navTotalPages = totalPages;
+				var paginationNav = $('#paginationNav');
+				paginationNav.empty();
+
+				// Previous button
+				var prevButton = '<li class="page-item" data-id="' + (currentPage - 1) + '"><a class="page-link" data-id="' + (currentPage - 1) + '" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+				paginationNav.append(prevButton);
+
+				// Numbered buttons
+				for (var i = 0; i < totalPages; i++) {
+					var pageButton = '<li class="page-item ' + (i === currentPage ? 'active' : '') + '" data-id="' + (i) + '"><a class="page-link" data-id="' + i + '">' + (i + 1) + '</a></li>';
+					paginationNav.append(pageButton);
+				}
+
+				// Next button
+				var nextButton = '<li class="page-item" data-id="' + (currentPage + 1) + '"><a class="page-link" data-id="' + (currentPage + 1) + '" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+				paginationNav.append(nextButton);
+			}
+			$('#paginationNav').on('click', '.page-item', function () {
+				var pageClicked = $(this).data('id');
+				console.log('page clicked: ' + pageClicked);
+				if (pageClicked <= 0) {
+					pageClicked = 0;
+					console.log('page clicked after adjust: ' + pageClicked);
+				} else if (pageClicked >= navTotalPages - 1) {
+					pageClicked = navTotalPages - 1;
+					console.log('page clicked after adjust: ' + pageClicked);
+				}
+				loadData(pageClicked);
+			});
+			loadData(currentPage);
+		});
+	</script>
+</div>

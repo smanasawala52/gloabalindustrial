@@ -32,81 +32,83 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
-import com.alpha.interview.wizard.model.mall.Product;
+import com.alpha.interview.wizard.model.mall.WebImage;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
-import com.alpha.interview.wizard.repository.mall.ProductRepository;
+import com.alpha.interview.wizard.repository.mall.WebImageRepository;
 
 @Controller
-@RequestMapping("/product")
-public class ProductController {
+@RequestMapping("/webImage")
+public class WebImageController {
 
 	@Autowired
-	private ProductRepository productRepository;
+	private WebImageRepository webImageRepository;
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
 
 	private final Map<String, ImageService> imageServiceMap;
 	@Autowired
-	public ProductController(ImageServiceMapInitializer serviceMapInitializer) {
+	public WebImageController(
+			ImageServiceMapInitializer serviceMapInitializer) {
 		this.imageServiceMap = serviceMapInitializer.getServiceMap();
 	}
 
 	@GetMapping("/")
 	public String login(Model model) {
-		model.addAttribute("contentTemplate", "product");
+		model.addAttribute("contentTemplate", "webImage");
 		return "common";
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<?> saveProduct(
-			@ModelAttribute("product") @Valid Product product,
+	public ResponseEntity<?> saveWebImage(
+			@ModelAttribute("webImage") @Valid WebImage webImage,
 			@RequestParam("imageFile") MultipartFile file,
 			BindingResult bindingResult) {
-		if (bindingResult.hasErrors() || product.getName() == null
-				|| (product.getName() != null && product.getName().isEmpty())) {
+		if (bindingResult.hasErrors() || webImage.getName() == null
+				|| (webImage.getName() != null
+						&& webImage.getName().isEmpty())) {
 			return new ResponseEntity<>(bindingResult.getAllErrors(),
 					HttpStatus.BAD_REQUEST);
 		}
-		Product existingProduct = productRepository
-				.findByName(MallUtil.formatName(product.getName()));
-		if (existingProduct != null) {
+		WebImage existingWebImage = webImageRepository
+				.findByName(MallUtil.formatName(webImage.getName()));
+		if (existingWebImage != null) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
-					.body("Product with name '" + product.getName()
+					.body("WebImage with name '" + webImage.getName()
 							+ "' already exists");
 		}
-		if (product.getDisplayName() == null
-				|| (product.getDisplayName() != null
-						&& product.getDisplayName().isEmpty())) {
-			product.setDisplayName(product.getName());
+		if (webImage.getDisplayName() == null
+				|| (webImage.getDisplayName() != null
+						&& webImage.getDisplayName().isEmpty())) {
+			webImage.setDisplayName(webImage.getName());
 		}
 		try {
 			// Process image upload
 			String imageUrl = null;
 			try {
 				imageUrl = imageServiceMap.get(imageServiceImpl)
-						.uploadImageFile(file, ImageTypeConstants.PRODUCT,
-								product.getName());
+						.uploadImageFile(file, ImageTypeConstants.WEB_IMAGE,
+								webImage.getName());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			product.setImgUrl(imageUrl);
+			webImage.setImgUrl(imageUrl);
 		} catch (Exception e) {
 			// Handle file upload error
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error occurred while uploading image");
 		}
 
-		product.setUpdateTimestamp(new Date());
-		product.setCreateTimestamp(new Date());
-		productRepository.save(product);
+		webImage.setUpdateTimestamp(new Date());
+		webImage.setCreateTimestamp(new Date());
+		webImageRepository.save(webImage);
 		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/all")
-	public ResponseEntity<Page<Product>> getAllProducts(
+	public ResponseEntity<Page<WebImage>> getAllWebImages(
 			@RequestParam(defaultValue = "", name = "name", required = false) String name,
 			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
 		if (cp <= 0) {
@@ -114,83 +116,83 @@ public class ProductController {
 		}
 		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
 				Sort.by("name").ascending());
-		Page<Product> products = null;
+		Page<WebImage> webImages = null;
 		if (name != null && !name.isEmpty()) {
 			String escapedName = HtmlUtils.htmlEscape(name);
-			products = productRepository.findAllByNameContaining(
+			webImages = webImageRepository.findAllByNameContaining(
 					escapedName.toLowerCase(), pageable);
 		} else {
-			products = productRepository.findAll(pageable);
+			webImages = webImageRepository.findAll(pageable);
 		}
-		return ResponseEntity.ok(products);
+		return ResponseEntity.ok(webImages);
 	}
 
 	@PostMapping("/save/{id}")
-	public ResponseEntity<?> saveProductImage(@PathVariable Long id,
+	public ResponseEntity<?> saveWebImageImage(@PathVariable Long id,
 			@RequestParam("imageFile") MultipartFile file) {
-		Product existingProduct = productRepository.getById(id);
-		if (existingProduct != null) {
+		WebImage existingWebImage = webImageRepository.getById(id);
+		if (existingWebImage != null) {
 			try {
 				// Process image upload
 				String imageUrl = null;
 				try {
 					imageUrl = imageServiceMap.get(imageServiceImpl)
-							.uploadImageFile(file, ImageTypeConstants.PRODUCT,
-									existingProduct.getName());
+							.uploadImageFile(file, ImageTypeConstants.WEB_IMAGE,
+									existingWebImage.getName());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				existingProduct.setImgUrl(imageUrl);
+				existingWebImage.setImgUrl(imageUrl);
 			} catch (Exception e) {
 				// Handle file upload error
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 						.body("Error occurred while uploading image");
 			}
 
-			existingProduct.setUpdateTimestamp(new Date());
-			productRepository.save(existingProduct);
+			existingWebImage.setUpdateTimestamp(new Date());
+			webImageRepository.save(existingWebImage);
 		}
 		return ResponseEntity.ok().build();
 	}
 
 	@PatchMapping("/update/{id}")
-	public ResponseEntity<Product> updateProduct(@PathVariable Long id,
+	public ResponseEntity<WebImage> updateWebImage(@PathVariable Long id,
 			@RequestBody Map<String, Object> updates) {
-		Optional<Product> productOptional = productRepository.findById(id);
-		if (!productOptional.isPresent()) {
+		Optional<WebImage> webImageOptional = webImageRepository.findById(id);
+		if (!webImageOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		Product product = productOptional.get();
+		WebImage webImage = webImageOptional.get();
 
 		// Update fields using reflection
 		updates.forEach((key, value) -> {
 			try {
-				Field field = product.getClass().getDeclaredField(key);
+				Field field = webImage.getClass().getDeclaredField(key);
 				field.setAccessible(true);
-				field.set(product, value);
+				field.set(webImage, value);
 			} catch (NoSuchFieldException | IllegalAccessException e) {
 				e.printStackTrace(); // Handle exception properly
 			}
 		});
-		if (product.getDisplayName() == null
-				|| (product.getDisplayName() != null
-						&& product.getDisplayName().isEmpty())) {
-			product.setDisplayName(product.getName());
+		if (webImage.getDisplayName() == null
+				|| (webImage.getDisplayName() != null
+						&& webImage.getDisplayName().isEmpty())) {
+			webImage.setDisplayName(webImage.getName());
 		}
-		product.setUpdateTimestamp(new Date());
-		// Save updated product
-		productRepository.save(product);
-		return ResponseEntity.ok(product);
+		webImage.setUpdateTimestamp(new Date());
+		// Save updated webImage
+		webImageRepository.save(webImage);
+		return ResponseEntity.ok(webImage);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-		Optional<Product> productOptional = productRepository.findById(id);
-		if (!productOptional.isPresent()) {
+	public ResponseEntity<Void> deleteWebImage(@PathVariable Long id) {
+		Optional<WebImage> webImageOptional = webImageRepository.findById(id);
+		if (!webImageOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		productRepository.deleteById(id);
+		webImageRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 }

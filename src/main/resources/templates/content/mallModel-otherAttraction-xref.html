@@ -1,0 +1,169 @@
+<div th:fragment="content">
+	<div class="container">
+		<h2>Mall - OtherAttraction Management</h2>
+		<br>
+		<div class="row mb-2">
+			<div class="col-md-4">
+				<div class="form-group">
+					<p>MallModel ID: <input type="hidden" id="mallModelId" th:value="${mallModel.id}" /><span th:text="${mallModel.id}"></span></p>        			
+					<p>MallModel Name: <span th:text="${mallModel.name}"></span></p>
+				</div>
+				<a href="/otherAttraction/" class="btn btn-success">Add New OtherAttraction</a>
+			</div>
+		</div>
+		<hr>
+		<div class="search-container">
+		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search otherAttractions...">
+		    <button id="resetButton" class="reset-button">&times;</button>
+		</div>
+		<hr>
+		<div class="otherAttraction-table table-responsive">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>Linked</th>
+						<th>ID</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody id="otherAttractionTableBody">
+					<!-- Data will be dynamically populated here -->
+				</tbody>
+			</table>
+		</div>
+		<!-- Page navigation -->
+		<nav aria-label="Page navigation">
+			<ul class="pagination" id="paginationNav">
+				<!-- Pagination buttons will be dynamically added here -->
+			</ul>
+		</nav>
+	</div>
+	<script>
+		$(document).ready(function () {
+			$('#searchInput').on('input', function() {
+		        var searchValue = $(this).val().trim();
+		        if (searchValue.length > 0) {
+		            $('#resetButton').css('display', 'block');
+		        } else {
+		            $('#resetButton').css('display', 'none');
+		        }
+		        loadData(0);
+		    });
+
+		    $('#resetButton').on('click', function() {
+		        $('#searchInput').val('');
+		        $('#resetButton').css('display', 'none');
+		        loadData(0);
+		    });
+
+			var currentPage = 0;
+			var navTotalPages = 0;
+
+			// Function to load otherAttraction data
+			function loadData(page) {
+				var searchValue = $('#searchInput').val().trim();
+				var mallModelId = $('#mallModelId').val().trim();
+				$.ajax({
+					url: "/mallModel/otherAttraction/all/"+mallModelId+"?cp=" + page+"&name="+searchValue,
+					type: "GET",
+					success: function (data) {
+						// Populate grid with data
+						populateTable(data.content);
+						// Update current page
+						currentPage = page;
+						// Add pagination buttons
+						addPaginationButtons(data.totalPages);
+					},
+					error: function (xhr, status, error) {
+						alert('Failed to load otherAttraction data: ' + error);
+					}
+				});
+			}
+
+			// Function to populate the table with otherAttraction data
+			function populateTable(data) {
+				var tableBody = $('#otherAttractionTableBody');
+				tableBody.empty(); // Clear existing data
+
+				$.each(data, function (index, otherAttraction) {
+				    var checkedStatus = otherAttraction.linked === true ? 'checked' : ''; // Set checked status based on linked attribute
+				    var row =  '<tr>' +
+				                    '<td><input type="checkbox" class="editable" data-field="link" data-id="' + otherAttraction.id + '" id="featured_' + otherAttraction.id + '" name="featured" value="' + otherAttraction.linked + '" ' + checkedStatus + '/></td>' +
+				                    '<td>' + otherAttraction.id + '</td>' +
+				                    '<td class="editable" data-type="text" data-field="name" data-id="' + otherAttraction.id + '" data-value="'+otherAttraction.name+'">' + otherAttraction.name + '</td>' +
+				                '</tr>';
+				    tableBody.append(row);
+				});
+			}
+
+			// Save edited data
+			$('#otherAttractionTableBody').on('change', '.editable', function () {
+				var mallModelId = $('#mallModelId').val().trim();
+		        var otherAttractionId = $(this).data('id');
+		        var checked = $(this).prop('checked');
+
+		        if (checked) {
+		            // Make a POST request if the checkbox is checked
+		            $.ajax({
+		                type: 'POST',
+		                url: '/mallModel/' + mallModelId + '/otherAttraction/' + otherAttractionId,
+		                success: function(response) {
+		                    // Handle success response
+		                    loadData(0);
+		                },
+		                error: function(xhr, status, error) {
+		                    // Handle error response
+		                }
+		            });
+		        } else {
+		            // Make a DELETE request if the checkbox is unchecked
+		            $.ajax({
+		                type: 'DELETE',
+		                url: '/mallModel/' + mallModelId + '/otherAttraction/' + otherAttractionId,
+		                success: function(response) {
+		                    // Handle success response
+		                },
+		                error: function(xhr, status, error) {
+		                    // Handle error response
+		                }
+		            });
+		        }
+			});
+			// Initial data load
+			//
+			// Function to add pagination buttons
+			function addPaginationButtons(totalPages) {
+				navTotalPages = totalPages;
+				var paginationNav = $('#paginationNav');
+				paginationNav.empty();
+
+				// Previous button
+				var prevButton = '<li class="page-item" data-id="' + (currentPage - 1) + '"><a class="page-link" data-id="' + (currentPage - 1) + '" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+				paginationNav.append(prevButton);
+
+				// Numbered buttons
+				for (var i = 0; i < totalPages; i++) {
+					var pageButton = '<li class="page-item ' + (i === currentPage ? 'active' : '') + '" data-id="' + (i) + '"><a class="page-link" data-id="' + i + '">' + (i + 1) + '</a></li>';
+					paginationNav.append(pageButton);
+				}
+
+				// Next button
+				var nextButton = '<li class="page-item" data-id="' + (currentPage + 1) + '"><a class="page-link" data-id="' + (currentPage + 1) + '" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+				paginationNav.append(nextButton);
+			}
+			$('#paginationNav').on('click', '.page-item', function () {
+				var pageClicked = $(this).data('id');
+				console.log('page clicked: ' + pageClicked);
+				if (pageClicked <= 0) {
+					pageClicked = 0;
+					console.log('page clicked after adjust: ' + pageClicked);
+				} else if (pageClicked >= navTotalPages - 1) {
+					pageClicked = navTotalPages - 1;
+					console.log('page clicked after adjust: ' + pageClicked);
+				}
+				loadData(pageClicked);
+			});
+			loadData(currentPage);
+		});
+	</script>
+</div>

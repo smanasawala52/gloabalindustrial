@@ -2,8 +2,11 @@ package com.alpha.interview.wizard.constants.mall.constants;
 
 public enum ImageTypeConstants {
 	BRAND("brand"), CATEGORY("category"), SUB_CATEGORY(
-			"sub-category"), ATTRACTION(
-					"attraction"), EVENT("event"), MALL_MODEL("mall");
+			"sub-category"), ATTRACTION("attraction"), EVENT(
+					"event"), MALL_MODEL("mall"), OTHER_ATTRACTION(
+							"other-attraction"), PARKING("parking"), PRODUCT(
+									"product"), SHOP(
+											"shop"), WEB_IMAGE("web-image");
 
 	private final String type;
 

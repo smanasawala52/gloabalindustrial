@@ -1,14 +1,11 @@
 package com.alpha.interview.wizard.model.mall;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.alpha.interview.wizard.constants.mall.constants.ActiveStatusConstants;
@@ -29,23 +26,15 @@ import lombok.ToString;
 @Entity
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
-public class Attraction {
-
+public class WebImage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Category> categories;
-	private String floor;
-	private String location;
-	private String howToReach;
 
 	private String name;
 	private String description;
 	private String displayName;
 	private String imgUrl;
-	private boolean featured;
-	private String additionalDetails;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
@@ -64,36 +53,11 @@ public class Attraction {
 	public void setCreateTimestamp(Date createTimestamp) {
 		this.createTimestamp = createTimestamp;
 	}
-
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public List<Category> getCategories() {
-		return categories;
-	}
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-	public String getFloor() {
-		return floor;
-	}
-	public void setFloor(String floor) {
-		this.floor = floor;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	public String getHowToReach() {
-		return howToReach;
-	}
-	public void setHowToReach(String howToReach) {
-		this.howToReach = howToReach;
 	}
 	public String getName() {
 		return name;
@@ -112,18 +76,6 @@ public class Attraction {
 	}
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
-	}
-	public boolean isFeatured() {
-		return featured;
-	}
-	public void setFeatured(boolean featured) {
-		this.featured = featured;
-	}
-	public String getAdditionalDetails() {
-		return additionalDetails;
-	}
-	public void setAdditionalDetails(String additionalDetails) {
-		this.additionalDetails = additionalDetails;
 	}
 	public int getActiveStatusKey() {
 		return activeStatusKey;

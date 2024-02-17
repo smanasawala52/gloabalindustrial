@@ -12,12 +12,12 @@
 </head>
 <body>
     <!-- Include the header -->
-    <div th:fragment="header"></div>
+    <div th:replace="${'header'} :: header"></div>
 
     <!-- Main content goes here -->
     <div th:replace="${'content/' + contentTemplate} :: content"></div>
 
     <!-- Include the footer -->
-    <div th:fragment="footer"></div>
+    <div th:replace="${'footer'} :: footer"></div>
 </body>
 </html>

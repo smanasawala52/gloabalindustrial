@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -36,6 +37,8 @@ public class Brand {
 	private String additionalDetails;
 	private Date updateTimestamp;
 	private Date createTimestamp;
+	@Transient
+	private boolean linked = false;
 	public Long getId() {
 		return id;
 	}
@@ -83,5 +86,11 @@ public class Brand {
 	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+	public boolean isLinked() {
+		return linked;
+	}
+	public void setLinked(boolean linked) {
+		this.linked = linked;
 	}
 }
