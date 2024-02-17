@@ -40,7 +40,7 @@ public class MallModel {
 
 	private String location;
 	private String imgUrl;
-	private int floors;
+	private String floors;
 
 	private String additionalDetails;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
@@ -111,10 +111,10 @@ public class MallModel {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public int getFloors() {
+	public String getFloors() {
 		return floors;
 	}
-	public void setFloors(int floors) {
+	public void setFloors(String floors) {
 		this.floors = floors;
 	}
 	public int getActiveStatusKey() {
