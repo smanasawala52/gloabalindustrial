@@ -1,5 +1,6 @@
 package com.alpha.interview.wizard.controller.mall;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -20,13 +21,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
@@ -98,41 +100,55 @@ public class BrandController {
 
 	@GetMapping("/all")
 	public ResponseEntity<Page<Brand>> getAllBrands(
+			@RequestParam(defaultValue = "", name = "name", required = false) String name,
 			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
 		if (cp <= 0) {
 			cp = 0;
 		}
 		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
 				Sort.by("name").ascending());
-		Page<Brand> brands = brandRepository.findAll(pageable);
+		Page<Brand> brands = null;
+		if (name != null && !name.isEmpty()) {
+			String escapedName = HtmlUtils.htmlEscape(name);
+			brands = brandRepository.findAllByNameContaining(
+					escapedName.toLowerCase(), pageable);
+		} else {
+			brands = brandRepository.findAll(pageable);
+		}
 		return ResponseEntity.ok(brands);
 	}
 
-	@PutMapping("/update/{id}")
+	@PatchMapping("/update/{id}")
 	public ResponseEntity<Brand> updateBrand(@PathVariable Long id,
 			@RequestParam(value = "imageFile", required = false) MultipartFile file,
-			@RequestBody Brand updatedBrand) {
+			@RequestBody Map<String, Object> updates) {
+
 		Optional<Brand> brandOptional = brandRepository.findById(id);
 		if (!brandOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		Brand brand = brandOptional.get();
-		// Update fields
-		brand.setName(updatedBrand.getName());
-		brand.setDescription(updatedBrand.getDescription());
+
+		// Update fields using reflection
+		updates.forEach((key, value) -> {
+			try {
+				Field field = brand.getClass().getDeclaredField(key);
+				field.setAccessible(true);
+				field.set(brand, value);
+			} catch (NoSuchFieldException | IllegalAccessException e) {
+				e.printStackTrace(); // Handle exception properly
+			}
+		});
+
 		// Upload new image if provided
 		if (file != null && !file.isEmpty()) {
 			try {
-				try {
-					String imageUrl = imageServiceMap.get(imageServiceImpl)
-							.uploadImageFile(file, ImageTypeConstants.BRAND,
-									brand.getName());
-					brand.setImgUrl(imageUrl);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				String imageUrl = imageServiceMap.get(imageServiceImpl)
+						.uploadImageFile(file, ImageTypeConstants.BRAND,
+								brand.getName());
+				brand.setImgUrl(imageUrl);
 			} catch (Exception e) {
+				e.printStackTrace(); // Handle exception properly
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 						.body(null);
 			}

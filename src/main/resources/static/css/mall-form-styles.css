@@ -49,3 +49,26 @@ body {
         max-width: 50%;
     }
 }
+.search-container {
+  position: relative;
+}
+
+.search-input {
+  padding-right: 30px; /* Adjust padding to accommodate the reset button */
+}
+
+.reset-button {
+  position: absolute;
+  right: 5px; /* Adjust the position as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  color: #aaa;
+}
+
+.reset-button:hover {
+  color: #666;
+}

@@ -10,5 +10,6 @@ import com.alpha.interview.wizard.model.mall.Coupon;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
 	Page<Coupon> findAll(Pageable pageable);
+	Page<Coupon> findAllByName(Pageable pageable, String name);
 	Coupon findByName(String name);
 }

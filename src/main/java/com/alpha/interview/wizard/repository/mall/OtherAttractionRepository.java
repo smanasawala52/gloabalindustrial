@@ -12,6 +12,7 @@ public interface OtherAttractionRepository
 		extends
 			JpaRepository<OtherAttraction, Long> {
 	Page<OtherAttraction> findAll(Pageable pageable);
+	Page<OtherAttraction> findAllByName(Pageable pageable, String name);
 	OtherAttraction findByName(String name);
 
 }

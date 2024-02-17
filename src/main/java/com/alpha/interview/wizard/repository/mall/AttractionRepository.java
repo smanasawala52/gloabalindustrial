@@ -10,5 +10,6 @@ import com.alpha.interview.wizard.model.mall.Attraction;
 @Repository
 public interface AttractionRepository extends JpaRepository<Attraction, Long> {
 	Page<Attraction> findAll(Pageable pageable);
+	Page<Attraction> findAllByName(Pageable pageable, String name);
 	Attraction findByName(String name);
 }

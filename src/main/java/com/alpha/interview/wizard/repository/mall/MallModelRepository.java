@@ -10,6 +10,7 @@ import com.alpha.interview.wizard.model.mall.MallModel;
 @Repository
 public interface MallModelRepository extends JpaRepository<MallModel, Long> {
 	Page<MallModel> findAll(Pageable pageable);
+	Page<MallModel> findAllByName(Pageable pageable, String name);
 	MallModel findByName(String name);
 
 }

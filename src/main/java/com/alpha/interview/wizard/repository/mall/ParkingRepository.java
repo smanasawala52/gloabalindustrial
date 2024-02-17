@@ -10,6 +10,8 @@ import com.alpha.interview.wizard.model.mall.Parking;
 @Repository
 public interface ParkingRepository extends JpaRepository<Parking, Long> {
 	Page<Parking> findAll(Pageable pageable);
-	Parking findByFloorAndBlock(String floor, String Block);
+	Page<Parking> findAllByFloorAndBlock(Pageable pageable, String floor,
+			String Block);
+	Parking findByFloorAndBlock(String floor, String block);
 
 }

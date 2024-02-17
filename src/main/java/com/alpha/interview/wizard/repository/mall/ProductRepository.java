@@ -10,6 +10,7 @@ import com.alpha.interview.wizard.model.mall.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 	Page<Product> findAll(Pageable pageable);
+	Page<Product> findAllByName(Pageable pageable, String name);
 	Product findByName(String name);
 
 }

@@ -10,6 +10,7 @@ import com.alpha.interview.wizard.model.mall.Event;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 	Page<Event> findAll(Pageable pageable);
+	Page<Event> findAllByName(Pageable pageable, String name);
 	Event findByName(String name);
 
 }

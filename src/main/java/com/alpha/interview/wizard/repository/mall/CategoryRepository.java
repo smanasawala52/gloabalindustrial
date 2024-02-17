@@ -10,5 +10,6 @@ import com.alpha.interview.wizard.model.mall.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 	Page<Category> findAll(Pageable pageable);
+	Page<Category> findAllByName(Pageable pageable, String name);
 	Category findByName(String name);
 }
