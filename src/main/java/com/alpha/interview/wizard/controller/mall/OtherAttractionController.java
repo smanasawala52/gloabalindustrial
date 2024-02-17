@@ -54,7 +54,7 @@ public class OtherAttractionController {
 
 	@GetMapping("/")
 	public String login(Model model) {
-		model.addAttribute("contentTemplate", "otherAttraction");
+		model.addAttribute("contentTemplate", "other-attraction");
 		return "common";
 	}
 

@@ -38,7 +38,11 @@ public class ShopController {
 		this.shopRepository = shopRepository;
 		this.categoryRepository = categoryRepository;
 	}
-
+	@GetMapping("/")
+	public String login(Model model) {
+		model.addAttribute("contentTemplate", "shop");
+		return "common";
+	}
 	@GetMapping("/form")
 	public String showForm(Model model) {
 		model.addAttribute("shop", new Shop());
