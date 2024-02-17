@@ -1,14 +1,12 @@
 package com.alpha.interview.wizard.model.mall;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.alpha.interview.wizard.constants.mall.constants.ActiveStatusConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
@@ -36,14 +34,14 @@ public class SubCategory {
 	private String name;
 	private String description;
 	private String displayName;
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<SubCategory> subCategories;
-	private boolean featured;
 	private String imgUrl;
 	private String additionalDetails;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
+	@Transient
+	private boolean linked = false;
+
 	public Date getCreateTimestamp() {
 		return createTimestamp;
 	}
@@ -67,18 +65,6 @@ public class SubCategory {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public List<SubCategory> getSubCategories() {
-		return subCategories;
-	}
-	public void setSubCategories(List<SubCategory> subCategories) {
-		this.subCategories = subCategories;
-	}
-	public boolean isFeatured() {
-		return featured;
-	}
-	public void setFeatured(boolean featured) {
-		this.featured = featured;
 	}
 	public String getAdditionalDetails() {
 		return additionalDetails;
@@ -109,6 +95,12 @@ public class SubCategory {
 	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+	public boolean isLinked() {
+		return linked;
+	}
+	public void setLinked(boolean linked) {
+		this.linked = linked;
 	}
 
 }

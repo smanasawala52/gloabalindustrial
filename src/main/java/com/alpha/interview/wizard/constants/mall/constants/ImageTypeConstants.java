@@ -1,7 +1,7 @@
 package com.alpha.interview.wizard.constants.mall.constants;
 
 public enum ImageTypeConstants {
-	BRAND("brand"), Category("category"), SUB_CATEGORY("sub-category");
+	BRAND("brand"), CATEGORY("category"), SUB_CATEGORY("sub-category");
 
 	private final String type;
 

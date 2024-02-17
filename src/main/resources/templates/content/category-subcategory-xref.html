@@ -1,0 +1,167 @@
+<div th:fragment="content">
+	<div class="container">
+		<h2>Category - Sub Category Management</h2>
+		<br>
+		<div class="row mb-2">
+			<div class="col-md-4">
+				<div class="form-group">
+					<p>Category ID: <input type="hidden" id="categoryId" th:value="${category.id}" /><span th:text="${category.id}"></span></p>        			
+					<p>Category Name: <span th:text="${category.name}"></span></p>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="search-container">
+		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search subcategorys...">
+		    <button id="resetButton" class="reset-button">&times;</button>
+		</div>
+		<hr>
+		<div class="subcategory-table table-responsive">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>Linked</th>
+						<th>ID</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody id="subcategoryTableBody">
+					<!-- Data will be dynamically populated here -->
+				</tbody>
+			</table>
+		</div>
+		<!-- Page navigation -->
+		<nav aria-label="Page navigation">
+			<ul class="pagination" id="paginationNav">
+				<!-- Pagination buttons will be dynamically added here -->
+			</ul>
+		</nav>
+	</div>
+	<script>
+		$(document).ready(function () {
+			$('#searchInput').on('input', function() {
+		        var searchValue = $(this).val().trim();
+		        if (searchValue.length > 0) {
+		            $('#resetButton').css('display', 'block');
+		        } else {
+		            $('#resetButton').css('display', 'none');
+		        }
+		        loadData(0);
+		    });
+
+		    $('#resetButton').on('click', function() {
+		        $('#searchInput').val('');
+		        $('#resetButton').css('display', 'none');
+		        loadData(0);
+		    });
+
+			var currentPage = 0;
+			var navTotalPages = 0;
+
+			// Function to load subcategory data
+			function loadData(page) {
+				var searchValue = $('#searchInput').val().trim();
+				var categoryId = $('#categoryId').val().trim();
+				$.ajax({
+					url: "/category/subcategory/all/"+categoryId+"?cp=" + page+"&name="+searchValue,
+					type: "GET",
+					success: function (data) {
+						// Populate grid with data
+						populateTable(data.content);
+						// Update current page
+						currentPage = page;
+						// Add pagination buttons
+						addPaginationButtons(data.totalPages);
+					},
+					error: function (xhr, status, error) {
+						alert('Failed to load subcategory data: ' + error);
+					}
+				});
+			}
+
+			// Function to populate the table with subcategory data
+			function populateTable(data) {
+				var tableBody = $('#subcategoryTableBody');
+				tableBody.empty(); // Clear existing data
+
+				$.each(data, function (index, subcategory) {
+				    var checkedStatus = subcategory.linked === true ? 'checked' : ''; // Set checked status based on linked attribute
+				    var row =  '<tr>' +
+				                    '<td><input type="checkbox" class="editable" data-field="link" data-id="' + subcategory.id + '" id="featured_' + subcategory.id + '" name="featured" value="' + subcategory.linked + '" ' + checkedStatus + '/></td>' +
+				                    '<td>' + subcategory.id + '</td>' +
+				                    '<td class="editable" data-type="text" data-field="name" data-id="' + subcategory.id + '" data-value="'+subcategory.name+'">' + subcategory.name + '</td>' +
+				                '</tr>';
+				    tableBody.append(row);
+				});
+			}
+
+			// Save edited data
+			$('#subcategoryTableBody').on('change', '.editable', function () {
+				var categoryId = $('#categoryId').val().trim();
+		        var subcategoryId = $(this).data('id');
+		        var checked = $(this).prop('checked');
+
+		        if (checked) {
+		            // Make a POST request if the checkbox is checked
+		            $.ajax({
+		                type: 'POST',
+		                url: '/category/' + categoryId + '/subcategory/' + subcategoryId,
+		                success: function(response) {
+		                    // Handle success response
+		                },
+		                error: function(xhr, status, error) {
+		                    // Handle error response
+		                }
+		            });
+		        } else {
+		            // Make a DELETE request if the checkbox is unchecked
+		            $.ajax({
+		                type: 'DELETE',
+		                url: '/category/' + categoryId + '/subcategory/' + subcategoryId,
+		                success: function(response) {
+		                    // Handle success response
+		                },
+		                error: function(xhr, status, error) {
+		                    // Handle error response
+		                }
+		            });
+		        }
+			});
+			// Initial data load
+			//
+			// Function to add pagination buttons
+			function addPaginationButtons(totalPages) {
+				navTotalPages = totalPages;
+				var paginationNav = $('#paginationNav');
+				paginationNav.empty();
+
+				// Previous button
+				var prevButton = '<li class="page-item" data-id="' + (currentPage - 1) + '"><a class="page-link" data-id="' + (currentPage - 1) + '" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+				paginationNav.append(prevButton);
+
+				// Numbered buttons
+				for (var i = 0; i < totalPages; i++) {
+					var pageButton = '<li class="page-item ' + (i === currentPage ? 'active' : '') + '" data-id="' + (i) + '"><a class="page-link" data-id="' + i + '">' + (i + 1) + '</a></li>';
+					paginationNav.append(pageButton);
+				}
+
+				// Next button
+				var nextButton = '<li class="page-item" data-id="' + (currentPage + 1) + '"><a class="page-link" data-id="' + (currentPage + 1) + '" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+				paginationNav.append(nextButton);
+			}
+			$('#paginationNav').on('click', '.page-item', function () {
+				var pageClicked = $(this).data('id');
+				console.log('page clicked: ' + pageClicked);
+				if (pageClicked <= 0) {
+					pageClicked = 0;
+					console.log('page clicked after adjust: ' + pageClicked);
+				} else if (pageClicked >= navTotalPages - 1) {
+					pageClicked = navTotalPages - 1;
+					console.log('page clicked after adjust: ' + pageClicked);
+				}
+				loadData(pageClicked);
+			});
+			loadData(currentPage);
+		});
+	</script>
+</div>
