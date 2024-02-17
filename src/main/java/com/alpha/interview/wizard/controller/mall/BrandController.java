@@ -171,6 +171,10 @@ public class BrandController {
 				e.printStackTrace(); // Handle exception properly
 			}
 		});
+		if (brand.getDisplayName() == null || (brand.getDisplayName() != null
+				&& brand.getDisplayName().isEmpty())) {
+			brand.setDisplayName(brand.getName());
+		}
 		brand.setUpdateTimestamp(new Date());
 		// Save updated brand
 		brandRepository.save(brand);
