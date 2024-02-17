@@ -137,7 +137,7 @@
 			function loadData(page) {
 				var searchValue = $('#searchInput').val().trim();
 				$.ajax({
-					url: "/mallModel/all?cp=" + page+"&name="+searchValue,
+					url: "/mallmodel/all?cp=" + page+"&name="+searchValue,
 					type: "GET",
 					success: function (data) {
 						// Populate grid with data
@@ -170,7 +170,7 @@
 										'<img src="' + mallModel.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + mallModel.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + mallModel.id + '" data-imgurl="' + mallModel.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + mallModel.id + '" style="display:none">'+
-											'<form id="image_update_form_' + mallModel.id + '" class="image_update_form" action="/mallModel/update/' + mallModel.id + '" data-id="'+mallModel.id+'" method="patch" enctype="multipart/form-data">'+
+											'<form id="image_update_form_' + mallModel.id + '" class="image_update_form" action="/mallmodel/update/' + mallModel.id + '" data-id="'+mallModel.id+'" method="patch" enctype="multipart/form-data">'+
 											'<input type="hidden" name="id_' + mallModel.id + '" value="' + mallModel.id + '" />'+
 											'<input type="file" class="form-control-file" id="imageFile_' + mallModel.id + '" name="imageFile" accept="image/*" />'+
 											'</form>'+
@@ -180,9 +180,9 @@
 									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + mallModel.id + '" data-value="'+mallModel.additionalDetails+'">' + mallModel.additionalDetails + '</td>' +
                                     '<td class="editable" data-type="text" data-field="floors" data-id="' + mallModel.id + '" data-value="'+mallModel.floors+'">' + mallModel.floors + '</td>' +
                                     '<td class="editable" data-type="text" data-field="location" data-id="' + mallModel.id + '" data-value="'+mallModel.location+'">' + mallModel.location + '</td>' +
-                                    '<td><a href="/mallModel/shop/' + mallModel.id + '" class="btn btn-success">Shops</a>&nbsp;<a href="/mallModel/attraction/' + mallModel.id + '" class="btn btn-success">Attractions</a>&nbsp;'+
-                                    '<a href="/mallModel/parking/' + mallModel.id + '" class="btn btn-success">Parking</a>&nbsp;<a href="/mallModel/event/' + mallModel.id + '" class="btn btn-success">Events</a>&nbsp;'+
-                                    '<a href="/mallModel/otherAttraction/' + mallModel.id + '" class="btn btn-success">Other Attractions</a>&nbsp;'+
+                                    '<td><a href="/mallmodel/shop/' + mallModel.id + '" class="btn btn-success">Shops</a>&nbsp;<a href="/mallmodel/attraction/' + mallModel.id + '" class="btn btn-success">Attractions</a>&nbsp;'+
+                                    '<a href="/mallmodel/parking/' + mallModel.id + '" class="btn btn-success">Parking</a>&nbsp;<a href="/mallmodel/event/' + mallModel.id + '" class="btn btn-success">Events</a>&nbsp;'+
+                                    '<a href="/mallmodel/otherAttraction/' + mallModel.id + '" class="btn btn-success">Other Attractions</a>&nbsp;'+
                                     '</td>'+
                                     '<td>' +
 									'<button class="btn btn-info edit-button" data-id="' + mallModel.id + '">Edit</button>&nbsp;' +
@@ -215,7 +215,7 @@
 				var formData = new FormData($('#image_update_form_' + mallModelId)[0]);
 
 				$.ajax({
-					url: '/mallModel/save/'+mallModelId,
+					url: '/mallmodel/save/'+mallModelId,
 					type: 'POST',
 					data: formData,
 					async: false,
@@ -290,7 +290,7 @@
 
 				// Perform AJAX request to update the mallModel
 				$.ajax({
-					url: '/mallModel/update/' + id, // Change this to your update endpoint
+					url: '/mallmodel/update/' + id, // Change this to your update endpoint
 					type: 'PATCH',
 					contentType: 'application/json', // Specify content type as JSON
 					data: JSON.stringify(newData),   // Convert JavaScript object to JSON string
@@ -318,7 +318,7 @@
 				if (confirmDelete) {
 					// Perform AJAX request to delete the mallModel
 					$.ajax({
-						url: '/mallModel/delete/' + id, // Change this to your delete endpoint
+						url: '/mallmodel/delete/' + id, // Change this to your delete endpoint
 						type: 'DELETE',
 						success: function (response) {
 							// Remove the row from the table if deletion is successful
@@ -337,7 +337,7 @@
 				var formData = new FormData($(this)[0]);
 
 				$.ajax({
-					url: '/mallModel/save',
+					url: '/mallmodel/save',
 					type: 'POST',
 					data: formData,
 					async: false,

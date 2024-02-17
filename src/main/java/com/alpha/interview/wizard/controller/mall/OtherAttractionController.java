@@ -1,6 +1,8 @@
 package com.alpha.interview.wizard.controller.mall;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -169,13 +171,24 @@ public class OtherAttractionController {
 			return ResponseEntity.notFound().build();
 		}
 		OtherAttraction otherAttraction = otherAttractionOptional.get();
-
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		// Update fields using reflection
 		updates.forEach((key, value) -> {
 			try {
 				Field field = otherAttraction.getClass().getDeclaredField(key);
 				field.setAccessible(true);
-				field.set(otherAttraction, value);
+				if (key.equals("startDate") || key.equals("endDate")) {
+					Date date = null;
+					try {
+						date = dateFormat.parse((String) value);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					field.set(otherAttraction, date);
+				} else {
+					field.set(otherAttraction, value);
+				}
 			} catch (NoSuchFieldException | IllegalAccessException e) {
 				e.printStackTrace(); // Handle exception properly
 			}

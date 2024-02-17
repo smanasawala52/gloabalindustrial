@@ -1,5 +1,8 @@
 package com.alpha.interview.wizard.controller.mall;
 
+import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -20,13 +23,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
@@ -62,7 +66,8 @@ public class CouponController {
 			@ModelAttribute("coupon") @Valid Coupon coupon,
 			@RequestParam("imageFile") MultipartFile file,
 			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || coupon.getName() == null
+				|| (coupon.getName() != null && coupon.getName().isEmpty())) {
 			return new ResponseEntity<>(bindingResult.getAllErrors(),
 					HttpStatus.BAD_REQUEST);
 		}
@@ -73,12 +78,16 @@ public class CouponController {
 					.body("Coupon with name '" + coupon.getName()
 							+ "' already exists");
 		}
+		if (coupon.getDisplayName() == null || (coupon.getDisplayName() != null
+				&& coupon.getDisplayName().isEmpty())) {
+			coupon.setDisplayName(coupon.getName());
+		}
 		try {
 			// Process image upload
 			String imageUrl = null;
 			try {
 				imageUrl = imageServiceMap.get(imageServiceImpl)
-						.uploadImageFile(file, ImageTypeConstants.BRAND,
+						.uploadImageFile(file, ImageTypeConstants.COUPON,
 								coupon.getName());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -99,46 +108,88 @@ public class CouponController {
 
 	@GetMapping("/all")
 	public ResponseEntity<Page<Coupon>> getAllCoupons(
+			@RequestParam(defaultValue = "", name = "name", required = false) String name,
 			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
 		if (cp <= 0) {
 			cp = 0;
 		}
 		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
 				Sort.by("name").ascending());
-		Page<Coupon> coupons = couponRepository.findAll(pageable);
+		Page<Coupon> coupons = null;
+		if (name != null && !name.isEmpty()) {
+			String escapedName = HtmlUtils.htmlEscape(name);
+			coupons = couponRepository.findAllByNameContaining(
+					escapedName.toLowerCase(), pageable);
+		} else {
+			coupons = couponRepository.findAll(pageable);
+		}
 		return ResponseEntity.ok(coupons);
 	}
 
-	@PutMapping("/update/{id}")
+	@PostMapping("/save/{id}")
+	public ResponseEntity<?> saveCouponImage(@PathVariable Long id,
+			@RequestParam("imageFile") MultipartFile file) {
+		Coupon existingCoupon = couponRepository.getById(id);
+		if (existingCoupon != null) {
+			try {
+				// Process image upload
+				String imageUrl = null;
+				try {
+					imageUrl = imageServiceMap.get(imageServiceImpl)
+							.uploadImageFile(file, ImageTypeConstants.COUPON,
+									existingCoupon.getName());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				existingCoupon.setImgUrl(imageUrl);
+			} catch (Exception e) {
+				// Handle file upload error
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body("Error occurred while uploading image");
+			}
+
+			existingCoupon.setUpdateTimestamp(new Date());
+			couponRepository.save(existingCoupon);
+		}
+		return ResponseEntity.ok().build();
+	}
+
+	@PatchMapping("/update/{id}")
 	public ResponseEntity<Coupon> updateCoupon(@PathVariable Long id,
-			@RequestParam(value = "imageFile", required = false) MultipartFile file,
-			@RequestBody Coupon updatedCoupon) {
+			@RequestBody Map<String, Object> updates) {
 		Optional<Coupon> couponOptional = couponRepository.findById(id);
 		if (!couponOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		Coupon coupon = couponOptional.get();
-		// Update fields
-		coupon.setName(updatedCoupon.getName());
-		coupon.setDescription(updatedCoupon.getDescription());
-		// Upload new image if provided
-		if (file != null && !file.isEmpty()) {
-			try {
-				try {
-					String imageUrl = imageServiceMap.get(imageServiceImpl)
-							.uploadImageFile(file, ImageTypeConstants.BRAND,
-									coupon.getName());
-					coupon.setImgUrl(imageUrl);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-						.body(null);
-			}
-		}
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+		// Update fields using reflection
+		updates.forEach((key, value) -> {
+			try {
+				Field field = coupon.getClass().getDeclaredField(key);
+				field.setAccessible(true);
+				if (key.equals("startDate") || key.equals("endDate")) {
+					Date date = null;
+					try {
+						date = dateFormat.parse((String) value);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					field.set(coupon, date);
+				} else {
+					field.set(coupon, value);
+				}
+			} catch (NoSuchFieldException | IllegalAccessException e) {
+				e.printStackTrace(); // Handle exception properly
+			}
+		});
+		if (coupon.getDisplayName() == null || (coupon.getDisplayName() != null
+				&& coupon.getDisplayName().isEmpty())) {
+			coupon.setDisplayName(coupon.getName());
+		}
 		coupon.setUpdateTimestamp(new Date());
 		// Save updated coupon
 		couponRepository.save(coupon);

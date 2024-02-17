@@ -165,8 +165,8 @@
 										'</div>'+
 									'</td>' +
 									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + event.id + '" data-value="'+event.additionalDetails+'">' + event.additionalDetails + '</td>' +
-                                    '<td class="editable" data-type="date" data-field="startDate" data-id="' + event.id + '" data-value="'+event.startDate+'">' + event.startDate + '</td>' +
-                                    '<td class="editable" data-type="date" data-field="endDate" data-id="' + event.id + '" data-value="'+event.endDate+'">' + event.endDate + '</td>' +
+                                    '<td class="editable" data-type="date" data-field="startDate" data-id="' + event.id + '" data-value="'+new Date(event.startDate).toLocaleDateString()+'">' + new Date(event.startDate).toLocaleDateString() + '</td>' +
+                                    '<td class="editable" data-type="date" data-field="endDate" data-id="' + event.id + '" data-value="'+new Date(event.endDate).toLocaleDateString()+'">' + new Date(event.endDate).toLocaleDateString() + '</td>' +
 									'<td>' +
 									'<button class="btn btn-info edit-button" data-id="' + event.id + '">Edit</button>&nbsp;' +
 									'<button class="btn btn-danger delete-button" data-id="' + event.id + '">Delete</button>' +

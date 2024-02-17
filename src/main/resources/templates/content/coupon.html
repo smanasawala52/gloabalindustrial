@@ -165,8 +165,8 @@
 										'</div>'+
 									'</td>' +
 									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + coupon.id + '" data-value="'+coupon.additionalDetails+'">' + coupon.additionalDetails + '</td>' +
-                                    '<td class="editable" data-type="date" data-field="startDate" data-id="' + coupon.id + '" data-value="'+coupon.startDate+'">' + coupon.startDate + '</td>' +
-                                    '<td class="editable" data-type="date" data-field="endDate" data-id="' + coupon.id + '" data-value="'+coupon.endDate+'">' + coupon.endDate + '</td>' +
+                                    '<td class="editable" data-type="date" data-field="startDate" data-id="' + coupon.id + '" data-value="'+new Date(coupon.startDate).toLocaleDateString()+'">' + new Date(coupon.startDate).toLocaleDateString() + '</td>' +
+                                    '<td class="editable" data-type="date" data-field="endDate" data-id="' + coupon.id + '" data-value="'+new Date(coupon.endDate).toLocaleDateString()+'">' + new Date(coupon.endDate).toLocaleDateString() + '</td>' +
 									'<td>' +
 									'<button class="btn btn-info edit-button" data-id="' + coupon.id + '">Edit</button>&nbsp;' +
 									'<button class="btn btn-danger delete-button" data-id="' + coupon.id + '">Delete</button>' +

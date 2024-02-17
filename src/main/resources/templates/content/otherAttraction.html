@@ -126,7 +126,7 @@
 			function loadData(page) {
 				var searchValue = $('#searchInput').val().trim();
 				$.ajax({
-					url: "/otherAttraction/all?cp=" + page+"&name="+searchValue,
+					url: "/otherattraction/all?cp=" + page+"&name="+searchValue,
 					type: "GET",
 					success: function (data) {
 						// Populate grid with data
@@ -157,7 +157,7 @@
 										'<img src="' + otherAttraction.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + otherAttraction.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + otherAttraction.id + '" data-imgurl="' + otherAttraction.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + otherAttraction.id + '" style="display:none">'+
-											'<form id="image_update_form_' + otherAttraction.id + '" class="image_update_form" action="/otherAttraction/update/' + otherAttraction.id + '" data-id="'+otherAttraction.id+'" method="patch" enctype="multipart/form-data">'+
+											'<form id="image_update_form_' + otherAttraction.id + '" class="image_update_form" action="/otherattraction/update/' + otherAttraction.id + '" data-id="'+otherAttraction.id+'" method="patch" enctype="multipart/form-data">'+
 											'<input type="hidden" name="id_' + otherAttraction.id + '" value="' + otherAttraction.id + '" />'+
 											'<input type="file" class="form-control-file" id="imageFile_' + otherAttraction.id + '" name="imageFile" accept="image/*" />'+
 											'</form>'+
@@ -165,8 +165,8 @@
 										'</div>'+
 									'</td>' +
 									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + otherAttraction.id + '" data-value="'+otherAttraction.additionalDetails+'">' + otherAttraction.additionalDetails + '</td>' +
-                                    '<td class="editable" data-type="date" data-field="startDate" data-id="' + otherAttraction.id + '" data-value="'+otherAttraction.startDate+'">' + otherAttraction.startDate + '</td>' +
-                                    '<td class="editable" data-type="date" data-field="endDate" data-id="' + otherAttraction.id + '" data-value="'+otherAttraction.endDate+'">' + otherAttraction.endDate + '</td>' +
+                                    '<td class="editable" data-type="date" data-field="startDate" data-id="' + otherAttraction.id + '" data-value="'+new Date(otherAttraction.startDate).toLocaleDateString()+'">' + new Date(otherAttraction.startDate).toLocaleDateString() + '</td>' +
+                                    '<td class="editable" data-type="date" data-field="endDate" data-id="' + otherAttraction.id + '" data-value="'+new Date(otherAttraction.endDate).toLocaleDateString()+'">' + new Date(otherAttraction.endDate).toLocaleDateString() + '</td>' +
 									'<td>' +
 									'<button class="btn btn-info edit-button" data-id="' + otherAttraction.id + '">Edit</button>&nbsp;' +
 									'<button class="btn btn-danger delete-button" data-id="' + otherAttraction.id + '">Delete</button>' +
@@ -188,7 +188,7 @@
 				var formData = new FormData($('#image_update_form_' + otherAttractionId)[0]);
 
 				$.ajax({
-					url: '/otherAttraction/save/'+otherAttractionId,
+					url: '/otherattraction/save/'+otherAttractionId,
 					type: 'POST',
 					data: formData,
 					async: false,
@@ -265,7 +265,7 @@
 
 				// Perform AJAX request to update the otherAttraction
 				$.ajax({
-					url: '/otherAttraction/update/' + id, // Change this to your update endpoint
+					url: '/otherattraction/update/' + id, // Change this to your update endpoint
 					type: 'PATCH',
 					contentType: 'application/json', // Specify content type as JSON
 					data: JSON.stringify(newData),   // Convert JavaScript object to JSON string
@@ -293,7 +293,7 @@
 				if (confirmDelete) {
 					// Perform AJAX request to delete the otherAttraction
 					$.ajax({
-						url: '/otherAttraction/delete/' + id, // Change this to your delete endpoint
+						url: '/otherattraction/delete/' + id, // Change this to your delete endpoint
 						type: 'DELETE',
 						success: function (response) {
 							// Remove the row from the table if deletion is successful
@@ -312,7 +312,7 @@
 				var formData = new FormData($(this)[0]);
 
 				$.ajax({
-					url: '/otherAttraction/save',
+					url: '/otherattractionk/save',
 					type: 'POST',
 					data: formData,
 					async: false,
