@@ -108,6 +108,7 @@
 		                url: '/category/' + categoryId + '/subcategory/' + subcategoryId,
 		                success: function(response) {
 		                    // Handle success response
+		                    loadData(0);
 		                },
 		                error: function(xhr, status, error) {
 		                    // Handle error response
