@@ -1,5 +1,7 @@
 package com.alpha.interview.wizard.repository.mall;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,5 +19,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	Page<Product> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	Product findByName(String name);
-
+	@Query("SELECT c.id, c.name FROM Product c")
+	List<Object[]> getAllIdAndName();
 }

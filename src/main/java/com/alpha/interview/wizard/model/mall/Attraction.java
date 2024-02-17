@@ -36,7 +36,6 @@ public class Attraction {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Category> categories;
 	private String floor;
-	private String shopNumber;
 	private String location;
 	private String howToReach;
 
@@ -73,12 +72,6 @@ public class Attraction {
 	}
 	public void setFloor(String floor) {
 		this.floor = floor;
-	}
-	public String getShopNumber() {
-		return shopNumber;
-	}
-	public void setShopNumber(String shopNumber) {
-		this.shopNumber = shopNumber;
 	}
 	public String getLocation() {
 		return location;

@@ -1,5 +1,7 @@
 package com.alpha.interview.wizard.repository.mall;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +21,6 @@ public interface SubCategoryRepository
 	Page<SubCategory> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	SubCategory findByName(String name);
+	@Query("SELECT c.id, c.name FROM SubCategory c")
+	List<Object[]> getAllIdAndName();
 }

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.alpha.interview.wizard.constants.mall.constants.ActiveStatusConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
@@ -44,6 +45,8 @@ public class Category {
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
+	@Transient
+	private boolean linked = false;
 	public Date getCreateTimestamp() {
 		return createTimestamp;
 	}
@@ -109,6 +112,12 @@ public class Category {
 	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+	public boolean isLinked() {
+		return linked;
+	}
+	public void setLinked(boolean linked) {
+		this.linked = linked;
 	}
 
 }

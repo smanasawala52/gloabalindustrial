@@ -1,5 +1,6 @@
 package com.alpha.interview.wizard.controller.mall;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -20,13 +21,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
@@ -62,7 +64,8 @@ public class EventController {
 			@ModelAttribute("event") @Valid Event event,
 			@RequestParam("imageFile") MultipartFile file,
 			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || event.getName() == null
+				|| (event.getName() != null && event.getName().isEmpty())) {
 			return new ResponseEntity<>(bindingResult.getAllErrors(),
 					HttpStatus.BAD_REQUEST);
 		}
@@ -72,12 +75,16 @@ public class EventController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(
 					"Event with name '" + event.getName() + "' already exists");
 		}
+		if (event.getDisplayName() == null || (event.getDisplayName() != null
+				&& event.getDisplayName().isEmpty())) {
+			event.setDisplayName(event.getName());
+		}
 		try {
 			// Process image upload
 			String imageUrl = null;
 			try {
 				imageUrl = imageServiceMap.get(imageServiceImpl)
-						.uploadImageFile(file, ImageTypeConstants.BRAND,
+						.uploadImageFile(file, ImageTypeConstants.EVENT,
 								event.getName());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -98,46 +105,76 @@ public class EventController {
 
 	@GetMapping("/all")
 	public ResponseEntity<Page<Event>> getAllEvents(
+			@RequestParam(defaultValue = "", name = "name", required = false) String name,
 			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
 		if (cp <= 0) {
 			cp = 0;
 		}
 		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
 				Sort.by("name").ascending());
-		Page<Event> events = eventRepository.findAll(pageable);
+		Page<Event> events = null;
+		if (name != null && !name.isEmpty()) {
+			String escapedName = HtmlUtils.htmlEscape(name);
+			events = eventRepository.findAllByNameContaining(
+					escapedName.toLowerCase(), pageable);
+		} else {
+			events = eventRepository.findAll(pageable);
+		}
 		return ResponseEntity.ok(events);
 	}
 
-	@PutMapping("/update/{id}")
+	@PostMapping("/save/{id}")
+	public ResponseEntity<?> saveEventImage(@PathVariable Long id,
+			@RequestParam("imageFile") MultipartFile file) {
+		Event existingEvent = eventRepository.getById(id);
+		if (existingEvent != null) {
+			try {
+				// Process image upload
+				String imageUrl = null;
+				try {
+					imageUrl = imageServiceMap.get(imageServiceImpl)
+							.uploadImageFile(file, ImageTypeConstants.EVENT,
+									existingEvent.getName());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				existingEvent.setImgUrl(imageUrl);
+			} catch (Exception e) {
+				// Handle file upload error
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body("Error occurred while uploading image");
+			}
+
+			existingEvent.setUpdateTimestamp(new Date());
+			eventRepository.save(existingEvent);
+		}
+		return ResponseEntity.ok().build();
+	}
+
+	@PatchMapping("/update/{id}")
 	public ResponseEntity<Event> updateEvent(@PathVariable Long id,
-			@RequestParam(value = "imageFile", required = false) MultipartFile file,
-			@RequestBody Event updatedEvent) {
+			@RequestBody Map<String, Object> updates) {
 		Optional<Event> eventOptional = eventRepository.findById(id);
 		if (!eventOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		Event event = eventOptional.get();
-		// Update fields
-		event.setName(updatedEvent.getName());
-		event.setDescription(updatedEvent.getDescription());
-		// Upload new image if provided
-		if (file != null && !file.isEmpty()) {
-			try {
-				try {
-					String imageUrl = imageServiceMap.get(imageServiceImpl)
-							.uploadImageFile(file, ImageTypeConstants.BRAND,
-									event.getName());
-					event.setImgUrl(imageUrl);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-						.body(null);
-			}
-		}
 
+		// Update fields using reflection
+		updates.forEach((key, value) -> {
+			try {
+				Field field = event.getClass().getDeclaredField(key);
+				field.setAccessible(true);
+				field.set(event, value);
+			} catch (NoSuchFieldException | IllegalAccessException e) {
+				e.printStackTrace(); // Handle exception properly
+			}
+		});
+		if (event.getDisplayName() == null || (event.getDisplayName() != null
+				&& event.getDisplayName().isEmpty())) {
+			event.setDisplayName(event.getName());
+		}
 		event.setUpdateTimestamp(new Date());
 		// Save updated event
 		eventRepository.save(event);

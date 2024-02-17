@@ -1,33 +1,24 @@
 <div th:fragment="content">
 	<div class="container">
-		<h2>Subcategory Management</h2>
+		<h2>Event Management</h2>
 		<button id="createNewBtn" class="btn btn-primary">Create New</button>
 		<br>
 		<div class="row mb-2">
 			<div class="col-md-4">
-				<form id="newsubcategoryForm" style="display: none;">
+				<form id="neweventForm" style="display: none;">
 					<div class="form-group">
 						<label for="name">Name</label>
-						<input type="text" class="form-control" id="name" name="name" placeholder="Enter subcategory name">
+						<input type="text" class="form-control" id="name" name="name" placeholder="Enter event name">
 					</div>
 					<div class="form-group">
 						<label for="displayName">Display Name</label>
 						<input type="text" class="form-control" id="displayName" name="displayName"
-							placeholder="Enter subcategory display name if there are any special chars other wise same as name">
+							placeholder="Enter event display name if there are any special chars other wise same as name">
 					</div>
 					<div class="form-group">
 						<label for="description">Description</label>
 						<input type="text" class="form-control" id="description" name="description"
-							placeholder="Enter subcategory description">
-					</div>
-                    <!-- <div class="form-group">
-                        <input type="checkbox" id="featured" name="featured" value="1">
-                        <label for="featured">Featured</label><br>
-					</div> -->
-                    <div class="form-group">
-						<!-- <label for="activeStatusKey">Active Status Key:</label> -->
-						<input type="hidden" class="form-control" id="activeStatusKey" name="activeStatusKey"
-							value="1" placeholder="Enter subcategory activeStatusKey">
+							placeholder="Enter event description">
 					</div>
 					<div class="form-group">
 						<label for="imageFile">Image</label>
@@ -38,17 +29,27 @@
 						<textarea class="form-control" id="additionalDetails" name="additionalDetails" rows="3"
 							placeholder="Enter additional details"></textarea>
 					</div>
+                    <div class="form-group">
+						<label for="description">Start Date</label>
+						<input type="date" class="form-control" id="startDate" name="startDate"
+							placeholder="Enter start date">
+					</div>
+                    <div class="form-group">
+						<label for="description">End Date</label>
+						<input type="date" class="form-control" id="endDate" name="endDate"
+							placeholder="Enter end date">
+					</div>
 					<button type="submit" class="btn btn-success">Save</button>
 				</form>
 			</div>
 		</div>
 		<hr>
 		<div class="search-container">
-		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search subcategorys...">
+		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search events...">
 		    <button id="resetButton" class="reset-button">&times;</button>
 		</div>
 		<hr>
-		<div class="subcategory-table table-responsive">
+		<div class="event-table table-responsive">
 			<table class="table">
 				<thead class="thead-light">
 					<tr>
@@ -56,13 +57,14 @@
 						<th>Name</th>
 						<th>Display Name</th>
 						<th>Description</th>
-                        <!--<th>Active Status</th> -->
 						<th>Image</th>
 						<th>Additional Details</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
 						<th>Action</th>
 					</tr>
 				</thead>
-				<tbody id="subcategoryTableBody">
+				<tbody id="eventTableBody">
 					<!-- Data will be dynamically populated here -->
 				</tbody>
 			</table>
@@ -81,13 +83,13 @@
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="imageModalLabel">subcategory Image</h5>
+					<h5 class="modal-title" id="imageModalLabel">event Image</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<img src="" alt="subcategory Image" class="img-fluid" id="modalImage">
+					<img src="" alt="event Image" class="img-fluid" id="modalImage">
 				</div>
 			</div>
 		</div>
@@ -120,11 +122,11 @@
 			var currentPage = 0;
 			var navTotalPages = 0;
 
-			// Function to load subcategory data
+			// Function to load event data
 			function loadData(page) {
 				var searchValue = $('#searchInput').val().trim();
 				$.ajax({
-					url: "/subcategory/all?cp=" + page+"&name="+searchValue,
+					url: "/event/all?cp=" + page+"&name="+searchValue,
 					type: "GET",
 					success: function (data) {
 						// Populate grid with data
@@ -135,58 +137,58 @@
 						addPaginationButtons(data.totalPages);
 					},
 					error: function (xhr, status, error) {
-						alert('Failed to load subcategory data: ' + error);
+						alert('Failed to load event data: ' + error);
 					}
 				});
 			}
 
-			// Function to populate the table with subcategory data
+			// Function to populate the table with event data
 			function populateTable(data) {
-				var tableBody = $('#subcategoryTableBody');
+				var tableBody = $('#eventTableBody');
 				tableBody.empty(); // Clear existing data
 
-				$.each(data, function (index, subcategory) {
+				$.each(data, function (index, event) {
 					var row = 	'<tr>' +
-									'<td>' + subcategory.id + '</td>' +
-									'<td class="editable" data-type="text" data-field="name" data-id="' + subcategory.id + '" data-value="'+subcategory.name+'">' + subcategory.name + '</td>' +
-									'<td class="editable" data-type="text" data-field="displayName" data-id="' + subcategory.id + '" data-value="'+subcategory.displayName+'">' + subcategory.displayName + '</td>' +
-									'<td class="editable" data-type="text" data-field="description" data-id="' + subcategory.id + '" data-value="'+subcategory.description+'">' + subcategory.description + '</td>' +
-									//'<td data-type="text" data-field="featured" data-id="' + subcategory.id + '" data-value="'+subcategory.featured+'">' + subcategory.featured + '</td>' +
-									//'<td class="editable" data-type="text" data-field="activeStatusKey" data-id="' + subcategory.id + '" data-value="'+subcategory.activeStatusKey+'">' + subcategory.activeStatusKey + '</td>' +
-									'<td data-id="' + subcategory.id + '" data-value="'+subcategory.imgUrl+'">' +
-										'<img src="' + subcategory.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + subcategory.imgUrl + '">'+
-										'<br><button class="btn btn-primary edit-image-btn" data-id="' + subcategory.id + '" data-imgurl="' + subcategory.imgUrl + '">Edit Image</button>' +
-										'<br><div id="image_update_div_' + subcategory.id + '" style="display:none">'+
-											'<form id="image_update_form_' + subcategory.id + '" class="image_update_form" action="/subcategory/update/' + subcategory.id + '" data-id="'+subcategory.id+'" method="patch" enctype="multipart/form-data">'+
-											'<input type="hidden" name="id_' + subcategory.id + '" value="' + subcategory.id + '" />'+
-											'<input type="file" class="form-control-file" id="imageFile_' + subcategory.id + '" name="imageFile" accept="image/*" />'+
+									'<td>' + event.id + '</td>' +
+									'<td class="editable" data-type="text" data-field="name" data-id="' + event.id + '" data-value="'+event.name+'">' + event.name + '</td>' +
+									'<td class="editable" data-type="text" data-field="displayName" data-id="' + event.id + '" data-value="'+event.displayName+'">' + event.displayName + '</td>' +
+									'<td class="editable" data-type="text" data-field="description" data-id="' + event.id + '" data-value="'+event.description+'">' + event.description + '</td>' +
+									'<td data-id="' + event.id + '" data-value="'+event.imgUrl+'">' +
+										'<img src="' + event.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + event.imgUrl + '">'+
+										'<br><button class="btn btn-primary edit-image-btn" data-id="' + event.id + '" data-imgurl="' + event.imgUrl + '">Edit Image</button>' +
+										'<br><div id="image_update_div_' + event.id + '" style="display:none">'+
+											'<form id="image_update_form_' + event.id + '" class="image_update_form" action="/event/update/' + event.id + '" data-id="'+event.id+'" method="patch" enctype="multipart/form-data">'+
+											'<input type="hidden" name="id_' + event.id + '" value="' + event.id + '" />'+
+											'<input type="file" class="form-control-file" id="imageFile_' + event.id + '" name="imageFile" accept="image/*" />'+
 											'</form>'+
-											'<br><button type="submit" class="btn btn-success submit-edit-image-btn" data-id="' + subcategory.id + '">Save</button>'+
+											'<br><button type="submit" class="btn btn-success submit-edit-image-btn" data-id="' + event.id + '">Save</button>'+
 										'</div>'+
 									'</td>' +
-									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + subcategory.id + '" data-value="'+subcategory.additionalDetails+'">' + subcategory.additionalDetails + '</td>' +
+									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + event.id + '" data-value="'+event.additionalDetails+'">' + event.additionalDetails + '</td>' +
+                                    '<td class="editable" data-type="date" data-field="startDate" data-id="' + event.id + '" data-value="'+event.startDate+'">' + event.startDate + '</td>' +
+                                    '<td class="editable" data-type="date" data-field="endDate" data-id="' + event.id + '" data-value="'+event.endDate+'">' + event.endDate + '</td>' +
 									'<td>' +
-									'<button class="btn btn-info edit-button" data-id="' + subcategory.id + '">Edit</button>&nbsp;' +
-									'<button class="btn btn-danger delete-button" data-id="' + subcategory.id + '">Delete</button>' +
+									'<button class="btn btn-info edit-button" data-id="' + event.id + '">Edit</button>&nbsp;' +
+									'<button class="btn btn-danger delete-button" data-id="' + event.id + '">Delete</button>' +
 									'</td>' +
 								'</tr>';
 					tableBody.append(row);
 				});
 			}
-			$('#subcategoryTableBody').on('click', '.edit-image-btn', function (event) {
-				var subcategoryId = $(this).data('id');
-				$('#subcategoryTableBody #image_update_div_'+subcategoryId).css('display', 'block');
+			$('#eventTableBody').on('click', '.edit-image-btn', function (event) {
+				var eventId = $(this).data('id');
+				$('#eventTableBody #image_update_div_'+eventId).css('display', 'block');
 				
 			});
 
-			$('#subcategoryTableBody').on('click', '.submit-edit-image-btn', function (event) {
+			$('#eventTableBody').on('click', '.submit-edit-image-btn', function (event) {
 				event.preventDefault(); // Prevent the form from submitting normally
-				var subcategoryId = $(this).data('id');
-// 				$('#subcategoryTableBody #image_update_form_'+subcategoryId).submit();
-				var formData = new FormData($('#image_update_form_' + subcategoryId)[0]);
+				var eventId = $(this).data('id');
+// 				$('#eventTableBody #image_update_form_'+eventId).submit();
+				var formData = new FormData($('#image_update_form_' + eventId)[0]);
 
 				$.ajax({
-					url: '/subcategory/save/'+subcategoryId,
+					url: '/event/save/'+eventId,
 					type: 'POST',
 					data: formData,
 					async: false,
@@ -204,11 +206,11 @@
 						console.error(xhr.responseText);
 					}
 				});
-				$('#subcategoryTableBody #image_update_div_'+subcategoryId).css('display', 'none');
+				$('#eventTableBody #image_update_div_'+eventId).css('display', 'none');
 			});
 			
 			// Enable inline editing
-			$('#subcategoryTableBody').on('click', '.edit-button', function (event) {
+			$('#eventTableBody').on('click', '.edit-button', function (event) {
 				event.preventDefault();
 				var $row = $(this).closest('tr'); // Get the parent row
 
@@ -231,6 +233,8 @@
 							$inputField = $('<input type="file" class="editable-field" name="'+$field+'" data-field="'+$field+'" form-control-file" id="imageFile" name="imageFile" accept="image/*">');
 						} else if ($td.data('type') === 'textarea') { // Check if it's a textarea input
 							$inputField = $('<textarea class="editable-field" name="'+$field+'" data-field="'+$field+'"></textarea>').val($fieldValue);
+						} else if ($td.data('type') === 'date') { // Check if it's a textarea input
+							$inputField = $('<input type="date" class="editable-field" name="'+$field+'" data-field="'+$field+'">').val($fieldValue);
 						} else {
 							$inputField = $('<input type="text" class="editable-field" name="'+$field+'" data-field="'+$field+'">').val($fieldValue);
 						}
@@ -244,7 +248,7 @@
 
 
 			// Save edited data
-			$('#subcategoryTableBody').on('click', '.save-button', function () {
+			$('#eventTableBody').on('click', '.save-button', function () {
 				var $row = $(this).closest('tr');
 			    var id = $row.find('.editable').data('id');
 			    var newData = {};
@@ -259,9 +263,9 @@
 				var name = $row.find('.editable[data-field="name"]').text().trim();
 				newData['name'] = name;
 
-				// Perform AJAX request to update the subcategory
+				// Perform AJAX request to update the event
 				$.ajax({
-					url: '/subcategory/update/' + id, // Change this to your update endpoint
+					url: '/event/update/' + id, // Change this to your update endpoint
 					type: 'PATCH',
 					contentType: 'application/json', // Specify content type as JSON
 					data: JSON.stringify(newData),   // Convert JavaScript object to JSON string
@@ -273,7 +277,7 @@
 						loadData(currentPage);
 					},
 					error: function (xhr, status, error) {
-						alert('Failed to update subcategory: ' + error);
+						alert('Failed to update event: ' + error);
 					}
 				});
 
@@ -282,33 +286,33 @@
 			});
 
 			// Handle deletion
-			$('#subcategoryTableBody').on('click', '.delete-button', function () {
+			$('#eventTableBody').on('click', '.delete-button', function () {
 				var id = $(this).data('id');
-				var confirmDelete = confirm('Are you sure you want to delete this subcategory?');
+				var confirmDelete = confirm('Are you sure you want to delete this event?');
 
 				if (confirmDelete) {
-					// Perform AJAX request to delete the subcategory
+					// Perform AJAX request to delete the event
 					$.ajax({
-						url: '/subcategory/delete/' + id, // Change this to your delete endpoint
+						url: '/event/delete/' + id, // Change this to your delete endpoint
 						type: 'DELETE',
 						success: function (response) {
 							// Remove the row from the table if deletion is successful
 							loadData(currentPage);
 						},
 						error: function (xhr, status, error) {
-							alert('Failed to delete subcategory: ' + error);
+							alert('Failed to delete event: ' + error);
 						}
 					});
 				}
 			});
 
-			// Handle new subcategory form submission
-			$('#newsubcategoryForm').submit(function (event) {
+			// Handle new event form submission
+			$('#neweventForm').submit(function (event) {
 				event.preventDefault(); // Prevent the form from submitting normally
 				var formData = new FormData($(this)[0]);
 
 				$.ajax({
-					url: '/subcategory/save',
+					url: '/event/save',
 					type: 'POST',
 					data: formData,
 					async: false,
@@ -319,7 +323,7 @@
 						// Handle success response
 						console.log(response);
 						// Empty form on success
-						$('#newsubcategoryForm')[0].reset();
+						$('#neweventForm')[0].reset();
 						// If needed, refresh the table to display the new data
 						loadData(currentPage);
 					},
@@ -330,9 +334,9 @@
 				});
 			});
 
-			// Show/hide create new subcategory form
+			// Show/hide create new event form
 			$('#createNewBtn').click(function () {
-				$('#newsubcategoryForm').toggle();
+				$('#neweventForm').toggle();
 			});
 
 			// Initial data load

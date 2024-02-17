@@ -39,11 +39,14 @@ public class MallModel {
 	private String displayName;
 
 	private String location;
+	private String imgUrl;
 	private int floors;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<String> images;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Shop> shops;
 	@OneToMany(cascade = CascadeType.ALL)
@@ -153,4 +156,17 @@ public class MallModel {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+	public List<String> getImages() {
+		return images;
+	}
+	public void setImages(List<String> images) {
+		this.images = images;
+	}
+
 }

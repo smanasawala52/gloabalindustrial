@@ -5,7 +5,7 @@
 		<br>
 		<div class="row mb-2">
 			<div class="col-md-4">
-				<form id="newCategoryForm" style="display: none;">
+				<form id="newcategoryForm" style="display: none;">
 					<div class="form-group">
 						<label for="name">Name</label>
 						<input type="text" class="form-control" id="name" name="name" placeholder="Enter category name">
@@ -20,9 +20,18 @@
 						<input type="text" class="form-control" id="description" name="description"
 							placeholder="Enter category description">
 					</div>
+                    <div class="form-group">
+                        <input type="checkbox" id="featured" name="featured" value="1">
+                        <label for="featured">Featured</label><br>
+					</div>
+                    <div class="form-group">
+						<!-- <label for="activeStatusKey">Active Status Key:</label> -->
+						<input type="hidden" class="form-control" id="activeStatusKey" name="activeStatusKey"
+							value="1" placeholder="Enter category activeStatusKey">
+					</div>
 					<div class="form-group">
 						<label for="imageFile">Image</label>
-						<input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/*">
+						<input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/jpeg, image/png, image/jpg">
 					</div>
 					<div class="form-group">
 						<label for="additionalDetails">Additional Details</label>
@@ -45,10 +54,11 @@
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
-						<th>Image</th>
 						<th>Display Name</th>
 						<th>Description</th>
+						<th>Image</th>
 						<th>Additional Details</th>
+						<th>Sub Category</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -71,13 +81,13 @@
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="imageModalLabel">Category Image</h5>
+					<h5 class="modal-title" id="imageModalLabel">category Image</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<img src="" alt="Category Image" class="img-fluid" id="modalImage">
+					<img src="" alt="category Image" class="img-fluid" id="modalImage">
 				</div>
 			</div>
 		</div>
@@ -139,6 +149,9 @@
 					var row = 	'<tr>' +
 									'<td>' + category.id + '</td>' +
 									'<td class="editable" data-type="text" data-field="name" data-id="' + category.id + '" data-value="'+category.name+'">' + category.name + '</td>' +
+									'<td class="editable" data-type="text" data-field="displayName" data-id="' + category.id + '" data-value="'+category.displayName+'">' + category.displayName + '</td>' +
+									'<td class="editable" data-type="text" data-field="description" data-id="' + category.id + '" data-value="'+category.description+'">' + category.description + '</td>' +
+									//'<td class="editable" data-type="text" data-field="activeStatusKey" data-id="' + category.id + '" data-value="'+category.activeStatusKey+'">' + category.activeStatusKey + '</td>' +
 									'<td data-id="' + category.id + '" data-value="'+category.imgUrl+'">' +
 										'<img src="' + category.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + category.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + category.id + '" data-imgurl="' + category.imgUrl + '">Edit Image</button>' +
@@ -150,9 +163,8 @@
 											'<br><button type="submit" class="btn btn-success submit-edit-image-btn" data-id="' + category.id + '">Save</button>'+
 										'</div>'+
 									'</td>' +
-									'<td class="editable" data-type="text" data-field="displayName" data-id="' + category.id + '" data-value="'+category.displayName+'">' + category.displayName + '</td>' +
-									'<td class="editable" data-type="text" data-field="description" data-id="' + category.id + '" data-value="'+category.description+'">' + category.description + '</td>' +
 									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + category.id + '" data-value="'+category.additionalDetails+'">' + category.additionalDetails + '</td>' +
+									'<td>'+appendNamesCommaSeparated(category.subCategories)+'<br><a href="/category/subcategory/' + category.id + '" class="btn btn-success">Add Sub Category</a></td>'+
 									'<td>' +
 									'<button class="btn btn-info edit-button" data-id="' + category.id + '">Edit</button>&nbsp;' +
 									'<button class="btn btn-danger delete-button" data-id="' + category.id + '">Delete</button>' +
@@ -161,6 +173,16 @@
 					tableBody.append(row);
 				});
 			}
+			function appendNamesCommaSeparated(objects) {
+		        var names = "";
+		        $.each(objects, function(index, object) {
+		            if (index > 0) {
+		                names += ", "; // Add comma if it's not the first name
+		            }
+		            names += object.name; // Append name
+		        });
+		        return names;
+		    }
 			$('#categoryTableBody').on('click', '.edit-image-btn', function (event) {
 				var categoryId = $(this).data('id');
 				$('#categoryTableBody #image_update_div_'+categoryId).css('display', 'block');
@@ -201,7 +223,7 @@
 				var $row = $(this).closest('tr'); // Get the parent row
 
 				// Toggle between displaying plain text and input fields
-				$row.find('.editable').not('[data-field="name"]').each(function () {
+				$row.find('.editable').not('[data-field="name"]','[data-type="featured"]','[data-type="activeStatusKey"]').each(function () {
 					var $td = $(this);
 					var $input = $td.find('.editable-field');
 					var $fieldValue = $td.data('value');
@@ -291,7 +313,7 @@
 			});
 
 			// Handle new category form submission
-			$('#newCategoryForm').submit(function (event) {
+			$('#newcategoryForm').submit(function (event) {
 				event.preventDefault(); // Prevent the form from submitting normally
 				var formData = new FormData($(this)[0]);
 
@@ -307,7 +329,7 @@
 						// Handle success response
 						console.log(response);
 						// Empty form on success
-						$('#newCategoryForm')[0].reset();
+						$('#newcategoryForm')[0].reset();
 						// If needed, refresh the table to display the new data
 						loadData(currentPage);
 					},
@@ -320,7 +342,7 @@
 
 			// Show/hide create new category form
 			$('#createNewBtn').click(function () {
-				$('#newCategoryForm').toggle();
+				$('#newcategoryForm').toggle();
 			});
 
 			// Initial data load

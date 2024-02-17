@@ -1,23 +1,23 @@
 <div th:fragment="content">
 	<div class="container">
-		<h2>Category - Sub Category Management</h2>
+		<h2>Attraction - Category Management</h2>
 		<br>
 		<div class="row mb-2">
 			<div class="col-md-4">
 				<div class="form-group">
-					<p>Category ID: <input type="hidden" id="categoryId" th:value="${category.id}" /><span th:text="${category.id}"></span></p>        			
-					<p>Category Name: <span th:text="${category.name}"></span></p>
+					<p>Attraction ID: <input type="hidden" id="attractionId" th:value="${attraction.id}" /><span th:text="${attraction.id}"></span></p>        			
+					<p>Attraction Name: <span th:text="${attraction.name}"></span></p>
 				</div>
-				<a href="/subcategory/" class="btn btn-success">Add New Sub Category</a>
+				<a href="/category/" class="btn btn-success">Add New Category</a>
 			</div>
 		</div>
 		<hr>
 		<div class="search-container">
-		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search subcategorys...">
+		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search categories...">
 		    <button id="resetButton" class="reset-button">&times;</button>
 		</div>
 		<hr>
-		<div class="subcategory-table table-responsive">
+		<div class="category-table table-responsive">
 			<table class="table">
 				<thead class="thead-light">
 					<tr>
@@ -26,7 +26,7 @@
 						<th>Name</th>
 					</tr>
 				</thead>
-				<tbody id="subcategoryTableBody">
+				<tbody id="categoryTableBody">
 					<!-- Data will be dynamically populated here -->
 				</tbody>
 			</table>
@@ -59,12 +59,12 @@
 			var currentPage = 0;
 			var navTotalPages = 0;
 
-			// Function to load subcategory data
+			// Function to load category data
 			function loadData(page) {
 				var searchValue = $('#searchInput').val().trim();
-				var categoryId = $('#categoryId').val().trim();
+				var attractionId = $('#attractionId').val().trim();
 				$.ajax({
-					url: "/category/subcategory/all/"+categoryId+"?cp=" + page+"&name="+searchValue,
+					url: "/attraction/category/all/"+attractionId+"?cp=" + page+"&name="+searchValue,
 					type: "GET",
 					success: function (data) {
 						// Populate grid with data
@@ -75,38 +75,38 @@
 						addPaginationButtons(data.totalPages);
 					},
 					error: function (xhr, status, error) {
-						alert('Failed to load subcategory data: ' + error);
+						alert('Failed to load category data: ' + error);
 					}
 				});
 			}
 
-			// Function to populate the table with subcategory data
+			// Function to populate the table with category data
 			function populateTable(data) {
-				var tableBody = $('#subcategoryTableBody');
+				var tableBody = $('#categoryTableBody');
 				tableBody.empty(); // Clear existing data
 
-				$.each(data, function (index, subcategory) {
-				    var checkedStatus = subcategory.linked === true ? 'checked' : ''; // Set checked status based on linked attribute
+				$.each(data, function (index, category) {
+				    var checkedStatus = category.linked === true ? 'checked' : ''; // Set checked status based on linked attribute
 				    var row =  '<tr>' +
-				                    '<td><input type="checkbox" class="editable" data-field="link" data-id="' + subcategory.id + '" id="featured_' + subcategory.id + '" name="featured" value="' + subcategory.linked + '" ' + checkedStatus + '/></td>' +
-				                    '<td>' + subcategory.id + '</td>' +
-				                    '<td class="editable" data-type="text" data-field="name" data-id="' + subcategory.id + '" data-value="'+subcategory.name+'">' + subcategory.name + '</td>' +
+				                    '<td><input type="checkbox" class="editable" data-field="link" data-id="' + category.id + '" id="featured_' + category.id + '" name="featured" value="' + category.linked + '" ' + checkedStatus + '/></td>' +
+				                    '<td>' + category.id + '</td>' +
+				                    '<td class="editable" data-type="text" data-field="name" data-id="' + category.id + '" data-value="'+category.name+'">' + category.name + '</td>' +
 				                '</tr>';
 				    tableBody.append(row);
 				});
 			}
 
 			// Save edited data
-			$('#subcategoryTableBody').on('change', '.editable', function () {
-				var categoryId = $('#categoryId').val().trim();
-		        var subcategoryId = $(this).data('id');
+			$('#categoryTableBody').on('change', '.editable', function () {
+				var attractionId = $('#attractionId').val().trim();
+		        var categoryId = $(this).data('id');
 		        var checked = $(this).prop('checked');
 
 		        if (checked) {
 		            // Make a POST request if the checkbox is checked
 		            $.ajax({
 		                type: 'POST',
-		                url: '/category/' + categoryId + '/subcategory/' + subcategoryId,
+		                url: '/attraction/' + attractionId + '/category/' + categoryId,
 		                success: function(response) {
 		                    // Handle success response
 		                    loadData(0);
@@ -119,7 +119,7 @@
 		            // Make a DELETE request if the checkbox is unchecked
 		            $.ajax({
 		                type: 'DELETE',
-		                url: '/category/' + categoryId + '/subcategory/' + subcategoryId,
+		                url: '/attraction/' + attractionId + '/category/' + categoryId,
 		                success: function(response) {
 		                    // Handle success response
 		                },

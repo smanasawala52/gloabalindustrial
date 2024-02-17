@@ -239,6 +239,10 @@ public class CategoryController {
 		}
 		return ResponseEntity.ok(categorys);
 	}
+	@GetMapping("/allIdAndName")
+	public ResponseEntity<List<Object[]>> getAllIdAndName() {
+		return ResponseEntity.ok(categoryRepository.getAllIdAndName());
+	}
 
 	@PostMapping("/save/{id}")
 	public ResponseEntity<?> saveCategoryImage(@PathVariable Long id,

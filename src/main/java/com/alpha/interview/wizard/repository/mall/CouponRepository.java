@@ -1,5 +1,7 @@
 package com.alpha.interview.wizard.repository.mall;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +19,6 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
 	Page<Coupon> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	Coupon findByName(String name);
+	@Query("SELECT c.id, c.name FROM Coupon c")
+	List<Object[]> getAllIdAndName();
 }
