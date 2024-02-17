@@ -1,6 +1,8 @@
 package com.alpha.interview.wizard.controller.mall;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -800,13 +802,29 @@ public class MallModelController {
 			return ResponseEntity.notFound().build();
 		}
 		MallModel mallModel = mallModelOptional.get();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		// Update fields using reflection
 		updates.forEach((key, value) -> {
 			try {
 				Field field = mallModel.getClass().getDeclaredField(key);
 				field.setAccessible(true);
-				field.set(mallModel, value);
+				if (key.equals("startDate") || key.equals("endDate")) {
+					Date date = null;
+					try {
+						date = dateFormat.parse((String) value);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					field.set(mallModel, date);
+				} else if (field.getType().equals(int.class)
+						&& value instanceof String) {
+					int intValue = Integer.parseInt((String) value);
+					field.set(mallModel, intValue);
+				} else {
+					field.set(mallModel, value);
+				}
 			} catch (NoSuchFieldException | IllegalAccessException e) {
 				e.printStackTrace(); // Handle exception properly
 			}

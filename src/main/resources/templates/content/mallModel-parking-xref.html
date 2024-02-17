@@ -65,7 +65,7 @@
 				var searchValue = $('#searchInput').val().trim();
 				var mallModelId = $('#mallModelId').val().trim();
 				$.ajax({
-					url: "/mallModel/parking/all/"+mallModelId+"?cp=" + page+"&name="+searchValue,
+					url: "/mallmodel/parking/all/"+mallModelId+"?cp=" + page+"&name="+searchValue,
 					type: "GET",
 					success: function (data) {
 						// Populate grid with data
@@ -108,7 +108,7 @@
 		            // Make a POST request if the checkbox is checked
 		            $.ajax({
 		                type: 'POST',
-		                url: '/mallModel/' + mallModelId + '/parking/' + parkingId,
+		                url: '/mallmodel/' + mallModelId + '/parking/' + parkingId,
 		                success: function(response) {
 		                    // Handle success response
 		                    loadData(0);
@@ -121,7 +121,7 @@
 		            // Make a DELETE request if the checkbox is unchecked
 		            $.ajax({
 		                type: 'DELETE',
-		                url: '/mallModel/' + mallModelId + '/parking/' + parkingId,
+		                url: '/mallmodel/' + mallModelId + '/parking/' + parkingId,
 		                success: function(response) {
 		                    // Handle success response
 		                },
