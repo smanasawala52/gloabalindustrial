@@ -61,21 +61,43 @@ public class MallModelDataLoadService {
 							for (SubCategory subCategory : category.getSubCategories()) {
 								Optional<SubCategory> subCategoryOptional = subCategoryRepository
 										.findById(subCategory.getId());
-								if (subCategoryOptional.isPresent()) {
+								if (!subCategoryOptional.isPresent()) {
 									subCategoryRepository.save(subCategory);
 								}
 							}
 
 							Optional<Category> categoryOptional = categoryRepository.findById(category.getId());
-							if (categoryOptional.isPresent()) {
+							if (!categoryOptional.isPresent()) {
 								categoryRepository.save(category);
 							}
 						}
 						Optional<Shop> shopOptional = shopRepository.findById(shop.getId());
-						if (shopOptional.isPresent()) {
+						if (!shopOptional.isPresent()) {
 							shopRepository.save(shop);
 						}
 					}
+
+					for (Shop shop : mallModel.getShops()) {
+						for (Category category : shop.getCategories()) {
+							for (SubCategory subCategory : category.getSubCategories()) {
+								Optional<SubCategory> subCategoryOptional = subCategoryRepository
+										.findById(subCategory.getId());
+								if (!subCategoryOptional.isPresent()) {
+									subCategoryRepository.save(subCategory);
+								}
+							}
+
+							Optional<Category> categoryOptional = categoryRepository.findById(category.getId());
+							if (!categoryOptional.isPresent()) {
+								categoryRepository.save(category);
+							}
+						}
+						Optional<Shop> shopOptional = shopRepository.findById(shop.getId());
+						if (!shopOptional.isPresent()) {
+							shopRepository.save(shop);
+						}
+					}
+
 				}
 
 				// Now you have a List<SubCategory> containing your objects
