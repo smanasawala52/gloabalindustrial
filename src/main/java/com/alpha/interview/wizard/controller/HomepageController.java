@@ -1,4 +1,5 @@
 package com.alpha.interview.wizard.controller;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -29,12 +30,19 @@ public class HomepageController {
 	public String showHomeSendTextUsingWebSocketPage() {
 		return "homeSendTextUsingWebSocket";
 	}
+
 	@GetMapping("/homeFullAudioDemo")
 	public String showHomeFullAudioDemoPage() {
 		return "homeFullAudioDemo";
 	}
+
 	@GetMapping("/stream")
 	public String showStreamPage() {
 		return "stream";
+	}
+
+	@GetMapping("/audioVisualizer")
+	public String showAudioVisualizerPage() {
+		return "audioVisualizer";
 	}
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mall Model Upload Form</title>
+</head>
+<body>
+    <h2>Mall Model Upload Form</h2>
+
+    <form method="post" action="/mallmodel/upload" enctype="multipart/form-data">
+        <label for="file">Choose JSON File:</label>
+        <input type="file" name="file" id="file" accept=".json" required>
+        <br>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>

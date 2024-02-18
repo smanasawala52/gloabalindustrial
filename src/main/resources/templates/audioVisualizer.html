@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2D Audio Visualizer</title>
+<style>
+    #visualizer {
+        width: 100%;
+        height: 300px;
+        background-color: #f0f0f0;
+    }
+</style>
+</head>
+<body>
+<audio id="audio" controls>
+    <source src="your-audio-file.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+<div id="visualizer"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    var audio = document.getElementById("audio");
+    var context = new AudioContext();
+    var src = context.createMediaElementSource(audio);
+    var analyser = context.createAnalyser();
+
+    var canvas = document.getElementById("visualizer");
+    var ctx = canvas.getContext("2d");
+
+    src.connect(analyser);
+    analyser.connect(context.destination);
+
+    analyser.fftSize = 256;
+
+    var bufferLength = analyser.frequencyBinCount;
+    var dataArray = new Uint8Array(bufferLength);
+
+    var WIDTH = canvas.width;
+    var HEIGHT = canvas.height;
+
+    var barWidth = (WIDTH / bufferLength) * 2.5;
+    var barHeight;
+    var x = 0;
+
+    function renderFrame() {
+        requestAnimationFrame(renderFrame);
+
+        x = 0;
+
+        analyser.getByteFrequencyData(dataArray);
+
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+        for (var i = 0; i < bufferLength; i++) {
+            barHeight = dataArray[i];
+
+            var r = barHeight + (25 * (i/bufferLength));
+            var g = 250 * (i/bufferLength);
+            var b = 50;
+
+            ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+            ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+
+            x += barWidth + 1;
+        }
+    }
+
+	let resetButton = document.getElementById('resetButton');
+    let recordButton = document.getElementById('recordButton');
+    let executeQueryButton = document.getElementById('executeQueryButton');
+    let query = document.getElementById('query');
+    query.addEventListener("keydown", function(event) {
+        // Check if the pressed key is the "Enter" key (key code 13)
+        if (event.key === "Enter") {
+            // Call your JavaScript function or perform the desired action
+            executeQuery();
+        }
+    });
+    let audioChunks = [];
+    let mediaRecorder;
+    let stream;
+
+    let isRecording = false;
+
+    recordButton.addEventListener('click', toggleRecording);
+    executeQueryButton.addEventListener('click', executeQuery);
+    resetButton.addEventListener('click', executeResetChat);
+    async function executeResetChat(){
+    	let response = await fetch('/mall/resetChatSession', {
+            method: 'GET'
+        });
+    	resetButton.style = "display:none;";
+    	document.getElementById('messages').innerHTML='';
+    }
+    async function executeQuery() {
+    	convertToSpeech('We are currently analysing your question! Please wait a moment.');
+        let formData = new FormData();
+        formData.append('query', query.value); 
+        // Match the parameter name in your Spring Boot controller
+
+    	try {
+            let response = await fetch('/mall/captureQuery', {
+                method: 'POST',
+                body: formData
+            });
+            if (response.ok) {
+            	let message = await response.text();
+            	showMessage(message);
+            	convertToSpeech(JSON.parse(message).content);
+            	generateVideo(JSON.parse(message).content);
+                console.log('Text data sent successfully. ' + message);
+            } else {
+                console.error('Failed to send text data. Status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error sending text data:', error);
+        } finally {
+        }
+    }
+    async function toggleRecording() {
+        if (!isRecording) {
+            startRecording();
+        } else {
+            stopRecording();
+        }
+        isRecording = !isRecording;
+        updateButtonState();
+    }
+
+    async function startRecording() {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+
+            mediaRecorder.ondataavailable = function(event) {
+                if (event.data.size > 0) {
+                    audioChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = function() {
+            	sendAudioData();
+                // Do nothing on stop, as we're handling it in sendAudioData
+            };
+
+            mediaRecorder.start();
+        } catch (error) {
+            console.error('Error accessing microphone:', error);
+        }
+    }
+
+    function stopRecording() {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            mediaRecorder.stop();
+            stream.getTracks().forEach(track => track.stop());
+        }
+    }
+
+    async function sendAudioData() {
+    	convertToSpeech('We are currently analysing your question! Please wait a moment.');
+    	audioChunks;
+        let audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        let formData = new FormData();
+        formData.append('audioData', audioBlob); // Match the parameter name in your Spring Boot controller
+
+        try {
+            let response = await fetch('/mall/captureAudioStream', {
+                method: 'POST',
+                body: formData
+            });
+            if (response.ok) {
+            	let message = await response.text();
+            	showMessage(message);
+            	convertToSpeech(JSON.parse(message).content);
+                generateVideo(JSON.parse(message).content);
+                console.log('Audio data sent successfully. ' + message);
+            } else {
+                console.error('Failed to send audio data. Status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error sending audio data:', error);
+        } finally {
+            audioChunks = [];
+        }
+    }
+    function convertToSpeech(inputText) {
+        fetch('/convertToSpeech', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `inputText=${encodeURIComponent(inputText)}`,
+        })
+        .then(response => response.blob())
+        .then(audioBlob => {
+            // Create an audio element and set the source
+            const audioElement = document.createElement('audio');
+            audioElement.controls = true;
+            const audioUrl = URL.createObjectURL(audioBlob);
+            audioElement.src = audioUrl;
+
+            // Update the 'audioContainer' with the audio element
+            const audioContainer = document.getElementById('audioContainer');
+            audioContainer.innerHTML = '';
+            audioContainer.appendChild(audioElement);
+            audioElement.play();
+
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    async function generateVideo(inputText) {
+        //const apiKey = 'NjBmMDEyYzFjNTBlNDg2ZmIyYTQ2M2I3NGNlNWFmZmUtMTcwNzA2NTUyOA=='; // ktrophy
+        const apiKey = 'OWI4MzM3YTMxNTZhNGJjMzkwYWExZWFiOGI3ZmNlZDUtMTcwNzA2Njg2MA=='; // NB
+        const apiUrl = 'https://api.heygen.com/v1/video.generate';
+
+        const requestBody = {
+            background: '#ffffff',
+            clips: [{
+                avatar_id: 'Daisy-inskirt-20220818',
+                avatar_style: 'normal',
+                input_text: inputText,
+                offset: {
+                    x: 0,
+                    y: 0
+                },
+                scale: 1,
+                voice_id: '1bd001e7e50f421d891986aad5158bc8'
+            }],
+            ratio: '16:9',
+            test: true,
+            version: 'v1alpha'
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'X-Api-Key': apiKey,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log(result);
+
+            apiUrl1 = 'https://api.heygen.com/v1/video_status.get?video_id=' + result.data.video_id;
+            var status = '';
+            var videoUrl = '';
+            try {
+	            while (videoUrl == ''){
+	                const response = await fetch(apiUrl1, {
+	                    method: 'GET',
+	                    headers: {
+	                        'X-Api-Key': apiKey
+	                    }
+	                });
+	
+	                if (!response.ok) {
+	                    throw new Error(`HTTP error! Status: ${response.status}`);
+	                }
+	
+	                const result = await response.json();
+	                if(result.data.status == 'completed'){
+	                	videoUrl = result.data.video_url;
+	                	break;
+	                }
+	                await new Promise(resolve => setTimeout(resolve, 1000));
+	            }
+                displayVideo(videoUrl);
+                // Handle the generated video data as needed
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        } catch (error1) {
+            console.error('Error:', error1.message);
+        }
+    }
+
+    function displayVideo(videoUrl) {
+        const videoElement = document.getElementById('heygenVideo');
+        const sourceElement = document.createElement('source');
+
+        sourceElement.src = videoUrl;
+        sourceElement.type = 'video/mp4'; // Adjust the type based on the video format
+
+        videoElement.appendChild(sourceElement);
+        videoElement.load();
+        videoElement.play();
+        audioContainer.innerHTML = '';
+    }
+    function showMessage(message) {
+    	resetButton.style = "display:block;";
+        const messages = document.getElementById('messages');
+        const p = document.createElement('p');
+        const hr = document.createElement('hr');
+        const question = document.createElement('p');
+        const answer = document.createElement('p');
+        p.style.wordWrap = 'break-word';
+        question.style.wordWrap = 'break-word';
+        answer.style.wordWrap = 'break-word';
+        try{
+        	question.appendChild(document.createTextNode("Question: "+JSON.parse(message).question+"?"));
+        	p.appendChild(question);
+        }catch(err){
+        	console.log(err);
+        }
+        try{
+        	answer.appendChild(document.createTextNode("Answer: "+JSON.parse(message).content));
+        	p.appendChild(answer);
+        }catch(err){
+        	console.log(err);
+        }
+        p.appendChild(hr);
+        messages.prepend(p);
+    }
+
+    function updateButtonState() {
+        recordButton.textContent = isRecording ? '🛑 Stop Recording' : '🎤 Record';
+    }
+
+    audio.play();
+    renderFrame();
+});
+</script>
+<div id="audioContainer" style="display:none;"></div>
+<div id="messages" class="mall-messages"></div>
+</body>
+</html>
