@@ -1,7 +1,9 @@
 package com.alpha.interview.wizard.controller.mall;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -192,5 +194,18 @@ public class ProductController {
 		}
 		productRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Product>> getAllById(@PathVariable Long id) {
+		if (id <= 0) {
+			return ResponseEntity.ok(productRepository.findAll());
+		}
+		List<Product> lst = new ArrayList<>();
+		Optional<Product> productOptional = productRepository.findById(id);
+		if (productOptional.isPresent()) {
+			lst.add(productOptional.get());
+		}
+		return ResponseEntity.ok(lst);
 	}
 }

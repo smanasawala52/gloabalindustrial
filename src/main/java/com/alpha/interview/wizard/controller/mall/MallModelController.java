@@ -840,15 +840,18 @@ public class MallModelController {
 		return ResponseEntity.ok(mallModel);
 	}
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteMallModel(@PathVariable Long id) {
+	@GetMapping("/{id}")
+	public ResponseEntity<List<MallModel>> getAllById(@PathVariable Long id) {
+		if (id <= 0) {
+			return ResponseEntity.ok(mallModelRepository.findAll());
+		}
+		List<MallModel> lst = new ArrayList<>();
 		Optional<MallModel> mallModelOptional = mallModelRepository
 				.findById(id);
-		if (!mallModelOptional.isPresent()) {
-			return ResponseEntity.notFound().build();
+		if (mallModelOptional.isPresent()) {
+			lst.add(mallModelOptional.get());
 		}
-		mallModelRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.ok(lst);
 	}
 
 }

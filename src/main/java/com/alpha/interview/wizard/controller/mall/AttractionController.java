@@ -313,4 +313,18 @@ public class AttractionController {
 		attractionRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Attraction>> getAllById(@PathVariable Long id) {
+		if (id <= 0) {
+			return ResponseEntity.ok(attractionRepository.findAll());
+		}
+		List<Attraction> lst = new ArrayList<>();
+		Optional<Attraction> attractionOptional = attractionRepository
+				.findById(id);
+		if (attractionOptional.isPresent()) {
+			lst.add(attractionOptional.get());
+		}
+		return ResponseEntity.ok(lst);
+	}
 }

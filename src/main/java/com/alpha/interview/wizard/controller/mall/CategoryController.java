@@ -312,4 +312,18 @@ public class CategoryController {
 		categoryRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Category>> getAllById(@PathVariable Long id) {
+		if (id <= 0) {
+			return ResponseEntity.ok(categoryRepository.findAll());
+		}
+		List<Category> lst = new ArrayList<>();
+		Optional<Category> categoryOptional = categoryRepository
+				.findById(id);
+		if (categoryOptional.isPresent()) {
+			lst.add(categoryOptional.get());
+		}
+		return ResponseEntity.ok(lst);
+	}
 }

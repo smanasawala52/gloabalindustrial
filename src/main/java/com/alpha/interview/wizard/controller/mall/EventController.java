@@ -3,7 +3,9 @@ package com.alpha.interview.wizard.controller.mall;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -203,5 +205,18 @@ public class EventController {
 		}
 		eventRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Event>> getAllById(@PathVariable Long id) {
+		if (id <= 0) {
+			return ResponseEntity.ok(eventRepository.findAll());
+		}
+		List<Event> lst = new ArrayList<>();
+		Optional<Event> eventOptional = eventRepository.findById(id);
+		if (eventOptional.isPresent()) {
+			lst.add(eventOptional.get());
+		}
+		return ResponseEntity.ok(lst);
 	}
 }

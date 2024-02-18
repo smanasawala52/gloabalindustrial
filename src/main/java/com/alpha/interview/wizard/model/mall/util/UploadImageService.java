@@ -26,27 +26,31 @@ public class UploadImageService implements ImageService {
 	public String uploadImageFile(MultipartFile file,
 			ImageTypeConstants imageType, String name) throws Exception {
 		// Generate a unique file name
-		System.out.println("Reached here UploadImageService: uploadImageFile ");
-		String fileName = cleanUp(name) + ".jpg";
-		fileName = fileName.toLowerCase();
-		try {
-			String path = getImagePath(imageType, uploadDir);
-			System.out.println("UploadImageService path: " + path);
-			File directory = new File(path);
-			if (!directory.exists()) {
-				directory.mkdirs();
+		System.out.println(
+				"Reached here UploadImageService: uploadImageFile " + file);
+		if (!file.isEmpty() && file.getOriginalFilename() != null
+				&& !file.getOriginalFilename().isEmpty()) {
+			String fileName = cleanUp(name) + ".jpg";
+			fileName = fileName.toLowerCase();
+			try {
+				String path = getImagePath(imageType, uploadDir);
+				System.out.println("UploadImageService path: " + path);
+				File directory = new File(path);
+				if (!directory.exists()) {
+					directory.mkdirs();
+				}
+				// Resolve the file path
+				Path filePath = Paths.get(path).resolve(fileName);
+				// Copy the file to the target location
+				Files.copy(file.getInputStream(), filePath,
+						StandardCopyOption.REPLACE_EXISTING);
+				return "/image/" + imageType.getType() + "/" + fileName;
+			} catch (Exception ex) {
+				throw new RuntimeException("Failed to store file " + fileName
+						+ ". Please try again!", ex);
 			}
-			// Resolve the file path
-			Path filePath = Paths.get(path).resolve(fileName);
-			// Copy the file to the target location
-			Files.copy(file.getInputStream(), filePath,
-					StandardCopyOption.REPLACE_EXISTING);
-			return "/image/" + imageType.getType() + "/" + fileName;
-		} catch (Exception ex) {
-			throw new RuntimeException(
-					"Failed to store file " + fileName + ". Please try again!",
-					ex);
 		}
+		return "";
 	}
 
 	@Override

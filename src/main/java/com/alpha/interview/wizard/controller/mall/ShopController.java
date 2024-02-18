@@ -40,11 +40,15 @@ import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.alpha.interview.wizard.model.mall.Brand;
 import com.alpha.interview.wizard.model.mall.Category;
+import com.alpha.interview.wizard.model.mall.Coupon;
+import com.alpha.interview.wizard.model.mall.Product;
 import com.alpha.interview.wizard.model.mall.Shop;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
 import com.alpha.interview.wizard.repository.mall.BrandRepository;
 import com.alpha.interview.wizard.repository.mall.CategoryRepository;
+import com.alpha.interview.wizard.repository.mall.CouponRepository;
+import com.alpha.interview.wizard.repository.mall.ProductRepository;
 import com.alpha.interview.wizard.repository.mall.ShopRepository;
 
 @Controller
@@ -57,6 +61,11 @@ public class ShopController {
 	private BrandRepository brandRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private ProductRepository productRepository;
+	@Autowired
+	private CouponRepository couponRepository;
+
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
@@ -263,6 +272,196 @@ public class ShopController {
 		}
 		return ResponseEntity.ok("Category removed from shop");
 	}
+	@GetMapping("/product/{id}")
+	public String loginProduct(@PathVariable Long id, Model model) {
+		Optional<Shop> shopOptional = shopRepository.findById(id);
+		if (!shopOptional.isPresent()) {
+			model.addAttribute("contentTemplate", "shop");
+		} else {
+			model.addAttribute("contentTemplate", "shop-product-xref");
+			model.addAttribute("shop", shopOptional.get());
+		}
+		return "common";
+	}
+	@GetMapping("/product/all/{id}")
+	public ResponseEntity<Page<Product>> getAllProducts(@PathVariable Long id,
+			@RequestParam(defaultValue = "", name = "name", required = false) String name,
+			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
+		if (cp <= 0) {
+			cp = 0;
+		}
+		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
+				Sort.by("name").ascending());
+		Page<Product> products = null;
+		if (name != null && !name.isEmpty()) {
+			String escapedName = HtmlUtils.htmlEscape(name);
+			products = productRepository.findAllByNameContaining(
+					escapedName.toLowerCase(), pageable);
+		} else {
+			products = productRepository.findAll(pageable);
+		}
+		if (products.hasContent()) {
+			Optional<Shop> shopOptional = shopRepository.findById(id);
+			if (shopOptional.isPresent()
+					&& shopOptional.get().getProducts() != null) {
+				Set<Long> productIds = shopOptional.get().getProducts().stream()
+						.map(Product::getId).collect(Collectors.toSet());
+
+				products.getContent().forEach(product -> {
+					if (productIds.contains(product.getId())) {
+						product.setLinked(true);
+					}
+				});
+
+				// Sort the content of the page by the "linked" attribute
+				// Copy the content to a mutable list and sort it
+				List<Product> mutableList = new ArrayList<>(
+						products.getContent());
+				mutableList
+						.sort(Comparator
+								.comparing(Product::isLinked,
+										Comparator.nullsLast(
+												Comparator.naturalOrder()))
+								.reversed());
+
+				// Create a new Page object with the sorted list and existing
+				// pagination information
+				Page<Product> sortedPage = new PageImpl<>(mutableList,
+						products.getPageable(), products.getTotalElements());
+				return ResponseEntity.ok(sortedPage);
+			}
+		}
+		return ResponseEntity.ok(products);
+	}
+
+	@PostMapping("/{shopId}/product/{productId}")
+	public ResponseEntity<String> updateProduct(@PathVariable Long shopId,
+			@PathVariable Long productId) {
+		Optional<Shop> shopOptional = shopRepository.findById(shopId);
+		if (shopOptional.isPresent()) {
+			Optional<Product> productOptional = productRepository
+					.findById(productId);
+			if (productOptional.isPresent()) {
+				shopOptional.get().getProducts().add(productOptional.get());
+				shopRepository.save(shopOptional.get());
+				shopRepository.flush();
+			}
+		}
+		return ResponseEntity.ok("Product linked successfully to shop");
+	}
+
+	@DeleteMapping("/{shopId}/product/{productId}")
+	public ResponseEntity<String> removeProduct(@PathVariable Long shopId,
+			@PathVariable Long productId) {
+		Optional<Shop> shopOptional = shopRepository.findById(shopId);
+		if (shopOptional.isPresent()) {
+			Optional<Product> productOptional = productRepository
+					.findById(productId);
+			if (productOptional.isPresent()) {
+				Long productIdToRemove = productOptional.get().getId();
+				shopOptional.get().getProducts().removeIf(
+						product -> product.getId().equals(productIdToRemove));
+				shopRepository.save(shopOptional.get());
+				shopRepository.flush();
+			}
+		}
+		return ResponseEntity.ok("Product removed from shop");
+	}
+	@GetMapping("/coupon/{id}")
+	public String loginCoupon(@PathVariable Long id, Model model) {
+		Optional<Shop> shopOptional = shopRepository.findById(id);
+		if (!shopOptional.isPresent()) {
+			model.addAttribute("contentTemplate", "shop");
+		} else {
+			model.addAttribute("contentTemplate", "shop-coupon-xref");
+			model.addAttribute("shop", shopOptional.get());
+		}
+		return "common";
+	}
+	@GetMapping("/coupon/all/{id}")
+	public ResponseEntity<Page<Coupon>> getAllCoupons(@PathVariable Long id,
+			@RequestParam(defaultValue = "", name = "name", required = false) String name,
+			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
+		if (cp <= 0) {
+			cp = 0;
+		}
+		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
+				Sort.by("name").ascending());
+		Page<Coupon> coupons = null;
+		if (name != null && !name.isEmpty()) {
+			String escapedName = HtmlUtils.htmlEscape(name);
+			coupons = couponRepository.findAllByNameContaining(
+					escapedName.toLowerCase(), pageable);
+		} else {
+			coupons = couponRepository.findAll(pageable);
+		}
+		if (coupons.hasContent()) {
+			Optional<Shop> shopOptional = shopRepository.findById(id);
+			if (shopOptional.isPresent()
+					&& shopOptional.get().getCoupons() != null) {
+				Set<Long> couponIds = shopOptional.get().getCoupons().stream()
+						.map(Coupon::getId).collect(Collectors.toSet());
+
+				coupons.getContent().forEach(coupon -> {
+					if (couponIds.contains(coupon.getId())) {
+						coupon.setLinked(true);
+					}
+				});
+
+				// Sort the content of the page by the "linked" attribute
+				// Copy the content to a mutable list and sort it
+				List<Coupon> mutableList = new ArrayList<>(
+						coupons.getContent());
+				mutableList
+						.sort(Comparator
+								.comparing(Coupon::isLinked,
+										Comparator.nullsLast(
+												Comparator.naturalOrder()))
+								.reversed());
+
+				// Create a new Page object with the sorted list and existing
+				// pagination information
+				Page<Coupon> sortedPage = new PageImpl<>(mutableList,
+						coupons.getPageable(), coupons.getTotalElements());
+				return ResponseEntity.ok(sortedPage);
+			}
+		}
+		return ResponseEntity.ok(coupons);
+	}
+
+	@PostMapping("/{shopId}/coupon/{couponId}")
+	public ResponseEntity<String> updateCoupon(@PathVariable Long shopId,
+			@PathVariable Long couponId) {
+		Optional<Shop> shopOptional = shopRepository.findById(shopId);
+		if (shopOptional.isPresent()) {
+			Optional<Coupon> couponOptional = couponRepository
+					.findById(couponId);
+			if (couponOptional.isPresent()) {
+				shopOptional.get().getCoupons().add(couponOptional.get());
+				shopRepository.save(shopOptional.get());
+				shopRepository.flush();
+			}
+		}
+		return ResponseEntity.ok("Coupon linked successfully to shop");
+	}
+
+	@DeleteMapping("/{shopId}/coupon/{couponId}")
+	public ResponseEntity<String> removeCoupon(@PathVariable Long shopId,
+			@PathVariable Long couponId) {
+		Optional<Shop> shopOptional = shopRepository.findById(shopId);
+		if (shopOptional.isPresent()) {
+			Optional<Coupon> couponOptional = couponRepository
+					.findById(couponId);
+			if (couponOptional.isPresent()) {
+				Long couponIdToRemove = couponOptional.get().getId();
+				shopOptional.get().getCoupons().removeIf(
+						coupon -> coupon.getId().equals(couponIdToRemove));
+				shopRepository.save(shopOptional.get());
+				shopRepository.flush();
+			}
+		}
+		return ResponseEntity.ok("Coupon removed from shop");
+	}
 
 	@PostMapping("/save")
 	public ResponseEntity<?> saveShop(@ModelAttribute("shop") @Valid Shop shop,
@@ -393,5 +592,18 @@ public class ShopController {
 		}
 		shopRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Shop>> getAllById(@PathVariable Long id) {
+		if (id <= 0) {
+			return ResponseEntity.ok(shopRepository.findAll());
+		}
+		List<Shop> lst = new ArrayList<>();
+		Optional<Shop> shopOptional = shopRepository.findById(id);
+		if (shopOptional.isPresent()) {
+			lst.add(shopOptional.get());
+		}
+		return ResponseEntity.ok(lst);
 	}
 }

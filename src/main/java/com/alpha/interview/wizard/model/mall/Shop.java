@@ -42,6 +42,11 @@ public class Shop {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Brand> brands;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Coupon> coupons;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Product> products;
 	private String floor;
 	private String shopNumber;
 	private String location;
@@ -167,4 +172,17 @@ public class Shop {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	public List<Coupon> getCoupons() {
+		return coupons;
+	}
+	public void setCoupons(List<Coupon> coupons) {
+		this.coupons = coupons;
+	}
+	public List<Product> getProducts() {
+		return products;
+	}
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
 }

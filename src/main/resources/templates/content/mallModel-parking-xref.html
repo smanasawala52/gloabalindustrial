@@ -5,9 +5,8 @@
 		<div class="row mb-2">
 			<div class="col-md-4">
 				<div class="form-group">
-					<p>MallModel ID: <input type="hidden" id="mallModelId" th:value="${mallModel.id}" /><span th:text="${mallModel.id}"></span></p>        			
-					<p>MallModel Floor: <span th:text="${mallModel.floor}"></span></p>
-					<p>MallModel Block: <span th:text="${mallModel.block}"></span></p>
+					<p>Mall ID: <input type="hidden" id="mallModelId" th:value="${mallModel.id}" /><span th:text="${mallModel.id}"></span></p>        			
+					<p>Mall Name: <span th:text="${mallModel.name}"></span></p>
 				</div>
 				<a href="/parking/" class="btn btn-success">Add New Parking</a>
 			</div>
@@ -24,7 +23,8 @@
 					<tr>
 						<th>Linked</th>
 						<th>ID</th>
-						<th>Name</th>
+						<th>Floor</th>
+						<th>Block</th>
 					</tr>
 				</thead>
 				<tbody id="parkingTableBody">

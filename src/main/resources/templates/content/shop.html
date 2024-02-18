@@ -176,8 +176,8 @@
                                     '<td class="editable" data-type="text" data-field="floor" data-id="' + shop.id + '" data-value="'+shop.floor+'">' + shop.floor + '</td>' +
                                     '<td class="editable" data-type="text" data-field="location" data-id="' + shop.id + '" data-value="'+shop.location+'">' + shop.location + '</td>' +
                                     '<td class="editable" data-type="textarea" data-field="howToReach" data-id="' + shop.id + '" data-value="'+shop.howToReach+'">' + shop.howToReach + '</td>' +
-                                    '<td>'+appendNamesCommaSeparated(shop.brands)+'<br><a href="/shop/brand/' + shop.id + '" class="btn btn-success">Add Brand</a></td>'+
-                                    '<td>'+appendNamesCommaSeparated(shop.categories)+'<br><a href="/shop/category/' + shop.id + '" class="btn btn-success">Add Category</a></td>'+
+                                    '<td>'+appendNamesCommaSeparated(shop.brands)+'<br><a href="/shop/brand/' + shop.id + '" class="btn btn-success">Add Brand</a>&nbsp;'+appendNamesCommaSeparated(shop.products)+'<br><a href="/shop/product/' + shop.id + '" class="btn btn-success">Add Product</a></td>'+
+                                    '<td>'+appendNamesCommaSeparated(shop.categories)+'<br><a href="/shop/category/' + shop.id + '" class="btn btn-success">Add Category</a>&nbsp;'+appendNamesCommaSeparated(shop.coupons)+'<br><a href="/shop/coupon/' + shop.id + '" class="btn btn-success">Add Coupon</a></td>'+
                                     '<td>' +
 									'<button class="btn btn-info edit-button" data-id="' + shop.id + '">Edit</button>&nbsp;' +
 									'<button class="btn btn-danger delete-button" data-id="' + shop.id + '">Delete</button>' +

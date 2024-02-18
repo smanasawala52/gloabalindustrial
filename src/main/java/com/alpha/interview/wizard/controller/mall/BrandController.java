@@ -1,7 +1,9 @@
 package com.alpha.interview.wizard.controller.mall;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -190,4 +192,17 @@ public class BrandController {
 		brandRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Brand>> getAllById(@PathVariable Long id) {
+		if (id <= 0) {
+			return ResponseEntity.ok(brandRepository.findAll());
+		}
+		List<Brand> lst = new ArrayList<>();
+		Optional<Brand> brandOptional = brandRepository.findById(id);
+		if (brandOptional.isPresent()) {
+			lst.add(brandOptional.get());
+		}
+		return ResponseEntity.ok(lst);
+	}
+
 }

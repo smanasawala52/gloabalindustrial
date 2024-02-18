@@ -1,7 +1,9 @@
 package com.alpha.interview.wizard.controller.mall;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -193,5 +195,19 @@ public class ParkingController {
 		}
 		parkingRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Parking>> getAllById(@PathVariable Long id) {
+		if (id <= 0) {
+			return ResponseEntity.ok(parkingRepository.findAll());
+		}
+		List<Parking> lst = new ArrayList<>();
+		Optional<Parking> parkingOptional = parkingRepository
+				.findById(id);
+		if (parkingOptional.isPresent()) {
+			lst.add(parkingOptional.get());
+		}
+		return ResponseEntity.ok(lst);
 	}
 }

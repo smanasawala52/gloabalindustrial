@@ -3,7 +3,9 @@ package com.alpha.interview.wizard.controller.mall;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -204,5 +206,18 @@ public class CouponController {
 		}
 		couponRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Coupon>> getAllById(@PathVariable Long id) {
+		if (id <= 0) {
+			return ResponseEntity.ok(couponRepository.findAll());
+		}
+		List<Coupon> lst = new ArrayList<>();
+		Optional<Coupon> couponsOptional = couponRepository.findById(id);
+		if (couponsOptional.isPresent()) {
+			lst.add(couponsOptional.get());
+		}
+		return ResponseEntity.ok(lst);
 	}
 }
