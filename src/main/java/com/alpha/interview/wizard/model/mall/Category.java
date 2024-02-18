@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,6 +42,7 @@ public class Category {
 	private List<SubCategory> subCategories;
 	private String imgUrl;
 	private boolean featured;
+	@Column(length = 500)
 	private String additionalDetails;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;

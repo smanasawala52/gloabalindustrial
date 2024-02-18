@@ -69,45 +69,6 @@
 "updateTimestamp": "2024-02-18T11:23:03.724+00:00",
 "createTimestamp": "2024-02-18T11:23:03.724+00:00",
 "linked": false
-},
-{
-"id": 2,
-"name": "Category 2",
-"description": "",
-"displayName": "Category 2",
-"subCategories": [
-{
-"id": 3,
-"name": "Sub cat 3",
-"description": "",
-"displayName": "Sub cat 3",
-"imgUrl": "",
-"additionalDetails": "",
-"activeStatusKey": 1,
-"updateTimestamp": "2024-02-18T11:23:45.091+00:00",
-"createTimestamp": "2024-02-18T11:23:45.091+00:00",
-"linked": false
-},
-{
-"id": 4,
-"name": "Sub cat 4",
-"description": "",
-"displayName": "Sub cat 4",
-"imgUrl": "",
-"additionalDetails": "",
-"activeStatusKey": 1,
-"updateTimestamp": "2024-02-18T11:24:02.344+00:00",
-"createTimestamp": "2024-02-18T11:24:02.344+00:00",
-"linked": false
-}
-],
-"imgUrl": "",
-"featured": false,
-"additionalDetails": "",
-"activeStatusKey": 1,
-"updateTimestamp": "2024-02-18T11:24:24.275+00:00",
-"createTimestamp": "2024-02-18T11:24:24.275+00:00",
-"linked": false
 }
 ],
 "brands": [

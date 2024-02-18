@@ -2,6 +2,7 @@ package com.alpha.interview.wizard.model.mall;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,6 +36,7 @@ public class SubCategory {
 	private String description;
 	private String displayName;
 	private String imgUrl;
+	@Column(length = 500)
 	private String additionalDetails;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
