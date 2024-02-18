@@ -1,0 +1,410 @@
+[
+{
+"id": 1,
+"country": "",
+"city": "",
+"name": "Zahra manasawala",
+"description": "",
+"displayName": "Zahra manasawala",
+"location": "",
+"imgUrl": "",
+"floors": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:21:26.503+00:00",
+"createTimestamp": "2024-02-18T11:21:26.503+00:00",
+"images": [
+{
+"id": 1,
+"name": "Img out",
+"description": "",
+"displayName": "Img out",
+"imgUrl": "/image/web-image/img_out.jpg",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T12:36:19.656+00:00",
+"createTimestamp": "2024-02-18T12:36:19.656+00:00",
+"linked": false
+}
+],
+"shops": [
+{
+"id": 1,
+"founded": null,
+"categories": [
+{
+"id": 1,
+"name": "Category 1",
+"description": "",
+"displayName": "Category 1",
+"subCategories": [
+{
+"id": 1,
+"name": "Sub cat 1",
+"description": "",
+"displayName": "Sub cat 1",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:22:47.590+00:00",
+"createTimestamp": "2024-02-18T11:22:47.590+00:00",
+"linked": false
+},
+{
+"id": 2,
+"name": "Sub cat 2",
+"description": "",
+"displayName": "Sub cat 2",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:23:25.984+00:00",
+"createTimestamp": "2024-02-18T11:23:25.984+00:00",
+"linked": false
+}
+],
+"imgUrl": "",
+"featured": false,
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:23:03.724+00:00",
+"createTimestamp": "2024-02-18T11:23:03.724+00:00",
+"linked": false
+},
+{
+"id": 2,
+"name": "Category 2",
+"description": "",
+"displayName": "Category 2",
+"subCategories": [
+{
+"id": 3,
+"name": "Sub cat 3",
+"description": "",
+"displayName": "Sub cat 3",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:23:45.091+00:00",
+"createTimestamp": "2024-02-18T11:23:45.091+00:00",
+"linked": false
+},
+{
+"id": 4,
+"name": "Sub cat 4",
+"description": "",
+"displayName": "Sub cat 4",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:24:02.344+00:00",
+"createTimestamp": "2024-02-18T11:24:02.344+00:00",
+"linked": false
+}
+],
+"imgUrl": "",
+"featured": false,
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:24:24.275+00:00",
+"createTimestamp": "2024-02-18T11:24:24.275+00:00",
+"linked": false
+}
+],
+"brands": [
+{
+"id": 1,
+"name": "Brand 1",
+"description": "",
+"displayName": "Brand 1",
+"imgUrl": "",
+"additionalDetails": "",
+"updateTimestamp": "2024-02-18T11:22:30.966+00:00",
+"createTimestamp": "2024-02-18T11:22:30.966+00:00",
+"linked": false
+},
+{
+"id": 2,
+"name": "Brand 2",
+"description": "",
+"displayName": "Brand 2",
+"imgUrl": "",
+"additionalDetails": "",
+"updateTimestamp": "2024-02-18T11:24:46.293+00:00",
+"createTimestamp": "2024-02-18T11:24:46.293+00:00",
+"linked": false
+},
+{
+"id": 3,
+"name": "Brand 3",
+"description": "",
+"displayName": "Brand 3",
+"imgUrl": "",
+"additionalDetails": "",
+"updateTimestamp": "2024-02-18T11:24:51.932+00:00",
+"createTimestamp": "2024-02-18T11:24:51.932+00:00",
+"linked": false
+}
+],
+"coupons": [
+{
+"id": 1,
+"name": "Coupon 1",
+"description": "",
+"displayName": "Coupon 1",
+"imgUrl": "",
+"additionalDetails": "",
+"startDate": "2024-02-19T18:30:00.000+00:00",
+"endDate": "2024-02-20T18:30:00.000+00:00",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:26:37.466+00:00",
+"createTimestamp": "2024-02-18T11:26:37.466+00:00",
+"linked": false
+},
+{
+"id": 2,
+"name": "Coupon 2",
+"description": "",
+"displayName": "Coupon 2",
+"imgUrl": "",
+"additionalDetails": "",
+"startDate": "2024-02-29T18:30:00.000+00:00",
+"endDate": "2024-03-06T18:30:00.000+00:00",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:26:52.928+00:00",
+"createTimestamp": "2024-02-18T11:26:52.928+00:00",
+"linked": false
+}
+],
+"products": [
+{
+"id": 1,
+"name": "Product 1",
+"description": "",
+"displayName": "Product 1",
+"imgUrl": "",
+"featured": false,
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:27:04.876+00:00",
+"createTimestamp": "2024-02-18T11:27:04.876+00:00",
+"linked": false
+},
+{
+"id": 2,
+"name": "Product 2",
+"description": "",
+"displayName": "Product 2",
+"imgUrl": "",
+"featured": false,
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:27:09.942+00:00",
+"createTimestamp": "2024-02-18T11:27:09.942+00:00",
+"linked": false
+}
+],
+"floor": "",
+"shopNumber": null,
+"location": "",
+"howToReach": "",
+"name": "Shop 1",
+"description": "",
+"displayName": "Shop 1",
+"imgUrl": "",
+"featured": false,
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:22:16.413+00:00",
+"createTimestamp": "2024-02-18T11:22:16.413+00:00",
+"linked": false
+}
+],
+"attractions": [
+{
+"id": 1,
+"categories": [
+{
+"id": 2,
+"name": "Category 2",
+"description": "",
+"displayName": "Category 2",
+"subCategories": [
+{
+"id": 3,
+"name": "Sub cat 3",
+"description": "",
+"displayName": "Sub cat 3",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:23:45.091+00:00",
+"createTimestamp": "2024-02-18T11:23:45.091+00:00",
+"linked": false
+},
+{
+"id": 4,
+"name": "Sub cat 4",
+"description": "",
+"displayName": "Sub cat 4",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:24:02.344+00:00",
+"createTimestamp": "2024-02-18T11:24:02.344+00:00",
+"linked": false
+}
+],
+"imgUrl": "",
+"featured": false,
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:24:24.275+00:00",
+"createTimestamp": "2024-02-18T11:24:24.275+00:00",
+"linked": false
+}
+],
+"floor": "",
+"location": "",
+"howToReach": "",
+"name": "Attraction 1",
+"description": "",
+"displayName": "Attraction 1",
+"imgUrl": "",
+"featured": false,
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T12:36:35.148+00:00",
+"createTimestamp": "2024-02-18T12:36:35.148+00:00",
+"linked": false
+}
+],
+"parkings": [
+{
+"id": 1,
+"floor": "P1",
+"block": "B1",
+"displayName": "P1B1",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:27:28.957+00:00",
+"createTimestamp": "2024-02-18T11:27:28.957+00:00",
+"linked": false
+},
+{
+"id": 2,
+"floor": "P1",
+"block": "B2",
+"displayName": "P1B2",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:27:37.440+00:00",
+"createTimestamp": "2024-02-18T11:27:37.440+00:00",
+"linked": false
+},
+{
+"id": 3,
+"floor": "P1",
+"block": "B3",
+"displayName": "P1B3",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:27:42.958+00:00",
+"createTimestamp": "2024-02-18T11:27:42.958+00:00",
+"linked": false
+},
+{
+"id": 4,
+"floor": "P2",
+"block": "B1",
+"displayName": "P2B1",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:27:51.041+00:00",
+"createTimestamp": "2024-02-18T11:27:51.041+00:00",
+"linked": false
+},
+{
+"id": 5,
+"floor": "P3",
+"block": "",
+"displayName": "P3",
+"imgUrl": "",
+"additionalDetails": "",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:27:55.905+00:00",
+"createTimestamp": "2024-02-18T11:27:55.905+00:00",
+"linked": false
+}
+],
+"events": [
+{
+"id": 1,
+"name": "Event 1",
+"description": "",
+"displayName": "Event 1",
+"imgUrl": "",
+"additionalDetails": "",
+"startDate": "2024-02-18T18:30:00.000+00:00",
+"endDate": "2024-02-24T18:30:00.000+00:00",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:28:17.380+00:00",
+"createTimestamp": "2024-02-18T11:28:17.380+00:00",
+"linked": false
+},
+{
+"id": 2,
+"name": "Event 2",
+"description": "",
+"displayName": "Event 2",
+"imgUrl": "",
+"additionalDetails": "",
+"startDate": "2024-02-25T18:30:00.000+00:00",
+"endDate": "2024-03-02T18:30:00.000+00:00",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:28:35.575+00:00",
+"createTimestamp": "2024-02-18T11:28:35.575+00:00",
+"linked": false
+}
+],
+"otherAttractions": [
+{
+"id": 1,
+"floor": null,
+"location": null,
+"howToReach": null,
+"name": "Other attractions 1",
+"description": "",
+"displayName": "Other attractions 1",
+"imgUrl": "",
+"additionalDetails": "",
+"startDate": "2024-02-25T18:30:00.000+00:00",
+"endDate": "2024-02-27T18:30:00.000+00:00",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:29:01.755+00:00",
+"createTimestamp": "2024-02-18T11:29:01.755+00:00",
+"linked": false
+},
+{
+"id": 2,
+"floor": null,
+"location": null,
+"howToReach": null,
+"name": "Other attractions 2",
+"description": "",
+"displayName": "Other attractions 2",
+"imgUrl": "",
+"additionalDetails": "",
+"startDate": "2024-02-26T18:30:00.000+00:00",
+"endDate": "2024-02-29T18:30:00.000+00:00",
+"activeStatusKey": 1,
+"updateTimestamp": "2024-02-18T11:29:21.990+00:00",
+"createTimestamp": "2024-02-18T11:29:21.990+00:00",
+"linked": false
+}
+]
+}
+]
