@@ -606,4 +606,19 @@ public class ShopController {
 		}
 		return ResponseEntity.ok(lst);
 	}
+	// @GetMapping("/{mallId}/category/{categoryId}")
+	// public ResponseEntity<List<Shop>> getAllShopsByMallIdAndCategoryId(
+	// @PathVariable Long mallId, @PathVariable Long categoryId) {
+	// List<Shop> shops = shopRepository.findAllByMallIdAndCategoryId(mallId,
+	// categoryId);
+	// return new ResponseEntity<>(shops, HttpStatus.OK);
+	// }
+	//
+	// @GetMapping("/{mallId}/subcategory/{subCategoryId}")
+	// public ResponseEntity<List<Shop>> getAllShopsByMallIdAndSubCategoryId(
+	// @PathVariable Long mallId, @PathVariable Long subCategoryId) {
+	// List<Shop> shops = shopRepository
+	// .findAllByMallIdAndSubCategoryId(mallId, subCategoryId);
+	// return new ResponseEntity<>(shops, HttpStatus.OK);
+	// }
 }

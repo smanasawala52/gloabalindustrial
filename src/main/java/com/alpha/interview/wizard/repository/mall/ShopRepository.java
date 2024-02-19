@@ -22,4 +22,14 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 	@Query("SELECT c.id, c.name FROM Shop c")
 	List<Object[]> getAllIdAndName();
 
+	// @Query("SELECT DISTINCT s FROM Shop s JOIN s.categories c WHERE
+	// s.mallModel.id = :mallId AND c.id = :categoryId")
+	// List<Shop> findAllByMallIdAndCategoryId(@Param("mallId") Long mallId,
+	// @Param("categoryId") Long categoryId);
+	//
+	// @Query("SELECT DISTINCT s FROM Shop s JOIN s.categories c JOIN
+	// c.subCategories sc WHERE s.mallModel.id = :mallId AND sc.id =
+	// :subCategoryId")
+	// List<Shop> findAllByMallIdAndSubCategoryId(@Param("mallId") Long mallId,
+	// @Param("subCategoryId") Long subCategoryId);
 }

@@ -43,6 +43,8 @@ public class SubCategory {
 	private Date createTimestamp;
 	@Transient
 	private boolean linked = false;
+	// @ManyToMany(mappedBy = "subCategories")
+	// private List<Category> shops;
 
 	public Date getCreateTimestamp() {
 		return createTimestamp;

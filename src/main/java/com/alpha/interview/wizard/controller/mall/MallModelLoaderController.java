@@ -2,6 +2,7 @@ package com.alpha.interview.wizard.controller.mall;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,29 +20,35 @@ public class MallModelLoaderController {
 	private MallModelDataLoadService mallModelDataLoadService;
 
 	@GetMapping("/upload-form")
-	public String showUploadForm() {
-		return "uploadMallModelJsonForm";
+	public String showUploadForm(Model model) {
+		model.addAttribute("contentTemplate", "uploadMallModelJsonForm");
+		return "common";
 	}
 
 	@PostMapping("/upload")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+	public String handleFileUpload(@RequestParam("file") MultipartFile file,
+			RedirectAttributes redirectAttributes) {
 		if (file.isEmpty() && file.getOriginalFilename().endsWith(".json")) {
-			redirectAttributes.addFlashAttribute("message", "Please select a JSON file to upload.");
+			redirectAttributes.addFlashAttribute("message",
+					"Please select a JSON file to upload.");
 			return "redirect:/mallmodel/upload-form";
 		}
 
 		try {
 			mallModelDataLoadService.loadMallModelData(file);
-			redirectAttributes.addFlashAttribute("message", "Mall file uploaded and processed successfully.");
+			redirectAttributes.addFlashAttribute("message",
+					"Mall file uploaded and processed successfully.");
 		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("message", "Error processing CSV file: " + e.getMessage());
+			redirectAttributes.addFlashAttribute("message",
+					"Error processing CSV file: " + e.getMessage());
 		}
 
 		return "redirect:/mallmodel/upload-success";
 	}
 
 	@GetMapping("/upload-success")
-	public String showUploadSuccess() {
-		return "uploadMallModelJsonSuccess";
+	public String showUploadSuccess(Model model) {
+		model.addAttribute("contentTemplate", "uploadMallModelJsonSuccess");
+		return "common";
 	}
 }

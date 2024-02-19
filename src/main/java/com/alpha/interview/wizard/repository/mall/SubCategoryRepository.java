@@ -23,4 +23,17 @@ public interface SubCategoryRepository
 	SubCategory findByName(String name);
 	@Query("SELECT c.id, c.name FROM SubCategory c")
 	List<Object[]> getAllIdAndName();
+	// @Query("SELECT sc FROM SubCategory sc JOIN CategorySubCategory c ON sc.id
+	// = c.subCategory.id JOIN ShopCategory s ON c.category.id = s.category.id
+	// JOIN MallModelShop ms ON s.shop.id = ms.shop.id WHERE ms.mallModel.id =
+	// :mallId")
+	// List<SubCategory> findAllByMallId(@Param("mallId") Long mallId);
+	// @Query("SELECT sc FROM SubCategory sc JOIN CategorySubCategory c ON sc.id
+	// = c.subCategory.id JOIN ShopCategory s ON c.category.id = s.category.id
+	// JOIN MallModelShop ms ON s.shop.id = ms.shop.id WHERE ms.mallModel.id =
+	// :mallId AND s.category.id = :categoryId")
+	// List<SubCategory> findAllByMallIdAndCategoryId(@Param("mallId") Long
+	// mallId,
+	// @Param("categoryId") Long categoryId);
+
 }

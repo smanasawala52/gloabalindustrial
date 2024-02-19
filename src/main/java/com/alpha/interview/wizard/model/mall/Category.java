@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 import com.alpha.interview.wizard.constants.mall.constants.ActiveStatusConstants;
@@ -38,7 +38,7 @@ public class Category {
 	private String name;
 	private String description;
 	private String displayName;
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<SubCategory> subCategories;
 	private String imgUrl;
 	private boolean featured;
@@ -49,6 +49,12 @@ public class Category {
 	private Date createTimestamp;
 	@Transient
 	private boolean linked = false;
+
+	// @ManyToMany(mappedBy = "categories")
+	// private List<Shop> shops;
+	// @ManyToMany(mappedBy = "categories")
+	// private List<Attraction> attractions;
+
 	public Date getCreateTimestamp() {
 		return createTimestamp;
 	}

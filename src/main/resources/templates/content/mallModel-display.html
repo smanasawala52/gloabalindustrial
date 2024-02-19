@@ -1,0 +1,59 @@
+<div th:fragment="content">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<div class="mall-image">
+        <!-- Display main image here -->
+        <img th:src="${mallModel.imgUrl}" alt="Mall Image">
+    </div>
+     <div class="mall-description">
+        <h3>Name: <span id="mall-name" th:text="${mallModel.name}"></span></h3>
+        <p><strong>Country:</strong> <span id="mall-country" th:text="${mallModel.country}"></span></p>
+        <p><strong>City:</strong> <span id="mall-city" th:text="${mallModel.city}"></span></p>
+        <p><strong>Description:</strong> <span id="mall-description" th:text="${mallModel.description}"></span></p>
+        <p><strong>Location:</strong> <span id="mall-location" th:text="${mallModel.location}"></span></p>
+        <!-- Add more details as needed -->
+    </div>
+	<div class="image-grid">
+        <!-- WebImage thumbnails will be dynamically populated here -->
+    </div>
+        <!-- Modal for displaying larger image -->
+    <div id="image-modal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="modal-image" src="" alt="Web Image">
+            <p id="image-description"></p>
+        </div>
+    </div>
+<script>
+$(document).ready(function() {
+    // Function to open modal with larger image and description
+    function openModal(imageSrc, imageDescription) {
+        $('#modal-image').attr('src', imageSrc);
+        $('#image-description').text(imageDescription);
+        $('#image-modal').css('display', 'block');
+    }
+
+    // Close the modal when the close button or outside modal is clicked
+    $('.close, .modal').on('click', function() {
+        $('#image-modal').css('display', 'none');
+    });
+
+    // Fetch WebImage data via AJAX
+    $.ajax({
+        url: 'backend-url/webimages',
+        method: 'GET',
+        success: function(data) {
+            // Populate thumbnails
+            $.each(data, function(index, image) {
+                $('.image-grid').append('<img src="' + image.imgUrl + '" alt="' + image.name + '">');
+            });
+
+            // Attach click event to each thumbnail
+            $('.image-grid img').on('click', function() {
+                openModal($(this).attr('src'), $(this).attr('alt'));
+            });
+        }
+    });
+});
+</script>
+    
+</div>

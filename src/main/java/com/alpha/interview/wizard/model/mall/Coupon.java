@@ -45,6 +45,8 @@ public class Coupon {
 	private Date createTimestamp;
 	@Transient
 	private boolean linked = false;
+	// @ManyToMany(mappedBy = "coupons")
+	// private List<Shop> shops;
 
 	public boolean isLinked() {
 		return linked;

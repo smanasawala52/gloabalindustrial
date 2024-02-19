@@ -41,6 +41,8 @@ public class Brand {
 	private Date createTimestamp;
 	@Transient
 	private boolean linked = false;
+	// @ManyToMany(mappedBy = "brands")
+	// private List<Shop> shops;
 	public Long getId() {
 		return id;
 	}

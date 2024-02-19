@@ -50,11 +50,13 @@ import com.alpha.interview.wizard.model.mall.WebImage;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
 import com.alpha.interview.wizard.repository.mall.AttractionRepository;
+import com.alpha.interview.wizard.repository.mall.CategoryRepository;
 import com.alpha.interview.wizard.repository.mall.EventRepository;
 import com.alpha.interview.wizard.repository.mall.MallModelRepository;
 import com.alpha.interview.wizard.repository.mall.OtherAttractionRepository;
 import com.alpha.interview.wizard.repository.mall.ParkingRepository;
 import com.alpha.interview.wizard.repository.mall.ShopRepository;
+import com.alpha.interview.wizard.repository.mall.SubCategoryRepository;
 import com.alpha.interview.wizard.repository.mall.WebImageRepository;
 
 @Controller
@@ -75,6 +77,10 @@ public class MallModelController {
 	@Autowired
 	private EventRepository eventRepository;
 	@Autowired
+	private CategoryRepository categoryRepository;
+	@Autowired
+	private SubCategoryRepository subCategoryRepository;
+	@Autowired
 	private OtherAttractionRepository otherAttractionRepository;
 
 	private int PAGE_SIZE = 20;
@@ -91,6 +97,18 @@ public class MallModelController {
 	@GetMapping("/")
 	public String login(Model model) {
 		model.addAttribute("contentTemplate", "mallModel");
+		return "common";
+	}
+	@GetMapping("/{id}/page")
+	public String mallModelPage(@PathVariable Long id, Model model) {
+		Optional<MallModel> mallModelOptional = mallModelRepository
+				.findById(id);
+		if (!mallModelOptional.isPresent()) {
+			model.addAttribute("contentTemplate", "mallModel");
+		} else {
+			model.addAttribute("contentTemplate", "mallModel-display");
+			model.addAttribute("mallModel", mallModelOptional.get());
+		}
 		return "common";
 	}
 	@GetMapping("/shop/{id}")
@@ -853,5 +871,16 @@ public class MallModelController {
 		}
 		return ResponseEntity.ok(lst);
 	}
-
+	// @GetMapping("/{mallId}/categories")
+	// public ResponseEntity<List<Category>> getAllCategoriesByMallId(
+	// @PathVariable Long mallId) {
+	// List<Category> categories = categoryRepository.findAllByMallId(mallId);
+	// return new ResponseEntity<>(categories, HttpStatus.OK);
+	// }
+	// @GetMapping("/{mallId}/categories/{categoryId}")
+	// public ResponseEntity<Category> getAllSubCategoriesByMallIdAndCategoryId(
+	// @PathVariable Long mallId, @PathVariable Long categoryId) {
+	// Optional<Category> category = categoryRepository.findById(categoryId);
+	// return new ResponseEntity<>(category.get(), HttpStatus.OK);
+	// }
 }
