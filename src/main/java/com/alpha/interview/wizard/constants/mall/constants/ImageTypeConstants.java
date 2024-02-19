@@ -6,7 +6,8 @@ public enum ImageTypeConstants {
 					"event"), MALL_MODEL("mall"), OTHER_ATTRACTION(
 							"other-attraction"), PARKING("parking"), PRODUCT(
 									"product"), SHOP("shop"), WEB_IMAGE(
-											"web-image"), COUPON("coupon");
+											"web-image"), COUPON(
+													"coupon"), KIOSK("kiosk");
 
 	private final String type;
 

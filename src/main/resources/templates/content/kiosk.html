@@ -1,53 +1,38 @@
 <div th:fragment="content">
 	<div class="container">
-		<h2>Shop Management</h2>
+		<h2>Kiosk Management</h2>
 		<button id="createNewBtn" class="btn btn-primary">Create New</button>
 		<br>
 		<div class="row mb-2">
 			<div class="col-md-4">
-				<form id="newshopForm" style="display: none;">
+				<form id="newKioskForm" style="display: none;">
 					<div class="form-group">
 						<label for="name">Name</label>
-						<input type="text" class="form-control" id="name" name="name" placeholder="Enter shop name">
+						<input type="text" class="form-control" id="name" name="name" placeholder="Enter kiosk name">
 					</div>
 					<div class="form-group">
 						<label for="displayName">Display Name</label>
 						<input type="text" class="form-control" id="displayName" name="displayName"
-							placeholder="Enter shop display name if there are any special chars other wise same as name">
+							placeholder="Enter kiosk display name if there are any special chars other wise same as name">
 					</div>
 					<div class="form-group">
 						<label for="description">Description</label>
 						<input type="text" class="form-control" id="description" name="description"
-							placeholder="Enter shop description">
+							placeholder="Enter kiosk description">
 					</div>
 					<div class="form-group">
 						<label for="imageFile">Image</label>
-						<input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/jpeg, image/png, image/jpg">
+						<input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/*">
 					</div>
 					<div class="form-group">
-						<label for="additionalDetails">Additional Details</label>
-						<textarea class="form-control" id="additionalDetails" name="additionalDetails" rows="3"
-							placeholder="Enter additional details"></textarea>
+						<label for="shop">Shop</label>
+						<select class="form-control" id="shop" name="shop">
+						    <option value="">Select kiosk shop</option>
+						</select>
 					</div>
-                    <div class="form-group">
-						<label for="floor">Floor</label>
-						<input type="text" class="form-control" id="floor" name="floor"
-							placeholder="Enter floor">
-					</div>
-                    <div class="form-group">
-						<label for="shopNumber">Shop Number</label>
-						<input type="text" class="form-control" id="shopNumber" name="shopNumber"
-							placeholder="Enter shop number">
-					</div>
-                    <div class="form-group">
-						<label for="location">Location</label>
-						<input type="text" class="form-control" id="location" name="location"
-							placeholder="Enter location">
-					</div>
-                    <div class="form-group">
-						<label for="howToReach">How To Reach</label>
-						<textarea class="form-control" id="howToReach" name="howToReach"
-							placeholder="Enter howToReach"></textarea>
+					<div class="form-group">
+						<label for="imageFile">Navigation Animation</label>
+						<input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/*">
 					</div>
 					<button type="submit" class="btn btn-success">Save</button>
 				</form>
@@ -55,30 +40,24 @@
 		</div>
 		<hr>
 		<div class="search-container">
-		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search shops...">
+		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search kiosks...">
 		    <button id="resetButton" class="reset-button">&times;</button>
 		</div>
 		<hr>
-		<div class="shop-table table-responsive">
+		<div class="kiosk-table table-responsive">
 			<table class="table">
 				<thead class="thead-light">
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
+						<th>Image</th>
 						<th>Display Name</th>
 						<th>Description</th>
-						<th>Image</th>
 						<th>Additional Details</th>
-                        <th>Floor</th>
-                        <th>Shop Number</th>
-                        <th>Location</th>
-                        <th>How to reach</th>
-                        <th>Brands</th>
-                        <th>Categories</th>
 						<th>Action</th>
 					</tr>
 				</thead>
-				<tbody id="shopTableBody">
+				<tbody id="kioskTableBody">
 					<!-- Data will be dynamically populated here -->
 				</tbody>
 			</table>
@@ -91,25 +70,39 @@
 		</nav>
 	</div>
 
-	<!-- Bootstrap modal for displaying image -->
-	<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="imageModalLabel">shop Image</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<img src="" alt="shop Image" class="img-fluid" id="modalImage">
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- Bootstrap modal for displaying image -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+        <!-- Use modal-xl class to maximize modal size -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">kiosk.name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="" alt="Kiosk Image" class="img-fluid" id="modalImage" style="max-width: 100%; max-height: 100vh;">
+                <!-- Adjust max-width and max-height as needed to fit the image within the modal -->
+            </div>
+        </div>
+    </div>
+</div>
+
 	<script>
 		$(document).ready(function () {
+			function loadShopData(mallModelId){
+				$.get("/mallmodel/"+mallModelId, function(data) {
+		            // Iterate through the data and populate the dropdown
+		            $.each(data.shops, function(index, shop) {
+		                // Append option to the dropdown
+		                $('#description').append($('<option>', {
+		                    value: shop[0], // Assuming id is at index 0
+		                    text: shop[1]   // Assuming name is at index 1
+		                }));
+		            });
+		        });
+			}
 			// Event handler for the "View" button to open image popup
 			$(document).on('click', '.view-image-btn', function () {
 				var imgUrl = $(this).data('imgurl');
@@ -136,11 +129,11 @@
 			var currentPage = 0;
 			var navTotalPages = 0;
 
-			// Function to load shop data
+			// Function to load kiosk data
 			function loadData(page) {
 				var searchValue = $('#searchInput').val().trim();
 				$.ajax({
-					url: "/shop/all?cp=" + page+"&name="+searchValue,
+					url: "/kiosk/all?cp=" + page+"&name="+searchValue,
 					type: "GET",
 					success: function (data) {
 						// Populate grid with data
@@ -151,72 +144,56 @@
 						addPaginationButtons(data.totalPages);
 					},
 					error: function (xhr, status, error) {
-						alert('Failed to load shop data: ' + error);
+						alert('Failed to load kiosk data: ' + error);
 					}
 				});
 			}
 
-			// Function to populate the table with shop data
+			// Function to populate the table with kiosk data
 			function populateTable(data) {
-				var tableBody = $('#shopTableBody');
+				var tableBody = $('#kioskTableBody');
 				tableBody.empty(); // Clear existing data
 
-				$.each(data, function (index, shop) {
+				$.each(data, function (index, kiosk) {
 					var row = 	'<tr>' +
-									'<td>' + shop.id + '</td>' +
-									'<td class="editable" data-type="text" data-field="name" data-id="' + shop.id + '" data-value="'+shop.name+'">' + shop.name + '</td>' +
-									'<td class="editable" data-type="text" data-field="displayName" data-id="' + shop.id + '" data-value="'+shop.displayName+'">' + shop.displayName + '</td>' +
-									'<td class="editable" data-type="text" data-field="description" data-id="' + shop.id + '" data-value="'+shop.description+'">' + shop.description + '</td>' +
-									'<td data-id="' + shop.id + '" data-value="'+shop.imgUrl+'">' +
-										'<img src="' + shop.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + shop.imgUrl + '">'+
-										'<br><button class="btn btn-primary edit-image-btn" data-id="' + shop.id + '" data-imgurl="' + shop.imgUrl + '">Edit Image</button>' +
-										'<br><div id="image_update_div_' + shop.id + '" style="display:none">'+
-											'<form id="image_update_form_' + shop.id + '" class="image_update_form" action="/shop/update/' + shop.id + '" data-id="'+shop.id+'" method="patch" enctype="multipart/form-data">'+
-											'<input type="hidden" name="id_' + shop.id + '" value="' + shop.id + '" />'+
-											'<input type="file" class="form-control-file" id="imageFile_' + shop.id + '" name="imageFile" accept="image/*" />'+
+									'<td>' + kiosk.id + '</td>' +
+									'<td class="editable" data-type="text" data-field="name" data-id="' + kiosk.id + '" data-value="'+kiosk.name+'">' + kiosk.name + '</td>' +
+									'<td data-id="' + kiosk.id + '" data-value="'+kiosk.imgUrl+'">' +
+										'<img src="' + kiosk.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + kiosk.imgUrl + '">'+
+										'<br><button class="btn btn-primary edit-image-btn" data-id="' + kiosk.id + '" data-imgurl="' + kiosk.imgUrl + '">Edit Image</button>' +
+										'<br><div id="image_update_div_' + kiosk.id + '" style="display:none">'+
+											'<form id="image_update_form_' + kiosk.id + '" class="image_update_form" action="/kiosk/update/' + kiosk.id + '" data-id="'+kiosk.id+'" method="patch" enctype="multipart/form-data">'+
+											'<input type="hidden" name="id_' + kiosk.id + '" value="' + kiosk.id + '" />'+
+											'<input type="file" class="form-control-file" id="imageFile_' + kiosk.id + '" name="imageFile" accept="image/*" />'+
 											'</form>'+
-											'<br><button type="submit" class="btn btn-success submit-edit-image-btn" data-id="' + shop.id + '">Save</button>'+
+											'<br><button type="submit" class="btn btn-success submit-edit-image-btn" data-id="' + kiosk.id + '">Save</button>'+
 										'</div>'+
 									'</td>' +
-									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + shop.id + '" data-value="'+shop.additionalDetails+'">' + shop.additionalDetails + '</td>' +
-                                    '<td class="editable" data-type="text" data-field="floor" data-id="' + shop.id + '" data-value="'+shop.floor+'">' + shop.floor + '</td>' +
-                                    '<td class="editable" data-type="text" data-field="shopNumber" data-id="' + shop.id + '" data-value="'+shop.shopNumber+'">' + shop.shopNumber + '</td>' +
-                                    '<td class="editable" data-type="text" data-field="location" data-id="' + shop.id + '" data-value="'+shop.location+'">' + shop.location + '</td>' +
-                                    '<td class="editable" data-type="textarea" data-field="howToReach" data-id="' + shop.id + '" data-value="'+shop.howToReach+'">' + shop.howToReach + '</td>' +
-                                    '<td>'+appendNamesCommaSeparated(shop.brands)+'<br><a href="/shop/brand/' + shop.id + '" class="btn btn-success">Add Brand</a>&nbsp;'+appendNamesCommaSeparated(shop.products)+'<br><a href="/shop/product/' + shop.id + '" class="btn btn-success">Add Product</a></td>'+
-                                    '<td>'+appendNamesCommaSeparated(shop.categories)+'<br><a href="/shop/category/' + shop.id + '" class="btn btn-success">Add Category</a>&nbsp;'+appendNamesCommaSeparated(shop.coupons)+'<br><a href="/shop/coupon/' + shop.id + '" class="btn btn-success">Add Coupon</a></td>'+
-                                    '<td>' +
-									'<button class="btn btn-info edit-button" data-id="' + shop.id + '">Edit</button>&nbsp;' +
-									'<button class="btn btn-danger delete-button" data-id="' + shop.id + '">Delete</button>' +
+									'<td class="editable" data-type="text" data-field="displayName" data-id="' + kiosk.id + '" data-value="'+kiosk.displayName+'">' + kiosk.displayName + '</td>' +
+									'<td class="editable" data-type="text" data-field="description" data-id="' + kiosk.id + '" data-value="'+kiosk.description+'">' + kiosk.description + '</td>' +
+									'<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + kiosk.id + '" data-value="'+kiosk.additionalDetails+'">' + kiosk.additionalDetails + '</td>' +
+									'<td>' +
+									'<button class="btn btn-info edit-button" data-id="' + kiosk.id + '">Edit</button>&nbsp;' +
+									'<button class="btn btn-danger delete-button" data-id="' + kiosk.id + '">Delete</button>' +
 									'</td>' +
 								'</tr>';
 					tableBody.append(row);
 				});
 			}
-			function appendNamesCommaSeparated(objects) {
-		        var names = "";
-		        $.each(objects, function(index, object) {
-		            if (index > 0) {
-		                names += ", "; // Add comma if it's not the first name
-		            }
-		            names += object.name; // Append name
-		        });
-		        return names;
-		    }
-			$('#shopTableBody').on('click', '.edit-image-btn', function (event) {
-				var shopId = $(this).data('id');
-				$('#shopTableBody #image_update_div_'+shopId).css('display', 'block');
+			$('#kioskTableBody').on('click', '.edit-image-btn', function (event) {
+				var kioskId = $(this).data('id');
+				$('#kioskTableBody #image_update_div_'+kioskId).css('display', 'block');
 				
 			});
 
-			$('#shopTableBody').on('click', '.submit-edit-image-btn', function (event) {
+			$('#kioskTableBody').on('click', '.submit-edit-image-btn', function (event) {
 				event.preventDefault(); // Prevent the form from submitting normally
-				var shopId = $(this).data('id');
-// 				$('#shopTableBody #image_update_form_'+shopId).submit();
-				var formData = new FormData($('#image_update_form_' + shopId)[0]);
+				var kioskId = $(this).data('id');
+// 				$('#kioskTableBody #image_update_form_'+kioskId).submit();
+				var formData = new FormData($('#image_update_form_' + kioskId)[0]);
 
 				$.ajax({
-					url: '/shop/save/'+shopId,
+					url: '/kiosk/save/'+kioskId,
 					type: 'POST',
 					data: formData,
 					async: false,
@@ -234,16 +211,16 @@
 						console.error(xhr.responseText);
 					}
 				});
-				$('#shopTableBody #image_update_div_'+shopId).css('display', 'none');
+				$('#kioskTableBody #image_update_div_'+kioskId).css('display', 'none');
 			});
 			
 			// Enable inline editing
-			$('#shopTableBody').on('click', '.edit-button', function (event) {
+			$('#kioskTableBody').on('click', '.edit-button', function (event) {
 				event.preventDefault();
 				var $row = $(this).closest('tr'); // Get the parent row
 
 				// Toggle between displaying plain text and input fields
-				$row.find('.editable').not('[data-field="name"]','[data-type="featured"]','[data-type="activeStatusKey"]').each(function () {
+				$row.find('.editable').not('[data-field="name"]').each(function () {
 					var $td = $(this);
 					var $input = $td.find('.editable-field');
 					var $fieldValue = $td.data('value');
@@ -274,7 +251,7 @@
 
 
 			// Save edited data
-			$('#shopTableBody').on('click', '.save-button', function () {
+			$('#kioskTableBody').on('click', '.save-button', function () {
 				var $row = $(this).closest('tr');
 			    var id = $row.find('.editable').data('id');
 			    var newData = {};
@@ -289,9 +266,9 @@
 				var name = $row.find('.editable[data-field="name"]').text().trim();
 				newData['name'] = name;
 
-				// Perform AJAX request to update the shop
+				// Perform AJAX request to update the kiosk
 				$.ajax({
-					url: '/shop/update/' + id, // Change this to your update endpoint
+					url: '/kiosk/update/' + id, // Change this to your update endpoint
 					type: 'PATCH',
 					contentType: 'application/json', // Specify content type as JSON
 					data: JSON.stringify(newData),   // Convert JavaScript object to JSON string
@@ -303,7 +280,7 @@
 						loadData(currentPage);
 					},
 					error: function (xhr, status, error) {
-						alert('Failed to update shop: ' + error);
+						alert('Failed to update kiosk: ' + error);
 					}
 				});
 
@@ -312,33 +289,33 @@
 			});
 
 			// Handle deletion
-			$('#shopTableBody').on('click', '.delete-button', function () {
+			$('#kioskTableBody').on('click', '.delete-button', function () {
 				var id = $(this).data('id');
-				var confirmDelete = confirm('Are you sure you want to delete this shop?');
+				var confirmDelete = confirm('Are you sure you want to delete this kiosk?');
 
 				if (confirmDelete) {
-					// Perform AJAX request to delete the shop
+					// Perform AJAX request to delete the kiosk
 					$.ajax({
-						url: '/shop/delete/' + id, // Change this to your delete endpoint
+						url: '/kiosk/delete/' + id, // Change this to your delete endpoint
 						type: 'DELETE',
 						success: function (response) {
 							// Remove the row from the table if deletion is successful
 							loadData(currentPage);
 						},
 						error: function (xhr, status, error) {
-							alert('Failed to delete shop: ' + error);
+							alert('Failed to delete kiosk: ' + error);
 						}
 					});
 				}
 			});
 
-			// Handle new shop form submission
-			$('#newshopForm').submit(function (event) {
+			// Handle new kiosk form submission
+			$('#newKioskForm').submit(function (event) {
 				event.preventDefault(); // Prevent the form from submitting normally
 				var formData = new FormData($(this)[0]);
 
 				$.ajax({
-					url: '/shop/save',
+					url: '/kiosk/save',
 					type: 'POST',
 					data: formData,
 					async: false,
@@ -349,7 +326,7 @@
 						// Handle success response
 						console.log(response);
 						// Empty form on success
-						$('#newshopForm')[0].reset();
+						$('#newKioskForm')[0].reset();
 						// If needed, refresh the table to display the new data
 						loadData(currentPage);
 					},
@@ -360,9 +337,9 @@
 				});
 			});
 
-			// Show/hide create new shop form
+			// Show/hide create new kiosk form
 			$('#createNewBtn').click(function () {
-				$('#newshopForm').toggle();
+				$('#newKioskForm').toggle();
 			});
 
 			// Initial data load

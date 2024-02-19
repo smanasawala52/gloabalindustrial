@@ -13,7 +13,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alpha.interview.wizard.model.mall.Attraction;
+import com.alpha.interview.wizard.model.mall.Brand;
+import com.alpha.interview.wizard.model.mall.Category;
+import com.alpha.interview.wizard.model.mall.Coupon;
+import com.alpha.interview.wizard.model.mall.Event;
 import com.alpha.interview.wizard.model.mall.MallModel;
+import com.alpha.interview.wizard.model.mall.OtherAttraction;
+import com.alpha.interview.wizard.model.mall.Parking;
+import com.alpha.interview.wizard.model.mall.Product;
+import com.alpha.interview.wizard.model.mall.Shop;
+import com.alpha.interview.wizard.model.mall.SubCategory;
+import com.alpha.interview.wizard.model.mall.WebImage;
 import com.alpha.interview.wizard.repository.mall.AttractionRepository;
 import com.alpha.interview.wizard.repository.mall.BrandRepository;
 import com.alpha.interview.wizard.repository.mall.CategoryRepository;
@@ -139,124 +150,145 @@ public class MallModelDataLoadService {
 				// subCategoryListType);
 				List<MallModel> mallModels = Arrays.asList(objectMapper
 						.readValue(jsonArrayData, MallModel[].class));
-				mallModelRepository.saveAllAndFlush(mallModels);
+				// mallModelRepository.saveAllAndFlush(mallModels);
 				// for (MallModel mallModel : mallModels) {
 				// entityManager.merge(mallModel);
 				// }
-				// for (MallModel mallModel : mallModels) {
-				// for (WebImage image : mallModel.getImages()) {
-				// Optional<WebImage> webImageOptional = webImageRepository
-				// .findById(image.getId());
-				// if (!webImageOptional.isPresent()) {
-				// webImageRepository.saveAndFlush(image);
-				// webImageRepository.flush();
-				// }
-				// }
-				// for (Event event : mallModel.getEvents()) {
-				// Optional<Event> eventOptional = eventRepository
-				// .findById(event.getId());
-				// if (!eventOptional.isPresent()) {
-				// eventRepository.saveAndFlush(event);
-				// }
-				// }
-				// for (OtherAttraction otherAttraction : mallModel
-				// .getOtherAttractions()) {
-				// Optional<OtherAttraction> otherAttractionOptional =
-				// otherAttractionRepository
-				// .findById(otherAttraction.getId());
-				// if (!otherAttractionOptional.isPresent()) {
-				// otherAttractionRepository
-				// .saveAndFlush(otherAttraction);
-				// }
-				// }
-				// for (Parking parking : mallModel.getParkings()) {
-				// Optional<Parking> otherAttractionOptional = parkingRepository
-				// .findById(parking.getId());
-				// if (!otherAttractionOptional.isPresent()) {
-				// parkingRepository.saveAndFlush(parking);
-				// }
-				// }
-				// for (Attraction attraction : mallModel.getAttractions()) {
-				// for (Category category : attraction.getCategories()) {
-				// for (SubCategory subCategory : category
-				// .getSubCategories()) {
-				// Optional<SubCategory> subCategoryOptional =
-				// subCategoryRepository
-				// .findById(subCategory.getId());
-				// if (!subCategoryOptional.isPresent()) {
-				// subCategoryRepository
-				// .saveAndFlush(subCategory);
-				// }
-				// }
-				//
-				// Optional<Category> categoryOptional = categoryRepository
-				// .findById(category.getId());
-				// if (!categoryOptional.isPresent()) {
-				// categoryRepository.saveAndFlush(category);
-				// }
-				// }
-				//
-				// Optional<Attraction> attractionOptional =
-				// attractionRepository
-				// .findById(attraction.getId());
-				// if (!attractionOptional.isPresent()) {
-				// attractionRepository.saveAndFlush(attraction);
-				// }
-				// }
-				//
-				// for (Shop shop : mallModel.getShops()) {
-				// for (Category category : shop.getCategories()) {
-				// for (SubCategory subCategory : category
-				// .getSubCategories()) {
-				// Optional<SubCategory> subCategoryOptional =
-				// subCategoryRepository
-				// .findById(subCategory.getId());
-				// if (!subCategoryOptional.isPresent()) {
-				// subCategoryRepository
-				// .saveAndFlush(subCategory);
-				// }
-				// }
-				//
-				// Optional<Category> categoryOptional = categoryRepository
-				// .findById(category.getId());
-				// if (!categoryOptional.isPresent()) {
-				// categoryRepository.saveAndFlush(category);
-				// }
-				// }
-				// for (Coupon coupon : shop.getCoupons()) {
-				// Optional<Coupon> couponOptional = couponRepository
-				// .findById(coupon.getId());
-				// if (!couponOptional.isPresent()) {
-				// couponRepository.saveAndFlush(coupon);
-				// }
-				// }
-				// for (Brand brand : shop.getBrands()) {
-				// Optional<Brand> brandOptional = brandRepository
-				// .findById(brand.getId());
-				// if (!brandOptional.isPresent()) {
-				// brandRepository.saveAndFlush(brand);
-				// }
-				// }
-				// for (Product product : shop.getProducts()) {
-				// Optional<Product> brandOptional = productRepository
-				// .findById(product.getId());
-				// if (!brandOptional.isPresent()) {
-				// productRepository.saveAndFlush(product);
-				// }
-				// }
-				// Optional<Shop> shopOptional = shopRepository
-				// .findById(shop.getId());
-				// if (!shopOptional.isPresent()) {
-				// shopRepository.saveAndFlush(shop);
-				// }
-				// }
-				//
-				// Optional<MallModel> mallModelOptional = mallModelRepository
-				// .findById(mallModel.getId());
-				// if (!mallModelOptional.isPresent()) {
-				// mallModelRepository.saveAndFlush(mallModel);
-				// }
-				// }
+				for (MallModel mallModel : mallModels) {
+					for (WebImage image : mallModel.getImages()) {
+						// Optional<WebImage> webImageOptional =
+						// webImageRepository
+						// .findById(image.getId());
+						// if (!webImageOptional.isPresent()) {
+						// webImageRepository.saveAndFlush(image);
+						// webImageRepository.flush();
+						// }
+						image.setId(null);
+					}
+					for (Event event : mallModel.getEvents()) {
+						// Optional<Event> eventOptional = eventRepository
+						// .findById(event.getId());
+						// if (!eventOptional.isPresent()) {
+						// eventRepository.saveAndFlush(event);
+						// }
+						event.setId(null);
+					}
+					for (OtherAttraction otherAttraction : mallModel
+							.getOtherAttractions()) {
+						// Optional<OtherAttraction> otherAttractionOptional =
+						// otherAttractionRepository
+						// .findById(otherAttraction.getId());
+						// if (!otherAttractionOptional.isPresent()) {
+						// otherAttractionRepository
+						// .saveAndFlush(otherAttraction);
+						// }
+						otherAttraction.setId(null);
+					}
+					for (Parking parking : mallModel.getParkings()) {
+						// Optional<Parking> otherAttractionOptional =
+						// parkingRepository
+						// .findById(parking.getId());
+						// if (!otherAttractionOptional.isPresent()) {
+						// parkingRepository.saveAndFlush(parking);
+						// }
+						parking.setId(null);
+					}
+					for (Attraction attraction : mallModel.getAttractions()) {
+						for (Category category : attraction.getCategories()) {
+							for (SubCategory subCategory : category
+									.getSubCategories()) {
+								// Optional<SubCategory> subCategoryOptional =
+								// subCategoryRepository
+								// .findById(subCategory.getId());
+								// if (!subCategoryOptional.isPresent()) {
+								// subCategoryRepository
+								// .saveAndFlush(subCategory);
+								// }
+								subCategory.setId(null);
+							}
+
+							// Optional<Category> categoryOptional =
+							// categoryRepository
+							// .findById(category.getId());
+							// if (!categoryOptional.isPresent()) {
+							// categoryRepository.saveAndFlush(category);
+							// }
+							category.setId(null);
+						}
+
+						// Optional<Attraction> attractionOptional =
+						// attractionRepository
+						// .findById(attraction.getId());
+						// if (!attractionOptional.isPresent()) {
+						// attractionRepository.saveAndFlush(attraction);
+						// }
+						attraction.setId(null);
+					}
+
+					for (Shop shop : mallModel.getShops()) {
+						for (Category category : shop.getCategories()) {
+							for (SubCategory subCategory : category
+									.getSubCategories()) {
+								// Optional<SubCategory> subCategoryOptional =
+								// subCategoryRepository
+								// .findById(subCategory.getId());
+								// if (!subCategoryOptional.isPresent()) {
+								// subCategoryRepository
+								// .saveAndFlush(subCategory);
+								// }
+								subCategory.setId(null);
+							}
+
+							// Optional<Category> categoryOptional =
+							// categoryRepository
+							// .findById(category.getId());
+							// if (!categoryOptional.isPresent()) {
+							// categoryRepository.saveAndFlush(category);
+							// }
+							category.setId(null);
+						}
+						for (Coupon coupon : shop.getCoupons()) {
+							// Optional<Coupon> couponOptional =
+							// couponRepository
+							// .findById(coupon.getId());
+							// if (!couponOptional.isPresent()) {
+							// couponRepository.saveAndFlush(coupon);
+							// }
+							coupon.setId(null);
+						}
+						for (Brand brand : shop.getBrands()) {
+							// Optional<Brand> brandOptional = brandRepository
+							// .findById(brand.getId());
+							// if (!brandOptional.isPresent()) {
+							// brandRepository.saveAndFlush(brand);
+							// }
+							brand.setId(null);
+						}
+						for (Product product : shop.getProducts()) {
+							// Optional<Product> brandOptional =
+							// productRepository
+							// .findById(product.getId());
+							// if (!brandOptional.isPresent()) {
+							// productRepository.saveAndFlush(product);
+							// }
+							product.setId(null);
+						}
+						// Optional<Shop> shopOptional = shopRepository
+						// .findById(shop.getId());
+						// if (!shopOptional.isPresent()) {
+						// shopRepository.saveAndFlush(shop);
+						// }
+						shop.setId(null);
+					}
+
+					// Optional<MallModel> mallModelOptional =
+					// mallModelRepository
+					// .findById(mallModel.getId());
+					// if (!mallModelOptional.isPresent()) {
+					// mallModelRepository.saveAndFlush(mallModel);
+					// }
+					mallModel.setId(null);
+				}
 
 				// Now you have a List<SubCategory> containing your objects
 				// You can iterate over the list or perform other operations as
@@ -291,8 +323,8 @@ public class MallModelDataLoadService {
 				System.out.println("=============================");
 				System.out.println(mallModels);
 				System.out.println("=============================");
-				// mallModelRepository.saveAll(mallModels);
-				// mallModelRepository.flush();
+				mallModelRepository.saveAll(mallModels);
+				mallModelRepository.flush();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

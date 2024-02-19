@@ -184,45 +184,6 @@
 {
 "id": 1,
 "categories": [
-{
-"id": 1,
-"name": "Category 1",
-"description": "",
-"displayName": "Category 1",
-"subCategories": [
-{
-"id": 1,
-"name": "Sub cat 1",
-"description": "",
-"displayName": "Sub cat 1",
-"imgUrl": "",
-"additionalDetails": "",
-"activeStatusKey": 1,
-"updateTimestamp": "2024-02-18T11:22:47.590+00:00",
-"createTimestamp": "2024-02-18T11:22:47.590+00:00",
-"linked": false
-},
-{
-"id": 2,
-"name": "Sub cat 2",
-"description": "",
-"displayName": "Sub cat 2",
-"imgUrl": "",
-"additionalDetails": "",
-"activeStatusKey": 1,
-"updateTimestamp": "2024-02-18T11:23:25.984+00:00",
-"createTimestamp": "2024-02-18T11:23:25.984+00:00",
-"linked": false
-}
-],
-"imgUrl": "",
-"featured": false,
-"additionalDetails": "",
-"activeStatusKey": 1,
-"updateTimestamp": "2024-02-18T11:23:03.724+00:00",
-"createTimestamp": "2024-02-18T11:23:03.724+00:00",
-"linked": false
-}
 ],
 "floor": "",
 "location": "",
