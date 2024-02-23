@@ -44,8 +44,6 @@ public class Product {
 	private Date createTimestamp;
 	@Transient
 	private boolean linked = false;
-	// @ManyToMany(mappedBy = "products")
-	// private List<Shop> shops;
 
 	public boolean isLinked() {
 		return linked;

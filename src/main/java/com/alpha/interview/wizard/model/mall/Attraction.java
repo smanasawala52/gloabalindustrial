@@ -48,6 +48,13 @@ public class Attraction {
 	private boolean featured;
 	@Column(length = 500)
 	private String additionalDetails;
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Brand> brands;
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Coupon> coupons;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Product> products;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
@@ -144,5 +151,23 @@ public class Attraction {
 	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+	public List<Brand> getBrands() {
+		return brands;
+	}
+	public void setBrands(List<Brand> brands) {
+		this.brands = brands;
+	}
+	public List<Coupon> getCoupons() {
+		return coupons;
+	}
+	public void setCoupons(List<Coupon> coupons) {
+		this.coupons = coupons;
+	}
+	public List<Product> getProducts() {
+		return products;
+	}
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 }

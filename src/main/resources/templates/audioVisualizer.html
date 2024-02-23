@@ -21,49 +21,95 @@
 <body>
 <div id="visualizerContainer">
     <canvas id="visualizerCanvas"></canvas>
+    <canvas id="matrixVisualizerCanvas"></canvas>
 </div>
+<div id="audioContainer"></div> <!-- Added audioContainer div -->
+<input type="text" id="inputAudioText" value="We are currently analysing your question! Please wait a moment."/>
+<button id="playButton">Play</button>
 
 <script>
 $(document).ready(function() {
     var audio;
     var context;
     var src;
-    var analyser;
+    var analyser,matrixAnalyser;
 
     var canvas;
+    var matrixCanvas;
     var ctx;
-    var bufferLength;
-    var dataArray;
+    var matrixCtx;
+    var bufferLength, matrixBufferLength;
+    var dataArray, matrixDataArray;
     var WIDTH;
     var HEIGHT;
     var barWidth;
     var barHeight;
-    var x = 0;        
+    var x = 0;  
+    const characters = 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん0123456789';
+    const rain = [];
 
     function audioVisualize(){
         audio = document.getElementById("audio");
         context = new (window.AudioContext || window.webkitAudioContext)(); // Use vendor prefixed version for Safari
         src = context.createMediaElementSource(audio);
         analyser = context.createAnalyser();
+        matrixAnalyser = context.createAnalyser();
 
         canvas = document.getElementById("visualizerCanvas");
+        matrixCanvas = document.getElementById("matrixVisualizerCanvas");
+        
         ctx = canvas.getContext("2d");
+        matrixCtx = matrixCanvas.getContext("2d");
 
         src.connect(analyser);
         analyser.connect(context.destination);
-
         analyser.fftSize = 256;
-
         bufferLength = analyser.frequencyBinCount;
         dataArray = new Uint8Array(bufferLength);
-
         WIDTH = canvas.width;
         HEIGHT = canvas.height;
 
         barWidth = (WIDTH / bufferLength) * 2.5;
         barHeight;
         x = 0;        
+        
+        matrixAnalyser.connect(context.destination);
+        matrixAnalyser.fftSize = 256;
+        matrixBufferLength = matrixAnalyser.frequencyBinCount;
+        matrixDataArray = new Uint8Array(matrixBufferLength);
+        
+        matrixCtx.font = '20px monospace';
+        for (let i = 0; i < 100; i++) {
+        	  rain.push({
+        	    x: Math.random() * matrixCanvas.width,
+        	    y: Math.random() * matrixCanvas.height,
+        	    character: characters[Math.floor(Math.random() * characters.length)]
+        	  });
+        	}
+
     }
+    function draw() {
+    	  matrixCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+    	  for (let i = 0; i < rain.length; i++) {
+    	    const drop = rain[i];
+
+    	    // Move the drop down
+    	    drop.y += 1;
+
+    	    // If the drop is off the bottom of the canvas, reset it to the top
+    	    if (drop.y > matrixCanvas.height) {
+    	      drop.y = 0;
+    	    }
+
+    	    // Draw the drop
+    	    matrixCtx.fillStyle = 'green';
+    	    matrixCtx.fillText(drop.character, drop.x, drop.y);
+    	  }
+
+    	  // Request the next animation frame
+    	  requestAnimationFrame(draw);
+    	}
     function renderFrame() {
         requestAnimationFrame(renderFrame);
 
@@ -114,6 +160,7 @@ $(document).ready(function() {
             audioVisualize();
             audioElement.play();
             renderFrame();
+            draw();
         })
         .catch(error => console.error('Error:', error));
     }
@@ -121,8 +168,5 @@ $(document).ready(function() {
     convertToSpeech();
 });
 </script>
-<div id="audioContainer" >play</div>
-<input type="text" id="inputAudioText" value="We are currently analysing your question! Please wait a moment."/>
-<button id="playButton">Play</button>
 </body>
 </html>

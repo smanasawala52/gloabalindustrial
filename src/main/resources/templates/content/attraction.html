@@ -1,5 +1,5 @@
 <div th:fragment="content">
-	<div class="container">
+	<div class="container" style="max-width:100%;">
 		<h2>Attraction Management</h2>
 		<button id="createNewBtn" class="btn btn-primary">Create New</button>
 		<br>
@@ -175,7 +175,10 @@
                                     '<td class="editable" data-type="text" data-field="floor" data-id="' + attraction.id + '" data-value="'+attraction.floor+'">' + attraction.floor + '</td>' +
                                     '<td class="editable" data-type="text" data-field="location" data-id="' + attraction.id + '" data-value="'+attraction.location+'">' + attraction.location + '</td>' +
                                     '<td class="editable" data-type="textarea" data-field="howToReach" data-id="' + attraction.id + '" data-value="'+attraction.howToReach+'">' + attraction.howToReach + '</td>' +
-                                    '<td>'+appendNamesCommaSeparated(attraction.categories)+'<br><a href="/attraction/category/' + attraction.id + '" class="btn btn-success">Add Category</a></td>'+
+                                    '<td>'+
+                                    appendNamesCommaSeparated(attraction.categories)+'<br><a href="/attraction/category/' + attraction.id + '" class="btn btn-success">Add Category</a>'+appendNamesCommaSeparated(attraction.brands)+'<br><a href="/attraction/brand/' + attraction.id + '" class="btn btn-success">Add Brand</a>' +
+                                    appendNamesCommaSeparated(attraction.coupons)+'<br><a href="/attraction/coupon/' + attraction.id + '" class="btn btn-success">Add Coupon</a>'+appendNamesCommaSeparated(attraction.products)+'<br><a href="/attraction/product/' + attraction.id + '" class="btn btn-success">Add Product</a>' +
+                                    '</td>'+
                                     '<td>' +
 									'<button class="btn btn-info edit-button" data-id="' + attraction.id + '">Edit</button>&nbsp;' +
 									'<button class="btn btn-danger delete-button" data-id="' + attraction.id + '">Delete</button>' +

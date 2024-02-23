@@ -45,4 +45,8 @@ public class HomepageController {
 	public String showAudioVisualizerPage() {
 		return "audioVisualizer";
 	}
+	@GetMapping("/audioVisualizer3d")
+	public String showAudioVisualizer3dPage() {
+		return "audioVisualizer3d";
+	}
 }

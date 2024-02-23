@@ -1,23 +1,23 @@
 <div th:fragment="content">
 	<div class="container" style="max-width:100%;">
-		<h2>Mall - Shop Management</h2>
+		<h2>Attraction - Product Management</h2>
 		<br>
 		<div class="row mb-2">
 			<div class="col-md-4">
 				<div class="form-group">
-					<p>MallModel ID: <input type="hidden" id="mallModelId" th:value="${mallModel.id}" /><span th:text="${mallModel.id}"></span></p>        			
-					<p>MallModel Name: <span th:text="${mallModel.name}"></span></p>
+					<p>Attraction ID: <input type="hidden" id="attractionId" th:value="${attraction.id}" /><span th:text="${attraction.id}"></span></p>        			
+					<p>Attraction Name: <span th:text="${attraction.name}"></span></p>
 				</div>
-				<a href="/shop/" class="btn btn-success">Add New Shop</a>
+				<a href="/product/" class="btn btn-success">Add New Product</a>
 			</div>
 		</div>
 		<hr>
 		<div class="search-container">
-		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search shops...">
+		    Search: <input type="text" id="searchInput" class="search-input" placeholder="Search products...">
 		    <button id="resetButton" class="reset-button">&times;</button>
 		</div>
 		<hr>
-		<div class="shop-table table-responsive">
+		<div class="product-table table-responsive">
 			<table class="table">
 				<thead class="thead-light">
 					<tr>
@@ -26,7 +26,7 @@
 						<th>Name</th>
 					</tr>
 				</thead>
-				<tbody id="shopTableBody">
+				<tbody id="productTableBody">
 					<!-- Data will be dynamically populated here -->
 				</tbody>
 			</table>
@@ -59,12 +59,12 @@
 			var currentPage = 0;
 			var navTotalPages = 0;
 
-			// Function to load shop data
+			// Function to load product data
 			function loadData(page) {
 				var searchValue = $('#searchInput').val().trim();
-				var mallModelId = $('#mallModelId').val().trim();
+				var attractionId = $('#attractionId').val().trim();
 				$.ajax({
-					url: "/mallmodel/shop/all/"+mallModelId+"?cp=" + page+"&name="+searchValue,
+					url: "/attraction/product/all/"+attractionId+"?cp=" + page+"&name="+searchValue,
 					type: "GET",
 					success: function (data) {
 						// Populate grid with data
@@ -75,38 +75,38 @@
 						addPaginationButtons(data.totalPages);
 					},
 					error: function (xhr, status, error) {
-						alert('Failed to load shop data: ' + error);
+						alert('Failed to load product data: ' + error);
 					}
 				});
 			}
 
-			// Function to populate the table with shop data
+			// Function to populate the table with product data
 			function populateTable(data) {
-				var tableBody = $('#shopTableBody');
+				var tableBody = $('#productTableBody');
 				tableBody.empty(); // Clear existing data
 
-				$.each(data, function (index, shop) {
-				    var checkedStatus = shop.linked === true ? 'checked' : ''; // Set checked status based on linked attribute
+				$.each(data, function (index, product) {
+				    var checkedStatus = product.linked === true ? 'checked' : ''; // Set checked status based on linked attribute
 				    var row =  '<tr>' +
-				                    '<td><input type="checkbox" class="editable" data-field="link" data-id="' + shop.id + '" id="featured_' + shop.id + '" name="featured" value="' + shop.linked + '" ' + checkedStatus + '/></td>' +
-				                    '<td>' + shop.id + '</td>' +
-				                    '<td class="editable" data-type="text" data-field="name" data-id="' + shop.id + '" data-value="'+shop.name+'">' + shop.name + '</td>' +
+				                    '<td><input type="checkbox" class="editable" data-field="link" data-id="' + product.id + '" id="featured_' + product.id + '" name="featured" value="' + product.linked + '" ' + checkedStatus + '/></td>' +
+				                    '<td>' + product.id + '</td>' +
+				                    '<td class="editable" data-type="text" data-field="name" data-id="' + product.id + '" data-value="'+product.name+'">' + product.name + '</td>' +
 				                '</tr>';
 				    tableBody.append(row);
 				});
 			}
 
 			// Save edited data
-			$('#shopTableBody').on('change', '.editable', function () {
-				var mallModelId = $('#mallModelId').val().trim();
-		        var shopId = $(this).data('id');
+			$('#productTableBody').on('change', '.editable', function () {
+				var attractionId = $('#attractionId').val().trim();
+		        var productId = $(this).data('id');
 		        var checked = $(this).prop('checked');
 
 		        if (checked) {
 		            // Make a POST request if the checkbox is checked
 		            $.ajax({
 		                type: 'POST',
-		                url: '/mallmodel/' + mallModelId + '/shop/' + shopId,
+		                url: '/attraction/' + attractionId + '/product/' + productId,
 		                success: function(response) {
 		                    // Handle success response
 		                    loadData(0);
@@ -119,7 +119,7 @@
 		            // Make a DELETE request if the checkbox is unchecked
 		            $.ajax({
 		                type: 'DELETE',
-		                url: '/mallmodel/' + mallModelId + '/shop/' + shopId,
+		                url: '/attraction/' + attractionId + '/product/' + productId,
 		                success: function(response) {
 		                    // Handle success response
 		                },
