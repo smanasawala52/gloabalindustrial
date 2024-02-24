@@ -22,4 +22,22 @@ public interface MallModelRepository extends JpaRepository<MallModel, Long> {
 	@Query("SELECT c.id, c.name FROM MallModel c")
 	List<Object[]> getAllIdAndName();
 
+	@Query("SELECT NEW MallModel(m.id, m.name) FROM MallModel m JOIN m.images a WHERE a.id = :id")
+	List<MallModel> findByWebImageId(@Param("id") Long id);
+
+	@Query("SELECT NEW MallModel(m.id, m.name) FROM MallModel m JOIN m.shops a WHERE a.id = :id")
+	List<MallModel> findByShopId(@Param("id") Long id);
+
+	@Query("SELECT NEW MallModel(m.id, m.name) FROM MallModel m JOIN m.attractions a WHERE a.id = :id")
+	List<MallModel> findByAttractionId(@Param("id") Long id);
+
+	@Query("SELECT NEW MallModel(m.id, m.name) FROM MallModel m JOIN m.parkings a WHERE a.id = :id")
+	List<MallModel> findByParkingId(@Param("id") Long id);
+
+	@Query("SELECT NEW MallModel(m.id, m.name) FROM MallModel m JOIN m.events a WHERE a.id = :id")
+	List<MallModel> findByEventId(@Param("id") Long id);
+
+	@Query("SELECT NEW MallModel(m.id, m.name) FROM MallModel m JOIN m.otherAttractions a WHERE a.id = :id")
+	List<MallModel> findByOtherAttractionId(@Param("id") Long id);
+
 }

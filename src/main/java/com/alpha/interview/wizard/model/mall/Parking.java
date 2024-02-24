@@ -27,7 +27,11 @@ import lombok.ToString;
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
 public class Parking {
-
+	public Parking(Long id, String floor, String block) {
+		this.id = id;
+		this.floor = floor;
+		this.block = block;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

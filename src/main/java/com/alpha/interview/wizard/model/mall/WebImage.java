@@ -27,6 +27,10 @@ import lombok.ToString;
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
 public class WebImage {
+	public WebImage(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

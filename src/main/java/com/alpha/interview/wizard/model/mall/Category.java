@@ -31,7 +31,10 @@ import lombok.ToString;
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
 public class Category {
-
+	public Category(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

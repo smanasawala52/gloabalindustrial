@@ -42,6 +42,7 @@ import com.alpha.interview.wizard.model.mall.Attraction;
 import com.alpha.interview.wizard.model.mall.Brand;
 import com.alpha.interview.wizard.model.mall.Category;
 import com.alpha.interview.wizard.model.mall.Coupon;
+import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.Product;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
@@ -49,6 +50,7 @@ import com.alpha.interview.wizard.repository.mall.AttractionRepository;
 import com.alpha.interview.wizard.repository.mall.BrandRepository;
 import com.alpha.interview.wizard.repository.mall.CategoryRepository;
 import com.alpha.interview.wizard.repository.mall.CouponRepository;
+import com.alpha.interview.wizard.repository.mall.MallModelRepository;
 import com.alpha.interview.wizard.repository.mall.ProductRepository;
 
 @Controller
@@ -57,6 +59,8 @@ public class AttractionController {
 
 	@Autowired
 	private AttractionRepository attractionRepository;
+	@Autowired
+	private MallModelRepository mallModelRepository;
 	@Autowired
 	private BrandRepository brandRepository;
 	@Autowired
@@ -612,12 +616,25 @@ public class AttractionController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteAttraction(@PathVariable Long id) {
+	public ResponseEntity<?> deleteAttraction(@PathVariable Long id) {
 		Optional<Attraction> attractionOptional = attractionRepository
 				.findById(id);
 		if (!attractionOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
+		// delete any links from MallModel
+		List<MallModel> mallModels = mallModelRepository.findByAttractionId(id);
+		if (mallModels != null && !mallModels.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(mallModels);
+		}
+		// mallModels = mallModels.stream().map(mallModel -> {
+		// // Remove the attraction with the specified ID
+		// mallModel.getAttractions()
+		// .removeIf(attraction -> attraction.getId().equals(id));
+		// return mallModel;
+		// }).collect(Collectors.toList());
+		// mallModelRepository.saveAllAndFlush(mallModels);
+		// delete attraction repository
 		attractionRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
