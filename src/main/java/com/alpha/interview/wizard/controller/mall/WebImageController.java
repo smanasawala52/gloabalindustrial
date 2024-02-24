@@ -34,9 +34,11 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
+import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.WebImage;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
+import com.alpha.interview.wizard.repository.mall.MallModelRepository;
 import com.alpha.interview.wizard.repository.mall.WebImageRepository;
 
 @Controller
@@ -45,6 +47,8 @@ public class WebImageController {
 
 	@Autowired
 	private WebImageRepository webImageRepository;
+	@Autowired
+	private MallModelRepository mallModelRepository;
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
@@ -189,10 +193,14 @@ public class WebImageController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteWebImage(@PathVariable Long id) {
+	public ResponseEntity<?> deleteWebImage(@PathVariable Long id) {
 		Optional<WebImage> webImageOptional = webImageRepository.findById(id);
 		if (!webImageOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
+		}
+		List<MallModel> mallModels = mallModelRepository.findByWebImageId(id);
+		if (mallModels != null && !mallModels.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(mallModels);
 		}
 		webImageRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

@@ -41,6 +41,7 @@ import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.alpha.interview.wizard.model.mall.Brand;
 import com.alpha.interview.wizard.model.mall.Category;
 import com.alpha.interview.wizard.model.mall.Coupon;
+import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.Product;
 import com.alpha.interview.wizard.model.mall.Shop;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
@@ -48,6 +49,7 @@ import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
 import com.alpha.interview.wizard.repository.mall.BrandRepository;
 import com.alpha.interview.wizard.repository.mall.CategoryRepository;
 import com.alpha.interview.wizard.repository.mall.CouponRepository;
+import com.alpha.interview.wizard.repository.mall.MallModelRepository;
 import com.alpha.interview.wizard.repository.mall.ProductRepository;
 import com.alpha.interview.wizard.repository.mall.ShopRepository;
 
@@ -57,6 +59,8 @@ public class ShopController {
 
 	@Autowired
 	private ShopRepository shopRepository;
+	@Autowired
+	private MallModelRepository mallModelRepository;
 	@Autowired
 	private BrandRepository brandRepository;
 	@Autowired
@@ -585,10 +589,14 @@ public class ShopController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteShop(@PathVariable Long id) {
+	public ResponseEntity<?> deleteShop(@PathVariable Long id) {
 		Optional<Shop> shopOptional = shopRepository.findById(id);
 		if (!shopOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
+		}
+		List<MallModel> mallModels = mallModelRepository.findByShopId(id);
+		if (mallModels != null && !mallModels.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(mallModels);
 		}
 		shopRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

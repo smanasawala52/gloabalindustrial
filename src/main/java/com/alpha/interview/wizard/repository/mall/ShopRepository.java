@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.Shop;
 
 @Repository
@@ -35,14 +34,14 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 	// @Param("subCategoryId") Long subCategoryId);
 
 	@Query("SELECT NEW Shop(m.id, m.name) FROM Shop m JOIN m.categories a WHERE a.id = :id")
-	List<MallModel> findByCategoryId(@Param("id") Long id);
+	List<Shop> findByCategoryId(@Param("id") Long id);
 
 	@Query("SELECT NEW Shop(m.id, m.name) FROM Shop m JOIN m.brands a WHERE a.id = :id")
-	List<MallModel> findByBrandId(@Param("id") Long id);
+	List<Shop> findByBrandId(@Param("id") Long id);
 
 	@Query("SELECT NEW Shop(m.id, m.name) FROM Shop m JOIN m.coupons a WHERE a.id = :id")
-	List<MallModel> findByCouponId(@Param("id") Long id);
+	List<Shop> findByCouponId(@Param("id") Long id);
 
 	@Query("SELECT NEW Shop(m.id, m.name) FROM Shop m JOIN m.products a WHERE a.id = :id")
-	List<MallModel> findByProductId(@Param("id") Long id);
+	List<Shop> findByProductId(@Param("id") Long id);
 }

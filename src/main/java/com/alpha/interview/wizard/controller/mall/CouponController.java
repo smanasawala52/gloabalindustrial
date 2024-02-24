@@ -36,10 +36,14 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
+import com.alpha.interview.wizard.model.mall.Attraction;
 import com.alpha.interview.wizard.model.mall.Coupon;
+import com.alpha.interview.wizard.model.mall.Shop;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
+import com.alpha.interview.wizard.repository.mall.AttractionRepository;
 import com.alpha.interview.wizard.repository.mall.CouponRepository;
+import com.alpha.interview.wizard.repository.mall.ShopRepository;
 
 @Controller
 @RequestMapping("/coupon")
@@ -47,6 +51,10 @@ public class CouponController {
 
 	@Autowired
 	private CouponRepository couponRepository;
+	@Autowired
+	private ShopRepository shopRepository;
+	@Autowired
+	private AttractionRepository attractionRepository;
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
@@ -199,10 +207,18 @@ public class CouponController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteCoupon(@PathVariable Long id) {
+	public ResponseEntity<?> deleteCoupon(@PathVariable Long id) {
 		Optional<Coupon> couponOptional = couponRepository.findById(id);
 		if (!couponOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
+		}
+		List<Shop> shops = shopRepository.findByCouponId(id);
+		if (shops != null && !shops.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(shops);
+		}
+		List<Attraction> attractions = attractionRepository.findByCouponId(id);
+		if (attractions != null && !attractions.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(attractions);
 		}
 		couponRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

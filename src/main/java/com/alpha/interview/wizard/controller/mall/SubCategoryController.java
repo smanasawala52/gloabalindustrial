@@ -34,9 +34,11 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
+import com.alpha.interview.wizard.model.mall.Category;
 import com.alpha.interview.wizard.model.mall.SubCategory;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
+import com.alpha.interview.wizard.repository.mall.CategoryRepository;
 import com.alpha.interview.wizard.repository.mall.SubCategoryRepository;
 
 @Controller
@@ -45,6 +47,8 @@ public class SubCategoryController {
 
 	@Autowired
 	private SubCategoryRepository subCategoryRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
@@ -191,11 +195,15 @@ public class SubCategoryController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteSubCategory(@PathVariable Long id) {
+	public ResponseEntity<?> deleteSubCategory(@PathVariable Long id) {
 		Optional<SubCategory> subCategoryOptional = subCategoryRepository
 				.findById(id);
 		if (!subCategoryOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
+		}
+		List<Category> categories = categoryRepository.findBySubCategoryId(id);
+		if (categories != null && !categories.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(categories);
 		}
 		subCategoryRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

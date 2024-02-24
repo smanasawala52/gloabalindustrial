@@ -34,10 +34,14 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
+import com.alpha.interview.wizard.model.mall.Attraction;
 import com.alpha.interview.wizard.model.mall.Product;
+import com.alpha.interview.wizard.model.mall.Shop;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
+import com.alpha.interview.wizard.repository.mall.AttractionRepository;
 import com.alpha.interview.wizard.repository.mall.ProductRepository;
+import com.alpha.interview.wizard.repository.mall.ShopRepository;
 
 @Controller
 @RequestMapping("/product")
@@ -45,6 +49,10 @@ public class ProductController {
 
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private ShopRepository shopRepository;
+	@Autowired
+	private AttractionRepository attractionRepository;
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
@@ -187,11 +195,20 @@ public class ProductController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+	public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
 		Optional<Product> productOptional = productRepository.findById(id);
 		if (!productOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
+		List<Shop> shops = shopRepository.findByBrandId(id);
+		if (shops != null && !shops.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(shops);
+		}
+		List<Attraction> attractions = attractionRepository.findByBrandId(id);
+		if (attractions != null && !attractions.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(attractions);
+		}
+
 		productRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}

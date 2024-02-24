@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.alpha.interview.wizard.model.mall.Attraction;
-import com.alpha.interview.wizard.model.mall.MallModel;
 
 @Repository
 public interface AttractionRepository extends JpaRepository<Attraction, Long> {
@@ -24,14 +23,14 @@ public interface AttractionRepository extends JpaRepository<Attraction, Long> {
 	List<Object[]> getAllIdAndName();
 
 	@Query("SELECT NEW Attraction(m.id, m.name) FROM Attraction m JOIN m.categories a WHERE a.id = :id")
-	List<MallModel> findByCategoryId(@Param("id") Long id);
+	List<Attraction> findByCategoryId(@Param("id") Long id);
 
 	@Query("SELECT NEW Attraction(m.id, m.name) FROM Attraction m JOIN m.brands a WHERE a.id = :id")
-	List<MallModel> findByBrandId(@Param("id") Long id);
+	List<Attraction> findByBrandId(@Param("id") Long id);
 
 	@Query("SELECT NEW Attraction(m.id, m.name) FROM Attraction m JOIN m.coupons a WHERE a.id = :id")
-	List<MallModel> findByCouponId(@Param("id") Long id);
+	List<Attraction> findByCouponId(@Param("id") Long id);
 
 	@Query("SELECT NEW Attraction(m.id, m.name) FROM Attraction m JOIN m.products a WHERE a.id = :id")
-	List<MallModel> findByProductId(@Param("id") Long id);
+	List<Attraction> findByProductId(@Param("id") Long id);
 }

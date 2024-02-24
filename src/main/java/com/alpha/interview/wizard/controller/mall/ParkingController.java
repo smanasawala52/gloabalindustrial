@@ -32,9 +32,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
+import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.Parking;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
+import com.alpha.interview.wizard.repository.mall.MallModelRepository;
 import com.alpha.interview.wizard.repository.mall.ParkingRepository;
 
 @Controller
@@ -43,6 +45,8 @@ public class ParkingController {
 
 	@Autowired
 	private ParkingRepository parkingRepository;
+	@Autowired
+	private MallModelRepository mallModelRepository;
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
@@ -188,10 +192,14 @@ public class ParkingController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteParking(@PathVariable Long id) {
+	public ResponseEntity<?> deleteParking(@PathVariable Long id) {
 		Optional<Parking> parkingOptional = parkingRepository.findById(id);
 		if (!parkingOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
+		}
+		List<MallModel> mallModels = mallModelRepository.findByParkingId(id);
+		if (mallModels != null && !mallModels.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(mallModels);
 		}
 		parkingRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -203,8 +211,7 @@ public class ParkingController {
 			return ResponseEntity.ok(parkingRepository.findAll());
 		}
 		List<Parking> lst = new ArrayList<>();
-		Optional<Parking> parkingOptional = parkingRepository
-				.findById(id);
+		Optional<Parking> parkingOptional = parkingRepository.findById(id);
 		if (parkingOptional.isPresent()) {
 			lst.add(parkingOptional.get());
 		}

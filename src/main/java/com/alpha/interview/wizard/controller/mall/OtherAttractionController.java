@@ -36,9 +36,11 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
+import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.OtherAttraction;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
+import com.alpha.interview.wizard.repository.mall.MallModelRepository;
 import com.alpha.interview.wizard.repository.mall.OtherAttractionRepository;
 
 @Controller
@@ -47,6 +49,8 @@ public class OtherAttractionController {
 
 	@Autowired
 	private OtherAttractionRepository otherAttractionRepository;
+	@Autowired
+	private MallModelRepository mallModelRepository;
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
@@ -207,11 +211,16 @@ public class OtherAttractionController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteOtherAttraction(@PathVariable Long id) {
+	public ResponseEntity<?> deleteOtherAttraction(@PathVariable Long id) {
 		Optional<OtherAttraction> otherAttractionOptional = otherAttractionRepository
 				.findById(id);
 		if (!otherAttractionOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
+		}
+		List<MallModel> mallModels = mallModelRepository
+				.findByOtherAttractionId(id);
+		if (mallModels != null && !mallModels.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(mallModels);
 		}
 		otherAttractionRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

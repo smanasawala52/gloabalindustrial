@@ -38,11 +38,15 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
+import com.alpha.interview.wizard.model.mall.Attraction;
 import com.alpha.interview.wizard.model.mall.Category;
+import com.alpha.interview.wizard.model.mall.Shop;
 import com.alpha.interview.wizard.model.mall.SubCategory;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
+import com.alpha.interview.wizard.repository.mall.AttractionRepository;
 import com.alpha.interview.wizard.repository.mall.CategoryRepository;
+import com.alpha.interview.wizard.repository.mall.ShopRepository;
 import com.alpha.interview.wizard.repository.mall.SubCategoryRepository;
 
 @Controller
@@ -51,6 +55,10 @@ public class CategoryController {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private ShopRepository shopRepository;
+	@Autowired
+	private AttractionRepository attractionRepository;
 	@Autowired
 	private SubCategoryRepository subCategoryRepository;
 	private int PAGE_SIZE = 20;
@@ -304,10 +312,19 @@ public class CategoryController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+	public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
 		Optional<Category> categoryOptional = categoryRepository.findById(id);
 		if (!categoryOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
+		}
+		List<Shop> shops = shopRepository.findByCategoryId(id);
+		if (shops != null && !shops.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(shops);
+		}
+		List<Attraction> attractions = attractionRepository
+				.findByCategoryId(id);
+		if (attractions != null && !attractions.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(attractions);
 		}
 		categoryRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -319,8 +336,7 @@ public class CategoryController {
 			return ResponseEntity.ok(categoryRepository.findAll());
 		}
 		List<Category> lst = new ArrayList<>();
-		Optional<Category> categoryOptional = categoryRepository
-				.findById(id);
+		Optional<Category> categoryOptional = categoryRepository.findById(id);
 		if (categoryOptional.isPresent()) {
 			lst.add(categoryOptional.get());
 		}

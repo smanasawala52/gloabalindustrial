@@ -37,9 +37,11 @@ import org.springframework.web.util.HtmlUtils;
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.alpha.interview.wizard.model.mall.Event;
+import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
 import com.alpha.interview.wizard.model.mall.util.ImageServiceMapInitializer;
 import com.alpha.interview.wizard.repository.mall.EventRepository;
+import com.alpha.interview.wizard.repository.mall.MallModelRepository;
 
 @Controller
 @RequestMapping("/event")
@@ -47,6 +49,8 @@ public class EventController {
 
 	@Autowired
 	private EventRepository eventRepository;
+	@Autowired
+	private MallModelRepository mallModelRepository;
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
@@ -198,10 +202,14 @@ public class EventController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
+	public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
 		Optional<Event> eventOptional = eventRepository.findById(id);
 		if (!eventOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
+		}
+		List<MallModel> mallModels = mallModelRepository.findByEventId(id);
+		if (mallModels != null && !mallModels.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(mallModels);
 		}
 		eventRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

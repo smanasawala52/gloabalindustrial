@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.alpha.interview.wizard.model.mall.Category;
-import com.alpha.interview.wizard.model.mall.MallModel;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
@@ -28,5 +27,5 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	// List<Category> findAllByMallId(@Param("mallId") Long mallId);
 
 	@Query("SELECT NEW Category(m.id, m.name) FROM Category m JOIN m.subCategories a WHERE a.id = :id")
-	List<MallModel> findBySubCategoryId(@Param("id") Long id);
+	List<Category> findBySubCategoryId(@Param("id") Long id);
 }
