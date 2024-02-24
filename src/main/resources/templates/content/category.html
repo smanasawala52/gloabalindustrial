@@ -87,7 +87,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<img src="" alt="category Image" class="img-fluid" id="modalImage">
+					<img onerror="this.src='/images/mall/noImage.jpg';" src="" alt="category Image" class="img-fluid" id="modalImage">
 				</div>
 			</div>
 		</div>
@@ -153,7 +153,7 @@
 									'<td class="editable" data-type="text" data-field="description" data-id="' + category.id + '" data-value="'+category.description+'">' + category.description + '</td>' +
 									//'<td class="editable" data-type="text" data-field="activeStatusKey" data-id="' + category.id + '" data-value="'+category.activeStatusKey+'">' + category.activeStatusKey + '</td>' +
 									'<td data-id="' + category.id + '" data-value="'+category.imgUrl+'">' +
-										'<img src="' + category.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + category.imgUrl + '">'+
+										'<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + category.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + category.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + category.id + '" data-imgurl="' + category.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + category.id + '" style="display:none">'+
 											'<form id="image_update_form_' + category.id + '" class="image_update_form" action="/category/update/' + category.id + '" data-id="'+category.id+'" method="patch" enctype="multipart/form-data">'+

@@ -89,7 +89,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<img src="" alt="otherAttraction Image" class="img-fluid" id="modalImage">
+					<img onerror="this.src='/images/mall/noImage.jpg';" src="" alt="otherAttraction Image" class="img-fluid" id="modalImage">
 				</div>
 			</div>
 		</div>
@@ -154,7 +154,7 @@
 									'<td class="editable" data-type="text" data-field="displayName" data-id="' + otherAttraction.id + '" data-value="'+otherAttraction.displayName+'">' + otherAttraction.displayName + '</td>' +
 									'<td class="editable" data-type="text" data-field="description" data-id="' + otherAttraction.id + '" data-value="'+otherAttraction.description+'">' + otherAttraction.description + '</td>' +
 									'<td data-id="' + otherAttraction.id + '" data-value="'+otherAttraction.imgUrl+'">' +
-										'<img src="' + otherAttraction.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + otherAttraction.imgUrl + '">'+
+										'<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + otherAttraction.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + otherAttraction.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + otherAttraction.id + '" data-imgurl="' + otherAttraction.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + otherAttraction.id + '" style="display:none">'+
 											'<form id="image_update_form_' + otherAttraction.id + '" class="image_update_form" action="/otherattraction/update/' + otherAttraction.id + '" data-id="'+otherAttraction.id+'" method="patch" enctype="multipart/form-data">'+

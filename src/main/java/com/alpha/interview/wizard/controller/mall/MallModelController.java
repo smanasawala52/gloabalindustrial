@@ -866,6 +866,17 @@ public class MallModelController {
 		return ResponseEntity.ok(mallModel);
 	}
 
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Void> deleteMallModel(@PathVariable Long id) {
+		Optional<MallModel> mallModelOptional = mallModelRepository
+				.findById(id);
+		if (!mallModelOptional.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		mallModelRepository.deleteById(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<List<MallModel>> getAllById(@PathVariable Long id) {
 		if (id <= 0) {
@@ -892,7 +903,7 @@ public class MallModelController {
 	// return new ResponseEntity<>(category.get(), HttpStatus.OK);
 	// }
 
-	@GetMapping("/{mallId}/chat")
+	@GetMapping("/{mallId}/loadAI")
 	public ResponseEntity<?> initializeChatByMallId(@PathVariable Long mallId) {
 		Optional<MallModel> mallModelOptional = mallModelRepository
 				.findById(mallId);
@@ -905,5 +916,20 @@ public class MallModelController {
 					initSystemMessage, input, SectorTypeConstants.MALL);
 		}
 		return ResponseEntity.ok().build();
+	}
+	@GetMapping("/{mallId}/chat")
+	public String startChatByMallId(@PathVariable Long mallId, Model model) {
+		Optional<MallModel> mallModelOptional = mallModelRepository
+				.findById(mallId);
+		if (mallModelOptional.isPresent()) {
+			model.addAttribute("mallModel", mallModelOptional.get());
+			String initSystemMessage = "Answer in only 10 words and in this JSON Format {answer:\"\", mallId:[], shopId:[], attractionId:[]}.";
+			List<String> input = MallUtil
+					.initalizeChatInput(mallModelOptional.get());
+			chatServiceMap.get(chatServiceImpl).initializeChat(
+					initSystemMessage, input, SectorTypeConstants.MALL);
+		}
+		model.addAttribute("contentTemplate", "mallModel-chat");
+		return "common";
 	}
 }

@@ -44,7 +44,7 @@ $(document).ready(function() {
         success: function(data) {
             // Populate thumbnails
             $.each(data, function(index, image) {
-                $('.image-grid').append('<img src="' + image.imgUrl + '" alt="' + image.name + '">');
+                $('.image-grid').append('<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + image.imgUrl + '" alt="' + image.name + '">');
             });
 
             // Attach click event to each thumbnail

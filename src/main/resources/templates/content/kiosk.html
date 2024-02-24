@@ -82,7 +82,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img src="" alt="Kiosk Image" class="img-fluid" id="modalImage" style="max-width: 100%; max-height: 100vh;">
+                <img onerror="this.src='/images/mall/noImage.jpg';" src="" alt="Kiosk Image" class="img-fluid" id="modalImage" style="max-width: 100%; max-height: 100vh;">
                 <!-- Adjust max-width and max-height as needed to fit the image within the modal -->
             </div>
         </div>
@@ -159,7 +159,7 @@
 									'<td>' + kiosk.id + '</td>' +
 									'<td class="editable" data-type="text" data-field="name" data-id="' + kiosk.id + '" data-value="'+kiosk.name+'">' + kiosk.name + '</td>' +
 									'<td data-id="' + kiosk.id + '" data-value="'+kiosk.imgUrl+'">' +
-										'<img src="' + kiosk.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + kiosk.imgUrl + '">'+
+										'<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + kiosk.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + kiosk.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + kiosk.id + '" data-imgurl="' + kiosk.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + kiosk.id + '" style="display:none">'+
 											'<form id="image_update_form_' + kiosk.id + '" class="image_update_form" action="/kiosk/update/' + kiosk.id + '" data-id="'+kiosk.id+'" method="patch" enctype="multipart/form-data">'+

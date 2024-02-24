@@ -103,7 +103,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<img src="" alt="shop Image" class="img-fluid" id="modalImage">
+					<img onerror="this.src='/images/mall/noImage.jpg';" src="" alt="shop Image" class="img-fluid" id="modalImage">
 				</div>
 			</div>
 		</div>
@@ -168,7 +168,7 @@
 									'<td class="editable" data-type="text" data-field="displayName" data-id="' + shop.id + '" data-value="'+shop.displayName+'">' + shop.displayName + '</td>' +
 									'<td class="editable" data-type="text" data-field="description" data-id="' + shop.id + '" data-value="'+shop.description+'">' + shop.description + '</td>' +
 									'<td data-id="' + shop.id + '" data-value="'+shop.imgUrl+'">' +
-										'<img src="' + shop.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + shop.imgUrl + '">'+
+										'<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + shop.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + shop.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + shop.id + '" data-imgurl="' + shop.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + shop.id + '" style="display:none">'+
 											'<form id="image_update_form_' + shop.id + '" class="image_update_form" action="/shop/update/' + shop.id + '" data-id="'+shop.id+'" method="patch" enctype="multipart/form-data">'+

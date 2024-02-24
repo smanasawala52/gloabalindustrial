@@ -61,9 +61,10 @@ public class UploadImageService implements ImageService {
 			System.out.println(path + fileName);
 			return Files.readAllBytes(Paths.get(path + "/" + fileName));
 		} catch (IOException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
-		return Files.readAllBytes(Paths.get("/mall/noImage.jpg"));
+		return Files.readAllBytes(Paths.get("/images/mall/noImage.jpg"));
 	}
 	@Override
 	public ImageServiceTypeConstants getIdentity() {

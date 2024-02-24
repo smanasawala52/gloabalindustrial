@@ -76,7 +76,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<img src="" alt="parking Image" class="img-fluid" id="modalImage">
+					<img onerror="this.src='/images/mall/noImage.jpg';" src="" alt="parking Image" class="img-fluid" id="modalImage">
 				</div>
 			</div>
 		</div>
@@ -141,7 +141,7 @@
 									'<td class="editable" data-type="text" data-field="block" data-id="' + parking.id + '" data-value="'+parking.block+'">' + parking.block + '</td>' +
 									'<td class="editable" data-type="text" data-field="displayName" data-id="' + parking.id + '" data-value="'+parking.displayName+'">' + parking.displayName + '</td>' +
 									'<td data-id="' + parking.id + '" data-value="'+parking.imgUrl+'">' +
-										'<img src="' + parking.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + parking.imgUrl + '">'+
+										'<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + parking.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + parking.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + parking.id + '" data-imgurl="' + parking.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + parking.id + '" style="display:none">'+
 											'<form id="image_update_form_' + parking.id + '" class="image_update_form" action="/parking/update/' + parking.id + '" data-id="'+parking.id+'" method="patch" enctype="multipart/form-data">'+

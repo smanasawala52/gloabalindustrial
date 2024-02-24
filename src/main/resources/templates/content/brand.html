@@ -77,7 +77,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img src="" alt="Brand Image" class="img-fluid" id="modalImage" style="max-width: 100%; max-height: 100vh;">
+                <img onerror="this.src='/images/mall/noImage.jpg';" src="" alt="Brand Image" class="img-fluid" id="modalImage" style="max-width: 100%; max-height: 100vh;">
                 <!-- Adjust max-width and max-height as needed to fit the image within the modal -->
             </div>
         </div>
@@ -142,7 +142,7 @@
 									'<td>' + brand.id + '</td>' +
 									'<td class="editable" data-type="text" data-field="name" data-id="' + brand.id + '" data-value="'+brand.name+'">' + brand.name + '</td>' +
 									'<td data-id="' + brand.id + '" data-value="'+brand.imgUrl+'">' +
-										'<img src="' + brand.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + brand.imgUrl + '">'+
+										'<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + brand.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + brand.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + brand.id + '" data-imgurl="' + brand.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + brand.id + '" style="display:none">'+
 											'<form id="image_update_form_' + brand.id + '" class="image_update_form" action="/brand/update/' + brand.id + '" data-id="'+brand.id+'" method="patch" enctype="multipart/form-data">'+

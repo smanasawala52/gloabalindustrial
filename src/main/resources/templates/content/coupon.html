@@ -89,7 +89,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<img src="" alt="coupon Image" class="img-fluid" id="modalImage">
+					<img onerror="this.src='/images/mall/noImage.jpg';" src="" alt="coupon Image" class="img-fluid" id="modalImage">
 				</div>
 			</div>
 		</div>
@@ -154,7 +154,7 @@
 									'<td class="editable" data-type="text" data-field="displayName" data-id="' + coupon.id + '" data-value="'+coupon.displayName+'">' + coupon.displayName + '</td>' +
 									'<td class="editable" data-type="text" data-field="description" data-id="' + coupon.id + '" data-value="'+coupon.description+'">' + coupon.description + '</td>' +
 									'<td data-id="' + coupon.id + '" data-value="'+coupon.imgUrl+'">' +
-										'<img src="' + coupon.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + coupon.imgUrl + '">'+
+										'<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + coupon.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + coupon.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + coupon.id + '" data-imgurl="' + coupon.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + coupon.id + '" style="display:none">'+
 											'<form id="image_update_form_' + coupon.id + '" class="image_update_form" action="/coupon/update/' + coupon.id + '" data-id="'+coupon.id+'" method="patch" enctype="multipart/form-data">'+

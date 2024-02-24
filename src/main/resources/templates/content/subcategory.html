@@ -87,7 +87,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<img src="" alt="subcategory Image" class="img-fluid" id="modalImage">
+					<img onerror="this.src='/images/mall/noImage.jpg';" src="" alt="subcategory Image" class="img-fluid" id="modalImage">
 				</div>
 			</div>
 		</div>
@@ -154,7 +154,7 @@
 									//'<td data-type="text" data-field="featured" data-id="' + subcategory.id + '" data-value="'+subcategory.featured+'">' + subcategory.featured + '</td>' +
 									//'<td class="editable" data-type="text" data-field="activeStatusKey" data-id="' + subcategory.id + '" data-value="'+subcategory.activeStatusKey+'">' + subcategory.activeStatusKey + '</td>' +
 									'<td data-id="' + subcategory.id + '" data-value="'+subcategory.imgUrl+'">' +
-										'<img src="' + subcategory.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + subcategory.imgUrl + '">'+
+										'<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + subcategory.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + subcategory.imgUrl + '">'+
 										'<br><button class="btn btn-primary edit-image-btn" data-id="' + subcategory.id + '" data-imgurl="' + subcategory.imgUrl + '">Edit Image</button>' +
 										'<br><div id="image_update_div_' + subcategory.id + '" style="display:none">'+
 											'<form id="image_update_form_' + subcategory.id + '" class="image_update_form" action="/subcategory/update/' + subcategory.id + '" data-id="'+subcategory.id+'" method="patch" enctype="multipart/form-data">'+
