@@ -187,6 +187,8 @@
                                     '<td>' +
 									'<button class="btn btn-info edit-button" data-id="' + mallModel.id + '">Edit</button>&nbsp;' +
 									'<button class="btn btn-danger delete-button" data-id="' + mallModel.id + '">Delete</button>' +
+                                    '<a href="/mallmodel/' + mallModel.id + '" class="btn btn-success">JSON</a>&nbsp;<a href="/mallmodel/' + mallModel.id + '/page" class="btn btn-success">Details</a>'+
+                                    '<a href="/mallmodel/' + mallModel.id + '/loadAI" class="btn btn-success">Load AI</a>&nbsp;<a href="/mallmodel/' + mallModel.id + '/chat" class="btn btn-success">Chat</a>'+
 									'</td>' +
 								'</tr>';
 					tableBody.append(row);

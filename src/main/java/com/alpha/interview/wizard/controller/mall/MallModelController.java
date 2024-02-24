@@ -58,6 +58,9 @@ import com.alpha.interview.wizard.repository.mall.ParkingRepository;
 import com.alpha.interview.wizard.repository.mall.ShopRepository;
 import com.alpha.interview.wizard.repository.mall.SubCategoryRepository;
 import com.alpha.interview.wizard.repository.mall.WebImageRepository;
+import com.alpha.interview.wizard.service.SectorTypeConstants;
+import com.alpha.interview.wizard.service.chat.ChatService;
+import com.alpha.interview.wizard.service.chat.ChatServiceMapInitializer;
 
 @Controller
 @RequestMapping("/mallmodel")
@@ -86,12 +89,17 @@ public class MallModelController {
 	private int PAGE_SIZE = 20;
 	@Value("${image.service.impl}")
 	private String imageServiceImpl;
+	@Value("${chat.service.impl}")
+	private String chatServiceImpl;
 
 	private final Map<String, ImageService> imageServiceMap;
+	private final Map<String, ChatService> chatServiceMap;
 	@Autowired
 	public MallModelController(
-			ImageServiceMapInitializer serviceMapInitializer) {
-		this.imageServiceMap = serviceMapInitializer.getServiceMap();
+			ImageServiceMapInitializer imageServiceMapInitializer,
+			ChatServiceMapInitializer chatServiceMapInitializer) {
+		this.chatServiceMap = chatServiceMapInitializer.getServiceMap();
+		this.imageServiceMap = imageServiceMapInitializer.getServiceMap();
 	}
 
 	@GetMapping("/")
@@ -883,4 +891,19 @@ public class MallModelController {
 	// Optional<Category> category = categoryRepository.findById(categoryId);
 	// return new ResponseEntity<>(category.get(), HttpStatus.OK);
 	// }
+
+	@GetMapping("/{mallId}/chat")
+	public ResponseEntity<?> initializeChatByMallId(@PathVariable Long mallId) {
+		Optional<MallModel> mallModelOptional = mallModelRepository
+				.findById(mallId);
+		if (!mallModelOptional.isPresent()) {
+			String initSystemMessage = "This Chat will Read all Mall Raw Data and "
+					+ "will provide answers to users questions in an interactive session manner.";
+			List<String> input = MallUtil
+					.initalizeChatInput(mallModelOptional.get());
+			chatServiceMap.get(chatServiceImpl).initializeChat(
+					initSystemMessage, input, SectorTypeConstants.MALL);
+		}
+		return ResponseEntity.ok().build();
+	}
 }

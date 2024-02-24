@@ -627,13 +627,6 @@ public class AttractionController {
 		if (mallModels != null && !mallModels.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(mallModels);
 		}
-		// mallModels = mallModels.stream().map(mallModel -> {
-		// // Remove the attraction with the specified ID
-		// mallModel.getAttractions()
-		// .removeIf(attraction -> attraction.getId().equals(id));
-		// return mallModel;
-		// }).collect(Collectors.toList());
-		// mallModelRepository.saveAllAndFlush(mallModels);
 		// delete attraction repository
 		attractionRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

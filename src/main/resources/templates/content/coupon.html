@@ -170,6 +170,7 @@
 									'<td>' +
 									'<button class="btn btn-info edit-button" data-id="' + coupon.id + '">Edit</button>&nbsp;' +
 									'<button class="btn btn-danger delete-button" data-id="' + coupon.id + '">Delete</button>' +
+									'<div id="delete_list_' + coupon.id + '"data-id="' + coupon.id + '"></div>' +
 									'</td>' +
 								'</tr>';
 					tableBody.append(row);
@@ -300,7 +301,17 @@
 							loadData(currentPage);
 						},
 						error: function (xhr, status, error) {
-							alert('Failed to delete coupon: ' + error);
+							if(xhr.status == 409) { // Check for conflict status
+					            var mallModels = xhr.responseJSON; // Get the list of MallModels from response
+					            var str = 'Please Unlink these listed below before deleting.'; var listHtml = str + '<ul>';
+					            $.each(mallModels, function(index, mallModel) {
+					                listHtml += '<li>' + mallModel.name + '</li>'; // Adjust based on your MallModel properties
+					            });
+					            listHtml += '</ul>';
+					            $('#delete_list_'+id).html(listHtml); // Display the list in a div with id 'mallModelList'
+					        } else {
+					            alert('Failed to delete attraction: ' + error);
+					        }
 						}
 					});
 				}
