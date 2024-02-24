@@ -215,6 +215,32 @@ public class MallModelDataLoadService {
 							// }
 							category.setId(null);
 						}
+						for (Coupon coupon : attraction.getCoupons()) {
+							// Optional<Coupon> couponOptional =
+							// couponRepository
+							// .findById(coupon.getId());
+							// if (!couponOptional.isPresent()) {
+							// couponRepository.saveAndFlush(coupon);
+							// }
+							coupon.setId(null);
+						}
+						for (Brand brand : attraction.getBrands()) {
+							// Optional<Brand> brandOptional = brandRepository
+							// .findById(brand.getId());
+							// if (!brandOptional.isPresent()) {
+							// brandRepository.saveAndFlush(brand);
+							// }
+							brand.setId(null);
+						}
+						for (Product product : attraction.getProducts()) {
+							// Optional<Product> brandOptional =
+							// productRepository
+							// .findById(product.getId());
+							// if (!brandOptional.isPresent()) {
+							// productRepository.saveAndFlush(product);
+							// }
+							product.setId(null);
+						}
 
 						// Optional<Attraction> attractionOptional =
 						// attractionRepository
