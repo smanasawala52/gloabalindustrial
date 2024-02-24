@@ -64,7 +64,7 @@ public class UploadImageService implements ImageService {
 			// e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return Files.readAllBytes(Paths.get("/images/mall/noImage.jpg"));
+		return new byte[0];
 	}
 	@Override
 	public ImageServiceTypeConstants getIdentity() {
