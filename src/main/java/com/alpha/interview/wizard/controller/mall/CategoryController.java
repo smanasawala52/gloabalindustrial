@@ -248,7 +248,7 @@ public class CategoryController {
 		return ResponseEntity.ok(categorys);
 	}
 	@GetMapping("/allIdAndName")
-	public ResponseEntity<List<Object[]>> getAllIdAndName() {
+	public ResponseEntity<List<Category>> getAllIdAndName() {
 		return ResponseEntity.ok(categoryRepository.getAllIdAndName());
 	}
 

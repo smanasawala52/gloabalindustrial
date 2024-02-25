@@ -19,8 +19,11 @@ public interface MallModelRepository extends JpaRepository<MallModel, Long> {
 	Page<MallModel> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	MallModel findByName(String name);
-	@Query("SELECT c.id, c.name FROM MallModel c")
-	List<Object[]> getAllIdAndName();
+	@Query("SELECT NEW MallModel(c.id, c.name) FROM MallModel c")
+	List<MallModel> getAllIdAndName();
+
+	@Query("SELECT NEW MallModel(c.id, c.displayName) FROM MallModel c")
+	List<MallModel> getAllIdAndDisplayName();
 
 	@Query("SELECT NEW MallModel(m.id, m.name) FROM MallModel m JOIN m.images a WHERE a.id = :id")
 	List<MallModel> findByWebImageId(@Param("id") Long id);

@@ -37,7 +37,7 @@ public class MallService implements SectorService {
 		return mallModelRepository.findAll();
 	}
 
-	public String initializeChat() {
+	public String initializeChat(Map<String, String> queryParams) {
 		List<MallModel> mallModels = mallModelRepository.findAll();
 		if (mallModels.isEmpty()) {
 			return "redirect:/mall/csv/upload-success";
@@ -51,13 +51,13 @@ public class MallService implements SectorService {
 		return "redirect:/";
 	}
 	@Override
-	public Message getResponse(String input) {
+	public Message getResponse(String input, Map<String, String> queryParams) {
 		return chatServiceMap.get(chatServiceImpl).getResponse(input,
 				getIdentity());
 	}
 
 	@Override
-	public void resetChatSession() {
+	public void resetChatSession(Map<String, String> queryParams) {
 		chatServiceMap.get(chatServiceImpl).resetChatSession(getIdentity());
 	}
 	@Override

@@ -513,14 +513,24 @@ public class ShopController {
 	@GetMapping("/all")
 	public ResponseEntity<Page<Shop>> getAllShops(
 			@RequestParam(defaultValue = "", name = "name", required = false) String name,
-			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
+			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp,
+			@RequestParam(defaultValue = "0", name = "ps", required = false) int ps,
+			@RequestParam(defaultValue = "", name = "shopIds", required = false) String shopIds) {
 		if (cp <= 0) {
 			cp = 0;
 		}
-		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
-				Sort.by("name").ascending());
+		if (ps <= 0) {
+			ps = PAGE_SIZE;
+		}
+		if (ps > PAGE_SIZE) {
+			ps = PAGE_SIZE;
+		}
+		Pageable pageable = PageRequest.of(cp, ps, Sort.by("name").ascending());
 		Page<Shop> shops = null;
-		if (name != null && !name.isEmpty()) {
+		if (shopIds != null && !shopIds.isBlank()) {
+			List<Long> lstShopIds = MallUtil.convertToLongList(shopIds);
+			shops = shopRepository.findByIds(lstShopIds, pageable);
+		} else if (name != null && !name.isBlank()) {
 			String escapedName = HtmlUtils.htmlEscape(name);
 			shops = shopRepository.findAllByNameContaining(
 					escapedName.toLowerCase(), pageable);

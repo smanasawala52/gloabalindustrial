@@ -19,7 +19,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	Page<Event> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	Event findByName(String name);
-	@Query("SELECT c.id, c.name FROM Event c")
-	List<Object[]> getAllIdAndName();
+	@Query("SELECT NEW Event(c.id, c.name) FROM Event c")
+	List<Event> getAllIdAndName();
 
 }

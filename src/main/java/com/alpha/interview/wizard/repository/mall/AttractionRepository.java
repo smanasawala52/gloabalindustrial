@@ -19,8 +19,8 @@ public interface AttractionRepository extends JpaRepository<Attraction, Long> {
 	Page<Attraction> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	Attraction findByName(String name);
-	@Query("SELECT c.id, c.name FROM Attraction c")
-	List<Object[]> getAllIdAndName();
+	@Query("SELECT NEW Attraction(c.id, c.name) FROM Attraction c")
+	List<Attraction> getAllIdAndName();
 
 	@Query("SELECT NEW Attraction(m.id, m.name) FROM Attraction m JOIN m.categories a WHERE a.id = :id")
 	List<Attraction> findByCategoryId(@Param("id") Long id);

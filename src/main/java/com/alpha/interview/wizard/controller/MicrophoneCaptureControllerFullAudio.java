@@ -40,15 +40,16 @@ public class MicrophoneCaptureControllerFullAudio {
 	@PostMapping(value = "/{type}/captureAudioStream", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> captureAudioStream(
 			@PathVariable("type") String type,
-			@RequestParam("audioData") MultipartFile audioData) {
+			@RequestParam("audioData") MultipartFile audioData,
+			@RequestParam Map<String, String> queryParams) {
 		byte[] audioBytes;
 		try {
 			audioBytes = audioData.getBytes();
 			String encodedMessage = speechToTextServiceMap
 					.get(speechToTextServiceImpl).getText(audioBytes);
 			SectorService sectorService = serviceMap.get(type);
-			return ResponseEntity.ok()
-					.body(sectorService.getResponse(encodedMessage));
+			return ResponseEntity.ok().body(
+					sectorService.getResponse(encodedMessage, queryParams));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,10 +58,12 @@ public class MicrophoneCaptureControllerFullAudio {
 
 	@PostMapping(value = "/{type}/captureQuery", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> captureQuery(@PathVariable("type") String type,
-			@RequestParam("query") String query) {
+			@RequestParam("query") String query,
+			@RequestParam Map<String, String> queryParams) {
 		try {
 			SectorService sectorService = serviceMap.get(type);
-			return ResponseEntity.ok().body(sectorService.getResponse(query));
+			return ResponseEntity.ok()
+					.body(sectorService.getResponse(query, queryParams));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,9 +71,10 @@ public class MicrophoneCaptureControllerFullAudio {
 	}
 
 	@GetMapping("/{type}/resetChatSession")
-	public String showHomeMall(@PathVariable("type") String type) {
+	public String showHomeMall(@PathVariable("type") String type,
+			@RequestParam Map<String, String> queryParams) {
 		SectorService sectorService = serviceMap.get(type);
-		sectorService.resetChatSession();
+		sectorService.resetChatSession(queryParams);
 		return "redirect:/";
 	}
 }

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -58,9 +59,9 @@ import com.alpha.interview.wizard.repository.mall.ParkingRepository;
 import com.alpha.interview.wizard.repository.mall.ShopRepository;
 import com.alpha.interview.wizard.repository.mall.SubCategoryRepository;
 import com.alpha.interview.wizard.repository.mall.WebImageRepository;
-import com.alpha.interview.wizard.service.SectorTypeConstants;
 import com.alpha.interview.wizard.service.chat.ChatService;
 import com.alpha.interview.wizard.service.chat.ChatServiceMapInitializer;
+import com.alpha.interview.wizard.service.mall.MallModelService;
 
 @Controller
 @RequestMapping("/mallmodel")
@@ -903,32 +904,23 @@ public class MallModelController {
 	// return new ResponseEntity<>(category.get(), HttpStatus.OK);
 	// }
 
-	@GetMapping("/{mallId}/loadAI")
-	public ResponseEntity<?> initializeChatByMallId(@PathVariable Long mallId) {
-		Optional<MallModel> mallModelOptional = mallModelRepository
-				.findById(mallId);
-		if (!mallModelOptional.isPresent()) {
-			String initSystemMessage = "This Chat will Read all Mall Raw Data and "
-					+ "will provide answers to users questions in an interactive session manner.";
-			List<String> input = MallUtil
-					.initalizeChatInput(mallModelOptional.get());
-			chatServiceMap.get(chatServiceImpl).initializeChat(
-					initSystemMessage, input, SectorTypeConstants.MALL);
-		}
-		return ResponseEntity.ok().build();
+	@Autowired
+	private MallModelService mallmodelService;
+
+	@GetMapping("/{id}/loadAI")
+	public String initializeloadAI(Model model, @PathVariable Long id) {
+		Map<String, String> queryParams = new HashMap<String, String>();
+		queryParams.put("mallId", String.valueOf(id));
+		mallmodelService.initializeChat(queryParams);
+		model.addAttribute("contentTemplate", "mallModel");
+		return "common";
 	}
-	@GetMapping("/{mallId}/chat")
-	public String startChatByMallId(@PathVariable Long mallId, Model model) {
-		Optional<MallModel> mallModelOptional = mallModelRepository
-				.findById(mallId);
-		if (mallModelOptional.isPresent()) {
-			model.addAttribute("mallModel", mallModelOptional.get());
-			String initSystemMessage = "Answer in only 10 words and in this JSON Format {answer:\"\", mallId:[], shopId:[], attractionId:[]}.";
-			List<String> input = MallUtil
-					.initalizeChatInput(mallModelOptional.get());
-			chatServiceMap.get(chatServiceImpl).initializeChat(
-					initSystemMessage, input, SectorTypeConstants.MALL);
-		}
+	@GetMapping("/{id}/chat")
+	public String initializeChat(Model model, @PathVariable Long id) {
+		Map<String, String> queryParams = new HashMap<String, String>();
+		queryParams.put("mallId", String.valueOf(id));
+		model.addAttribute("mallModels",
+				mallModelRepository.getAllIdAndDisplayName());
 		model.addAttribute("contentTemplate", "mallModel-chat");
 		return "common";
 	}

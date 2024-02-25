@@ -19,8 +19,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	Page<Category> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	Category findByName(String name);
-	@Query("SELECT c.id, c.name FROM Category c")
-	List<Object[]> getAllIdAndName();
+	@Query("SELECT NEW Category(c.id, c.name) FROM Category c")
+	List<Category> getAllIdAndName();
 	// @Query("SELECT c FROM Category c JOIN ShopCategory s ON c.id =
 	// s.category.id JOIN MallModelShop ms ON s.shop.id = ms.shop.id WHERE
 	// ms.mallModel.id = :mallId")

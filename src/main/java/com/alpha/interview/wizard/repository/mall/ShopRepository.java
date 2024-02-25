@@ -19,8 +19,8 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 	Page<Shop> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	Shop findByName(String name);
-	@Query("SELECT c.id, c.name FROM Shop c")
-	List<Object[]> getAllIdAndName();
+	@Query("SELECT NEW Shop(c.id, c.name) FROM Shop c")
+	List<Shop> getAllIdAndName();
 
 	// @Query("SELECT DISTINCT s FROM Shop s JOIN s.categories c WHERE
 	// s.mallModel.id = :mallId AND c.id = :categoryId")
@@ -44,4 +44,7 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 
 	@Query("SELECT NEW Shop(m.id, m.name) FROM Shop m JOIN m.products a WHERE a.id = :id")
 	List<Shop> findByProductId(@Param("id") Long id);
+
+	@Query("SELECT s FROM Shop s WHERE s.id IN :ids")
+	Page<Shop> findByIds(@Param("ids") List<Long> ids, Pageable pageable);
 }

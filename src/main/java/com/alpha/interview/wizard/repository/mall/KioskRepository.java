@@ -19,6 +19,6 @@ public interface KioskRepository extends JpaRepository<Kiosk, Long> {
 	Page<Kiosk> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	Kiosk findByName(String name);
-	@Query("SELECT c.id, c.name FROM Kiosk c")
-	List<Object[]> getAllIdAndName();
+	@Query("SELECT NEW Kiosk(c.id, c.name) FROM Kiosk c")
+	List<Kiosk> getAllIdAndName();
 }

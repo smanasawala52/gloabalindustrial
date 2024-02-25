@@ -21,7 +21,7 @@ public interface OtherAttractionRepository
 	Page<OtherAttraction> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	OtherAttraction findByName(String name);
-	@Query("SELECT c.id, c.name FROM OtherAttraction c")
-	List<Object[]> getAllIdAndName();
+	@Query("SELECT NEW OtherAttraction(c.id, c.name) FROM OtherAttraction c")
+	List<OtherAttraction> getAllIdAndName();
 
 }

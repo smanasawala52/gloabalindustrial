@@ -1,4 +1,6 @@
 package com.alpha.interview.wizard.controller.mall;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +40,7 @@ public class CsvController {
 			csvService.processCsvFile(file);
 			redirectAttributes.addFlashAttribute("message",
 					"CSV file uploaded and processed successfully.");
-			return mallService.initializeChat();
+			return mallService.initializeChat(new HashMap<String, String>());
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("message",
 					"Error processing CSV file: " + e.getMessage());

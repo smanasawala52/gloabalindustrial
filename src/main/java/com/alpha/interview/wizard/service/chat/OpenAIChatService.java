@@ -17,6 +17,8 @@ import com.alpha.interview.wizard.service.SectorTypeConstants;
 
 import io.github.sashirestela.openai.SimpleOpenAI;
 import io.github.sashirestela.openai.domain.chat.ChatRequest;
+import io.github.sashirestela.openai.domain.chat.ChatRespFmt;
+import io.github.sashirestela.openai.domain.chat.ChatRespFmtType;
 import io.github.sashirestela.openai.domain.chat.ChatResponse;
 import io.github.sashirestela.openai.domain.chat.Role;
 import io.github.sashirestela.openai.domain.chat.message.ChatMsg;
@@ -124,6 +126,7 @@ public class OpenAIChatService implements ChatService {
 			}
 			ChatRequest chatRequestSessionTemp = ChatRequest.builder()
 					.model(modelIdToUse)
+					.responseFormat(new ChatRespFmt(ChatRespFmtType.JSON))
 					.messages(chatRequestModel.getChatRequestSession())
 					.temperature(0.0).maxTokens(300).build();
 			CompletableFuture<ChatResponse> futureChat = openAI

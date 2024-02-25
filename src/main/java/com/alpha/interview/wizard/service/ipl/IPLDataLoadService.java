@@ -10,6 +10,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -106,7 +107,7 @@ public class IPLDataLoadService implements SectorService {
 		}
 		Collections.sort(getMatches());
 		if (!matches.isEmpty()) {
-			initializeChat();
+			initializeChat(new HashMap<String, String>());
 		}
 	}
 
@@ -130,7 +131,7 @@ public class IPLDataLoadService implements SectorService {
 	}
 
 	@Override
-	public String initializeChat() {
+	public String initializeChat(Map<String, String> queryParams) {
 		String initSystemMessage = "This Chat will Read all IPL Matches Raw Data and "
 				+ "will provide answers to users questions in an interactive session manner.";
 		List<String> input = new ArrayList<String>();
@@ -141,13 +142,13 @@ public class IPLDataLoadService implements SectorService {
 		return "redirect:/ipl";
 	}
 	@Override
-	public Message getResponse(String input) {
+	public Message getResponse(String input, Map<String, String> queryParams) {
 		return chatServiceMap.get(chatServiceImpl).getResponse(input,
 				getIdentity());
 	}
 
 	@Override
-	public void resetChatSession() {
+	public void resetChatSession(Map<String, String> queryParams) {
 		chatServiceMap.get(chatServiceImpl).resetChatSession(getIdentity());
 	}
 

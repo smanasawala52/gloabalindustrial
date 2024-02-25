@@ -1,7 +1,8 @@
 package com.alpha.interview.wizard.service;
 
 public enum SectorTypeConstants {
-	MALL("mall"), IPL("ipl"), INTERVIEW("interview"), TRAVEL("travel");
+	MALL("mall"), IPL("ipl"), INTERVIEW("interview"), TRAVEL(
+			"travel"), MALL_MODEL("mallmodel");
 
 	private final String type;
 

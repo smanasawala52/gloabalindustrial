@@ -21,8 +21,8 @@ public interface SubCategoryRepository
 	Page<SubCategory> findAllByNameContaining(@Param("name") String name,
 			Pageable pageable);
 	SubCategory findByName(String name);
-	@Query("SELECT c.id, c.name FROM SubCategory c")
-	List<Object[]> getAllIdAndName();
+	@Query("SELECT NEW SubCategory(c.id, c.name) FROM SubCategory c")
+	List<SubCategory> getAllIdAndName();
 	// @Query("SELECT sc FROM SubCategory sc JOIN CategorySubCategory c ON sc.id
 	// = c.subCategory.id JOIN ShopCategory s ON c.category.id = s.category.id
 	// JOIN MallModelShop ms ON s.shop.id = ms.shop.id WHERE ms.mallModel.id =
