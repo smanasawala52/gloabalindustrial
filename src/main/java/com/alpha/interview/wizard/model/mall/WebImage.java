@@ -39,6 +39,7 @@ public class WebImage {
 	private String description;
 	private String displayName;
 	private String imgUrl;
+	private String imgType;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
@@ -98,5 +99,11 @@ public class WebImage {
 	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+	public String getImgType() {
+		return imgType;
+	}
+	public void setImgType(String imgType) {
+		this.imgType = imgType;
 	}
 }

@@ -44,11 +44,19 @@ public class MallModel {
 	private String displayName;
 
 	private String location;
+	@Column(length = 500)
+	private String googleMap;
 	private String imgUrl;
 	private String floors;
 
 	@Column(length = 500)
 	private String additionalDetails;
+	@Column(length = 30)
+	private String timings;
+	@Column(length = 20)
+	private String contactNumber;
+	@Column(length = 20)
+	private String contactEmail;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
@@ -182,6 +190,30 @@ public class MallModel {
 	}
 	public void setImages(List<WebImage> images) {
 		this.images = images;
+	}
+	public String getTimings() {
+		return timings;
+	}
+	public void setTimings(String timings) {
+		this.timings = timings;
+	}
+	public String getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	public String getGoogleMap() {
+		return googleMap;
+	}
+	public void setGoogleMap(String googleMap) {
+		this.googleMap = googleMap;
+	}
+	public String getContactEmail() {
+		return contactEmail;
+	}
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
 	}
 
 }

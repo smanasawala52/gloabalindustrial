@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -42,6 +43,9 @@ import org.springframework.web.util.HtmlUtils;
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.alpha.interview.wizard.model.mall.Attraction;
+import com.alpha.interview.wizard.model.mall.Brand;
+import com.alpha.interview.wizard.model.mall.Category;
+import com.alpha.interview.wizard.model.mall.Coupon;
 import com.alpha.interview.wizard.model.mall.Event;
 import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.OtherAttraction;
@@ -115,8 +119,29 @@ public class MallModelController {
 		if (!mallModelOptional.isPresent()) {
 			model.addAttribute("contentTemplate", "mallModel");
 		} else {
+			MallModel mallModel = mallModelOptional.get();
 			model.addAttribute("contentTemplate", "mallModel-display");
-			model.addAttribute("mallModel", mallModelOptional.get());
+			model.addAttribute("mallModel", mallModel);
+			Set<Brand> brands = new HashSet<>();
+			Set<Category> categories = new HashSet<>();
+			Set<Coupon> coupons = new HashSet<>();
+			if (mallModel.getShops() != null) {
+				for (Shop shop : mallModel.getShops()) {
+					brands.addAll(shop.getBrands());
+					categories.addAll(shop.getCategories());
+					coupons.addAll(shop.getCoupons());
+				}
+			}
+			if (mallModel.getAttractions() != null) {
+				for (Attraction shop : mallModel.getAttractions()) {
+					brands.addAll(shop.getBrands());
+					categories.addAll(shop.getCategories());
+					coupons.addAll(shop.getCoupons());
+				}
+			}
+			model.addAttribute("brands", brands);
+			model.addAttribute("coupons", coupons);
+			model.addAttribute("categories", categories);
 		}
 		return "common";
 	}
