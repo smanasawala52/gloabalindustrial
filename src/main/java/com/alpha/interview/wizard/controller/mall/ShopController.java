@@ -513,9 +513,10 @@ public class ShopController {
 	@GetMapping("/all")
 	public ResponseEntity<Page<Shop>> getAllShops(
 			@RequestParam(defaultValue = "", name = "name", required = false) String name,
+			@RequestParam(defaultValue = "name", name = "s", required = false) String sort,
 			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp,
 			@RequestParam(defaultValue = "0", name = "ps", required = false) int ps,
-			@RequestParam(defaultValue = "", name = "shopIds", required = false) String shopIds) {
+			@RequestParam(defaultValue = "", name = "ids", required = false) String ids) {
 		if (cp <= 0) {
 			cp = 0;
 		}
@@ -525,10 +526,10 @@ public class ShopController {
 		if (ps > PAGE_SIZE) {
 			ps = PAGE_SIZE;
 		}
-		Pageable pageable = PageRequest.of(cp, ps, Sort.by("name").ascending());
+		Pageable pageable = PageRequest.of(cp, ps, Sort.by(sort).ascending());
 		Page<Shop> shops = null;
-		if (shopIds != null && !shopIds.isBlank()) {
-			List<Long> lstShopIds = MallUtil.convertToLongList(shopIds);
+		if (ids != null && !ids.isBlank()) {
+			List<Long> lstShopIds = MallUtil.convertToLongList(ids);
 			shops = shopRepository.findByIds(lstShopIds, pageable);
 		} else if (name != null && !name.isBlank()) {
 			String escapedName = HtmlUtils.htmlEscape(name);

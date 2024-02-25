@@ -21,4 +21,7 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
 	Coupon findByName(String name);
 	@Query("SELECT c.id, c.name FROM Coupon c")
 	List<Object[]> getAllIdAndName();
+
+	@Query("SELECT s FROM Coupon s WHERE s.id IN :ids")
+	Page<Coupon> findByIds(@Param("ids") List<Long> ids, Pageable pageable);
 }

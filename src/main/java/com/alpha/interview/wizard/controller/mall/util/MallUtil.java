@@ -31,6 +31,7 @@ public class MallUtil {
 			String name = inputName.trim();
 			name = name.substring(0, 1).toUpperCase()
 					+ name.substring(1).toLowerCase();
+			name = name.replaceAll("\"", "");
 			name = name.replaceAll("'", "");
 			return name;
 		}
@@ -57,13 +58,13 @@ public class MallUtil {
 			List<Category> categories) {
 		StringBuilder stringCategories = new StringBuilder();
 		if (categories != null && !categories.isEmpty()) {
-			stringCategories.append(", 'categories': [");
+			stringCategories.append(", \"categories\": [");
 			String preCat = "";
 			for (Category category : categories) {
 				// Iterate over subcategories within each category
-				stringCategories.append(preCat).append("'")
+				stringCategories.append(preCat).append("\"")
 						.append(formatJsonName(category.getDisplayName()))
-						.append("'");
+						.append("\"");
 				preCat = ", ";
 			}
 			stringCategories.append("] ");
@@ -73,12 +74,12 @@ public class MallUtil {
 	private static StringBuilder getProductInputString(List<Product> products) {
 		StringBuilder stringProduct = new StringBuilder();
 		if (products != null && !products.isEmpty()) {
-			stringProduct.append(", 'products': [");
+			stringProduct.append(", \"products\": [");
 			String preProd = "";
 			for (Product product : products) {
-				stringProduct.append(preProd).append("'")
+				stringProduct.append(preProd).append("\"")
 						.append(formatJsonName(product.getDisplayName()))
-						.append("'");
+						.append("\"");
 				preProd = ", ";
 			}
 			stringProduct.append("] ");
@@ -88,14 +89,14 @@ public class MallUtil {
 	private static StringBuilder getCouponInputString(List<Coupon> coupons) {
 		StringBuilder stringCoupons = new StringBuilder();
 		if (coupons != null && !coupons.isEmpty()) {
-			stringCoupons.append(", 'coupons': [");
+			stringCoupons.append(", \"coupons\": [");
 			String preCoupon = "";
 			for (Coupon coupon : coupons) {
 				if (isTodayInRange(coupon.getStartDate(),
 						coupon.getEndDate())) {
-					stringCoupons.append(preCoupon).append("'")
+					stringCoupons.append(preCoupon).append("\"")
 							.append(formatJsonName(coupon.getDisplayName()))
-							.append("'");
+							.append("\"");
 					preCoupon = ", ";
 				}
 			}
@@ -106,12 +107,12 @@ public class MallUtil {
 	private static StringBuilder getBrandInputString(List<Brand> brands) {
 		StringBuilder stringBrands = new StringBuilder();
 		if (brands != null && !brands.isEmpty()) {
-			stringBrands.append(", 'brands': [");
+			stringBrands.append(", \"brands\": [");
 			String preBrand = "";
 			for (Brand brand : brands) {
-				stringBrands.append(preBrand).append("'")
+				stringBrands.append(preBrand).append("\"")
 						.append(formatJsonName(brand.getDisplayName()))
-						.append("'");
+						.append("\"");
 				preBrand = ", ";
 			}
 			stringBrands.append("]");
@@ -125,32 +126,32 @@ public class MallUtil {
 		if (shops != null) {
 			shops.stream().forEach(shop -> {
 				StringBuilder sb = new StringBuilder();
-				sb.append("{'mallId': '").append(mallId).append("'");
-				sb.append(", 'shopId': '").append(shop.getId()).append("'");
+				sb.append("{\"mallId\": \"").append(mallId).append("\"");
+				sb.append(", \"shopId\": \"").append(shop.getId()).append("\"");
 				if (shop.getShopNumber() != null
 						&& !shop.getShopNumber().isBlank()) {
-					sb.append(", 'shopNumber': '")
+					sb.append(", \"shopNumber\": \"")
 							.append(formatJsonName(shop.getShopNumber()))
-							.append("'");
+							.append("\"");
 				}
-				sb.append(", 'name': '")
+				sb.append(", \"name\": \"")
 						.append(formatJsonName(shop.getDisplayName()))
-						.append("'");
+						.append("\"");
 				if (shop.getFloor() != null && !shop.getFloor().isBlank()) {
-					sb.append(", 'floor': '")
+					sb.append(", \"floor\": \"")
 							.append(formatJsonName(shop.getFloor()))
-							.append("'");
+							.append("\"");
 				}
 				if (shop.getHowToReach() != null
 						&& !shop.getHowToReach().isBlank()) {
-					sb.append(", 'howToReach': '")
+					sb.append(", \"howToReach\": \"")
 							.append(formatJsonName(shop.getHowToReach()))
-							.append("'");
+							.append("\"");
 				}
 				if (shop.getFounded() != null && !shop.getFounded().isBlank()) {
-					sb.append(", 'founded': '")
+					sb.append(", \"founded\": \"")
 							.append(formatJsonName(shop.getFounded()))
-							.append("'");
+							.append("\"");
 				}
 				sb.append(getBrandInputString(shop.getBrands()));
 				sb.append(getCategoryInputString(shop.getCategories()));
@@ -158,15 +159,15 @@ public class MallUtil {
 				sb.append(getProductInputString(shop.getProducts()));
 				if (shop.getDescription() != null
 						&& !shop.getDescription().isBlank()) {
-					sb.append(", 'details': '")
+					sb.append(", \"details\": \"")
 							.append(formatJsonName(shop.getDescription()))
-							.append("'");
+							.append("\"");
 				}
 				if (shop.getAdditionalDetails() != null
 						&& !shop.getAdditionalDetails().isBlank()) {
-					sb.append(", 'addDet': '")
+					sb.append(", \"addDet\": \"")
 							.append(formatJsonName(shop.getAdditionalDetails()))
-							.append("'");;
+							.append("\"");;
 				}
 				sb.append("}");
 				input.add(sb.toString());
@@ -180,23 +181,23 @@ public class MallUtil {
 		if (shops != null) {
 			shops.stream().forEach(attraction -> {
 				StringBuilder sb = new StringBuilder();
-				sb.append("{'mallId': '").append(mallId).append("'");
-				sb.append(", 'attractionId': '").append(attraction.getId())
-						.append("'");
-				sb.append(", 'name': '")
+				sb.append("{\"mallId\": \"").append(mallId).append("\"");
+				sb.append(", \"attractionId\": \"").append(attraction.getId())
+						.append("\"");
+				sb.append(", \"name\": \"")
 						.append(formatJsonName(attraction.getDisplayName()))
-						.append("'");
+						.append("\"");
 				if (attraction.getFloor() != null
 						&& !attraction.getFloor().isBlank()) {
-					sb.append(", 'floor': '")
+					sb.append(", \"floor\": \"")
 							.append(formatJsonName(attraction.getFloor()))
-							.append("'");
+							.append("\"");
 				}
 				if (attraction.getHowToReach() != null
 						&& !attraction.getHowToReach().isBlank()) {
-					sb.append(", 'howToReach': '")
+					sb.append(", \"howToReach\": \"")
 							.append(formatJsonName(attraction.getHowToReach()))
-							.append("'");
+							.append("\"");
 				}
 				sb.append(getBrandInputString(attraction.getBrands()));
 				sb.append(getCategoryInputString(attraction.getCategories()));
@@ -204,16 +205,16 @@ public class MallUtil {
 				sb.append(getProductInputString(attraction.getProducts()));
 				if (attraction.getDescription() != null
 						&& !attraction.getDescription().isBlank()) {
-					sb.append(", 'details': '")
+					sb.append(", \"details\": \"")
 							.append(formatJsonName(attraction.getDescription()))
-							.append("'");
+							.append("\"");
 				}
 				if (attraction.getAdditionalDetails() != null
 						&& !attraction.getAdditionalDetails().isBlank()) {
-					sb.append(", 'addDet': '")
+					sb.append(", \"addDet\": \"")
 							.append(formatJsonName(
 									attraction.getAdditionalDetails()))
-							.append("'");
+							.append("\"");
 				}
 				sb.append("}");
 				input.add(sb.toString());
@@ -223,39 +224,41 @@ public class MallUtil {
 	}
 	private static String getMallInputString(MallModel inputMallModel) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("{ 'mallId': '").append(inputMallModel.getId()).append("'");
-		sb.append(", 'name': '")
+		sb.append("{ \"mallId\": \"").append(inputMallModel.getId())
+				.append("\"");
+		sb.append(", \"name\": \"")
 				.append(formatJsonName(inputMallModel.getDisplayName()))
-				.append("'");
+				.append("\"");
 		if (inputMallModel.getFloors() != null
 				&& !inputMallModel.getFloors().isBlank()) {
-			sb.append(", 'floors': '")
+			sb.append(", \"floors\": \"")
 					.append(formatJsonName(inputMallModel.getFloors()))
-					.append("'");
+					.append("\"");
 		}
 		if (inputMallModel.getCity() != null
 				&& !inputMallModel.getCity().isBlank()) {
-			sb.append(", 'city': '")
+			sb.append(", \"city\": \"")
 					.append(formatJsonName(inputMallModel.getCity()))
-					.append("'");
+					.append("\"");
 		}
 		if (inputMallModel.getCountry() != null
 				&& !inputMallModel.getCountry().isBlank()) {
-			sb.append(", 'country': '")
+			sb.append(", \"country\": \"")
 					.append(formatJsonName(inputMallModel.getCountry()))
-					.append("'");
+					.append("\"");
 		}
 		if (inputMallModel.getDescription() != null
 				&& !inputMallModel.getDescription().isBlank()) {
-			sb.append(", 'details': '")
+			sb.append(", \"details\": \"")
 					.append(formatJsonName(inputMallModel.getDescription()))
-					.append("'");
+					.append("\"");
 		}
 		if (inputMallModel.getAdditionalDetails() != null
 				&& !inputMallModel.getAdditionalDetails().isBlank()) {
-			sb.append(", 'addDet': '").append(
-					formatJsonName(inputMallModel.getAdditionalDetails()))
-					.append("'");
+			sb.append(", \"addDet\": \"")
+					.append(formatJsonName(
+							inputMallModel.getAdditionalDetails()))
+					.append("\"");
 		}
 		sb.append("}");
 		return sb.toString();
@@ -268,40 +271,42 @@ public class MallUtil {
 					x -> isTodayInRange(x.getStartDate(), x.getEndDate()))
 					.forEach(attraction -> {
 						StringBuilder sb = new StringBuilder();
-						sb.append("{ 'mallId': '").append(mallId).append("'");
-						sb.append(", 'attractionId': '")
-								.append(attraction.getId()).append("'");
-						sb.append(", 'name': '")
+						sb.append("{ \"mallId\": \"").append(mallId)
+								.append("\"");
+						sb.append(", \"otherAttractionId\": \"")
+								.append(attraction.getId()).append("\"");
+						sb.append(", \"name\": \"")
 								.append(formatJsonName(
 										attraction.getDisplayName()))
-								.append("'");
+								.append("\"");
 						if (attraction.getFloor() != null
 								&& !attraction.getFloor().isBlank()) {
-							sb.append(", 'floor': '").append(
-									formatJsonName(attraction.getFloor()))
-									.append("'");
+							sb.append(", \"floor\": \"")
+									.append(formatJsonName(
+											attraction.getFloor()))
+									.append("\"");
 						}
 						if (attraction.getHowToReach() != null
 								&& !attraction.getHowToReach().isBlank()) {
-							sb.append(", 'howToReach': '")
+							sb.append(", \"howToReach\": \"")
 									.append(formatJsonName(
 											attraction.getHowToReach()))
-									.append("'");
+									.append("\"");
 						}
 						if (attraction.getDescription() != null
 								&& !attraction.getDescription().isBlank()) {
-							sb.append(", 'details': '")
+							sb.append(", \"details\": \"")
 									.append(formatJsonName(
 											attraction.getDescription()))
-									.append("'");
+									.append("\"");
 						}
 						if (attraction.getAdditionalDetails() != null
 								&& !attraction.getAdditionalDetails()
 										.isBlank()) {
-							sb.append(", 'addDet': '")
+							sb.append(", \"addDet\": \"")
 									.append(formatJsonName(
 											attraction.getAdditionalDetails()))
-									.append("'");
+									.append("\"");
 						}
 						sb.append("}");
 						input.add(sb.toString());
@@ -315,30 +320,30 @@ public class MallUtil {
 		if (parkings != null) {
 			parkings.stream().forEach(attraction -> {
 				StringBuilder sb = new StringBuilder();
-				sb.append("{ 'mallId': '").append(mallId).append("'");
-				sb.append(", 'attractionId': '").append(attraction.getId())
-						.append("'");
-				sb.append(", 'name': '")
+				sb.append("{ \"mallId\": \"").append(mallId).append("\"");
+				sb.append(", \"parkingId\": \"").append(attraction.getId())
+						.append("\"");
+				sb.append(", \"name\": \"")
 						.append(formatJsonName(attraction.getDisplayName()))
-						.append("'");
+						.append("\"");
 				if (attraction.getFloor() != null
 						&& !attraction.getFloor().isBlank()) {
-					sb.append(", 'floor': '")
+					sb.append(", \"floor\": \"")
 							.append(formatJsonName(attraction.getFloor()))
-							.append("'");
+							.append("\"");
 				}
 				if (attraction.getBlock() != null
 						&& !attraction.getBlock().isBlank()) {
-					sb.append(", 'block': '")
+					sb.append(", \"block\": \"")
 							.append(formatJsonName(attraction.getBlock()))
-							.append("'");
+							.append("\"");
 				}
 				if (attraction.getAdditionalDetails() != null
 						&& !attraction.getAdditionalDetails().isBlank()) {
-					sb.append(", 'addDet': '")
+					sb.append(", \"addDet\": \"")
 							.append(formatJsonName(
 									attraction.getAdditionalDetails()))
-							.append("'");
+							.append("\"");
 				}
 				sb.append("}");
 				input.add(sb.toString());
@@ -354,25 +359,26 @@ public class MallUtil {
 					x -> isTodayInRange(x.getStartDate(), x.getEndDate()))
 					.forEach(event -> {
 						StringBuilder sb = new StringBuilder();
-						sb.append("{ 'mallId': '").append(mallId).append("'");
-						sb.append(", 'eventId': '").append(event.getId())
-								.append("'");
-						sb.append(", 'name': '")
+						sb.append("{ \"mallId\": \"").append(mallId)
+								.append("\"");
+						sb.append(", \"eventId\": \"").append(event.getId())
+								.append("\"");
+						sb.append(", \"name\": \"")
 								.append(formatJsonName(event.getDisplayName()))
-								.append("'");
+								.append("\"");
 						if (event.getDescription() != null
 								&& !event.getDescription().isBlank()) {
-							sb.append(", 'details': '")
+							sb.append(", \"details\": \"")
 									.append(formatJsonName(
 											event.getDescription()))
-									.append("'");
+									.append("\"");
 						}
 						if (event.getAdditionalDetails() != null
 								&& !event.getAdditionalDetails().isBlank()) {
-							sb.append(", 'addDet': '")
+							sb.append(", \"addDet\": \"")
 									.append(formatJsonName(
 											event.getAdditionalDetails()))
-									.append("'");
+									.append("\"");
 						}
 						sb.append("}");
 						input.add(sb.toString());
@@ -381,7 +387,7 @@ public class MallUtil {
 		return input;
 	}
 	public static boolean isTodayInRange(Date startDate, Date endDate) {
-		// Get today's date
+		// Get today\"s date
 		Date today = new Date();
 
 		// Set start date to 00:00
@@ -400,7 +406,7 @@ public class MallUtil {
 		endCal.set(Calendar.SECOND, 59);
 		endDate = endCal.getTime();
 
-		// Check if today's date is within the range
+		// Check if today\"s date is within the range
 		return (today.compareTo(startDate) >= 0
 				&& today.compareTo(endDate) <= 0);
 	}

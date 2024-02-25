@@ -28,4 +28,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 	@Query("SELECT NEW Category(m.id, m.name) FROM Category m JOIN m.subCategories a WHERE a.id = :id")
 	List<Category> findBySubCategoryId(@Param("id") Long id);
+
+	@Query("SELECT s FROM Category s WHERE s.id IN :ids")
+	Page<Category> findByIds(@Param("ids") List<Long> ids, Pageable pageable);
 }

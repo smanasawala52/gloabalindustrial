@@ -36,4 +36,7 @@ public interface SubCategoryRepository
 	// mallId,
 	// @Param("categoryId") Long categoryId);
 
+	@Query("SELECT s FROM SubCategory s WHERE s.id IN :ids")
+	Page<SubCategory> findByIds(@Param("ids") List<Long> ids,
+			Pageable pageable);
 }

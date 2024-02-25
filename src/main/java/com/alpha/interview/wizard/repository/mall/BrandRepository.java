@@ -21,4 +21,7 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
 	Brand findByName(String name);
 	@Query("SELECT NEW Brand(c.id, c.name) FROM Brand c")
 	List<Brand> getAllIdAndName();
+
+	@Query("SELECT s FROM Brand s WHERE s.id IN :ids")
+	Page<Brand> findByIds(@Param("ids") List<Long> ids, Pageable pageable);
 }

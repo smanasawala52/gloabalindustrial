@@ -24,4 +24,7 @@ public interface OtherAttractionRepository
 	@Query("SELECT NEW OtherAttraction(c.id, c.name) FROM OtherAttraction c")
 	List<OtherAttraction> getAllIdAndName();
 
+	@Query("SELECT s FROM OtherAttraction s WHERE s.id IN :ids")
+	Page<OtherAttraction> findByIds(@Param("ids") List<Long> ids,
+			Pageable pageable);
 }

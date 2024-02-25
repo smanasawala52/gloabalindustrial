@@ -1,59 +1,572 @@
 <div th:fragment="content">
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	<div class="mall-image">
-        <!-- Display main image here -->
-        <img th:src="${mallModel.imgUrl}" alt="Mall Image">
-    </div>
-     <div class="mall-description">
-        <h3>Name: <span id="mall-name" th:text="${mallModel.name}"></span></h3>
-        <p><strong>Country:</strong> <span id="mall-country" th:text="${mallModel.country}"></span></p>
-        <p><strong>City:</strong> <span id="mall-city" th:text="${mallModel.city}"></span></p>
-        <p><strong>Description:</strong> <span id="mall-description" th:text="${mallModel.description}"></span></p>
-        <p><strong>Location:</strong> <span id="mall-location" th:text="${mallModel.location}"></span></p>
-        <!-- Add more details as needed -->
-    </div>
-	<div class="image-grid">
-        <!-- WebImage thumbnails will be dynamically populated here -->
-    </div>
-        <!-- Modal for displaying larger image -->
-    <div id="image-modal" class="modal">
-        <span class="close">&times;</span>
-        <div class="modal-content">
-            <img id="modal-image" src="" alt="Web Image">
-            <p id="image-description"></p>
-        </div>
-    </div>
+   <link rel="stylesheet" href="/css/bootstrap.css">
+   <link rel="stylesheet" href="/css/fonts.css">
+   <link rel="stylesheet" href="/css/style.css">
+   <!-- <script type="text/javascript" async="" src="/js/scripts.js"></script>
+   <script type="text/javascript" async="" src="/js/bootstrap.js"></script>
+   <script type="text/javascript" async="" src="/js/bootstrap.min.js"></script>
+   <script type="text/javascript" async="" src="/js/scripts.js"></script>
+   <script type="text/javascript" async="" src="/js/main.js"></script>
+   <script type="text/javascript" async="" src="/js/swiper-element-bundle.min.js"></script>
+   <script type="text/javascript" async="" src="/js/swiper-bundle.min.js"></script>
+   <script type="text/javascript" async="" src="/js/jquery-3.6.4.min.js"></script> -->
+
+   <div class="page text-center animated" style="animation-duration: 500ms;">
+      <header class="page-header">
+         <!-- RD Navbar-->
+         <div class="rd-navbar-wrap" style="height: 146px;">
+            <nav class="rd-navbar rd-navbar-classic rd-navbar-original rd-navbar-static" data-layout="rd-navbar-fixed"
+               data-sm-layout="rd-navbar-fixed" data-sm-device-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed"
+               data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static"
+               data-lg-device-layout="rd-navbar-static" data-xl-layout="rd-navbar-static"
+               data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static"
+               data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xg-stick-up-offset="46px"
+               data-xxl-stick-up-offset="46px">
+               <div class="rd-navbar-top-panel-wrap">
+
+               </div>
+               <div class="rd-navbar-inner">
+                  <!-- RD Navbar Panel-->
+                  <div class="rd-navbar-left-side">
+                     <div class="rd-navbar-panel">
+                        <!-- RD Navbar Toggle-->
+                        <button class="rd-navbar-toggle toggle-original"
+                           data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                        <!-- RD Navbar Brand-->
+                        <div class="rd-navbar-brand">
+                           <!--Brand--><a class="brand" href=""><img class="brand-logo-dark"
+                                 src="/images/logo-202x56.png" alt="" width="101" height="28"><img
+                                 class="brand-logo-light" src="./Home_files/logo-inverse-202x56.png" alt="" width="101"
+                                 height="28"></a>
+                        </div>
+                        <!-- RD Navbar Toggle-->
+                        <button class="rd-navbar-toggle-search-fixed d-lg-none d-tablet toggle-original"
+                           data-rd-navbar-toggle=".rd-navbar-search-wrap-fixed"></button>
+                        <!-- RD Navbar Toggle-->
+                        <button class="rd-navbar-collapse-toggle d-xl-none d-lg-inline-block toggle-original"
+                           data-rd-navbar-toggle=".rd-navbar-top-panel"><span></span></button>
+                     </div>
+                  </div>
+                  <div class="rd-navbar-right-side">
+                     <div class="rd-navbar-nav-wrap d-inline-block toggle-original-elements">
+                        <ul class="rd-navbar-nav">
+                           <li class="rd-nav-item active rd-navbar--has-dropdown rd-navbar-submenu"><a
+                                 class="rd-nav-link" href="">Home</a><span class="rd-navbar-submenu-toggle"></span><span
+                                 class="rd-navbar-submenu-toggle"></span>
+                              <ul class="rd-menu rd-navbar-dropdown">
+                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link"
+                                       href="https://livedemo00.template-help.com/wt_61211_v2/index-variant-2.html">Home
+                                       Variant 2</a>
+                                 </li>
+                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link"
+                                       href="https://livedemo00.template-help.com/wt_61211_v2/index-variant-3.html">Home
+                                       Variant 3</a>
+                                 </li>
+                              </ul>
+                           </li>
+                           <li class="rd-nav-item rd-navbar--has-dropdown rd-navbar-submenu"><a class="rd-nav-link"
+                                 href="https://livedemo00.template-help.com/wt_61211_v2/entertainment.html">Services</a><span
+                                 class="rd-navbar-submenu-toggle"></span><span class="rd-navbar-submenu-toggle"></span>
+                              <ul class="rd-menu rd-navbar-dropdown">
+                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="#shopspage">Shops</a>
+                                 </li>
+                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link"
+                                       href="https://livedemo00.template-help.com/wt_61211_v2/food.html">Food</a>
+                                 </li>
+                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link"
+                                       href="https://livedemo00.template-help.com/wt_61211_v2/entertainment.html">Entertainment</a>
+                                 </li>
+                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link"
+                                       href="https://livedemo00.template-help.com/wt_61211_v2/parking.html">Parking</a>
+                                 </li>
+                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link"
+                                       href="https://livedemo00.template-help.com/wt_61211_v2/gift-cards.html">Gift
+                                       Cards</a>
+                                 </li>
+                              </ul>
+                           </li>
+                           <li class="rd-nav-item rd-navbar--has-dropdown rd-navbar-submenu"><a class="rd-nav-link"
+                                 href="#">Events</a><span class="rd-navbar-submenu-toggle"></span><span
+                                 class="rd-navbar-submenu-toggle"></span>
+                              <ul class="rd-menu rd-navbar-dropdown">
+                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="#l">All
+                                       Events</a>
+                                 </li>
+                              </ul>
+                           </li>
+                        </ul>
+                     </div>
+                     <!--RD Navbar Search-->
+                     <div class="rd-navbar-search-wrap-fixed d-inline-block toggle-original-elements">
+                        <div class="rd-navbar-search-wrap toggle-original-elements">
+                           <div class="rd-navbar-search toggle-original-elements"><a
+                                 class="rd-navbar-search-toggle toggle-original"
+                                 data-rd-navbar-toggle=".rd-navbar-search" href="#"><span></span></a>
+                              <form class="rd-search rd-navbar-search-custom"
+                                 action="https://livedemo00.template-help.com/wt_61211_v2/search-results.html"
+                                 data-search-live="rd-search-results-live" method="GET">
+                                 <div class="form-group">
+                                    <label class="form-label rd-input-label"
+                                       for="rd-navbar-search-form-input">Search</label>
+                                    <input class="rd-navbar-search-form-input form-control form-control-gray-lightest"
+                                       id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
+                                    <button type="submit"><span class="icon icon-xs fa fa-search"></span></button>
+                                 </div>
+                                 <div class="rd-search-results-live d-none d-xl-block" id="rd-search-results-live">
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- RD Navbar Toggle-->
+                     <button class="rd-navbar-toggle-search d-none d-lg-inline-block veil-tablet toggle-original"
+                        data-rd-navbar-toggle=".rd-navbar-search-wrap"></button>
+                  </div>
+               </div>
+            </nav>
+         </div>
+      </header>
+      <div class="swiper-container-wrap">
+         <div class="swiper-container swiper-slider swiper-container-horizontal" data-height="" data-min-height="300px"
+            data-simulate-touch="false" data-autoplay="4200">
+            <div class="swiper-wrapper" style="transform: translate3d(-6076px, 0px, 0px); transition-duration: 0ms;">
+               <div class="swiper-slide swiper-slide-duplicate swiper-slide-next swiper-slide-duplicate-prev"
+                  data-slide-bg="images/backgrounds/background-08-1920-1025.jpg"
+                  style="background-image: url(&quot;images/backgrounds/background-08-1920-1025.jpg&quot;); background-size: cover; width: 1519px;"
+                  data-swiper-slide-index="2">
+                  <div class="swiper-slide-caption">
+                     <div class="inset-xl-left-35 inset-xxl-left-125">
+                        <div class="container-wide container-wide-custom">
+                           <div class="row justify-content-sm-center justify-content-xl-start text-xl-left">
+                              <div class="col-md-10 col-xl-7">
+                                 <div class="text-big-84 font-italic font-monospace text-spacing-inverse-20 text-white">
+                                    Hats &amp; Accessories</div>
+                                 <h1>30% OFF</h1>
+                                 <div class="d-none d-xl-inline-block offset-top-25">
+                                    <hr class="divider divider-xl bg-default">
+                                 </div>
+                                 <div class="d-inline-block text-top offset-lg-top-10 inset-left-10">
+                                    <h4 class="text-uppercase">EVERYTHING</h4>
+                                 </div>
+                                 <div class="offset-top-15 offset-md-top-65"><a class="btn btn-width-165 btn-bermuda"
+                                       href="https://livedemo00.template-help.com/wt_61211_v2/shops.html">shop now</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="container-wide container-wide-custom">
+               <div class="inset-xl-left-45 inset-xxl-left-85">
+                  <div
+                     class="swiper-pagination swiper-pagination-bottom swiper-pagination-clickable swiper-pagination-bullets">
+                     <span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
+                        class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="swiper-aside-right">
+            <ul class="list list-background-minsk list-0 text-center section-top-60 section-md-top-0">
+               <li class="inset-sm-left-85 inset-sm-right-85 inset-md-left-0 inset-md-right-0"><a
+                     class="box-sm bg-accent d-block"
+                     href="https://livedemo00.template-help.com/wt_61211_v2/directions.html"><span
+                        class="sprite sprite-icon-02-44x44 d-inline-block"></span><span
+                        class="font-weight-bold text-white d-block">Directions</span></a></li>
+               <li
+                  class="inset-sm-left-85 inset-sm-right-85 inset-md-left-0 inset-md-right-0 offset-top-30 offset-md-top-0">
+                  <a class="box-sm bg-accent d-block" href="#shopspage"><span
+                        class="sprite sprite-icon-06-44x44 d-inline-block"></span><span
+                        class="font-weight-bold text-white d-block">Shops</span></a>
+               </li>
+               <li
+                  class="inset-sm-left-85 inset-sm-right-85 inset-md-left-0 inset-md-right-0 offset-top-30 offset-md-top-0">
+                  <a class="box-sm bg-accent d-block"
+                     href="https://livedemo00.template-help.com/wt_61211_v2/food.html"><span
+                        class="sprite sprite-icon-05-44x44 d-inline-block"></span><span
+                        class="font-weight-bold text-white d-block">Food</span></a>
+               </li>
+               <li
+                  class="inset-sm-left-85 inset-sm-right-85 inset-md-left-0 inset-md-right-0 offset-top-30 offset-md-top-0">
+                  <a class="box-sm bg-accent d-block"
+                     href="https://livedemo00.template-help.com/wt_61211_v2/entertainment.html"><span
+                        class="sprite sprite-icon-04-45x44 d-inline-block"></span><span
+                        class="font-weight-bold text-white d-block">Entertainment</span></a>
+               </li>
+               <li
+                  class="inset-sm-left-85 inset-sm-right-85 inset-md-left-0 inset-md-right-0 offset-top-30 offset-md-top-0">
+                  <a class="box-sm bg-accent d-block"
+                     href="https://livedemo00.template-help.com/wt_61211_v2/parking.html"><span
+                        class="sprite sprite-icon-03-36x44 d-inline-block"></span><span
+                        class="font-weight-bold text-white d-block">Parking</span></a>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <div class="page-content">
+         <!-- <section class="section-80">
+            <div
+               class="row no-gutters align-items-sm-center justify-content-sm-center justify-content-lg-between list-inline-dashed-lg row-60">
+               <div class="col-sm-5 col-lg-4 col-xl-2"><a class="d-inline-block" href="#"><img
+                        class="img-responsive center-block img-semi-transparent"
+                        src="./Home_files/product-logo-21-127x69.png" width="127" height="69" alt=""></a></div>
+               <div class="col-sm-5 col-lg-4 col-xl-2"><a class="d-inline-block" href="#"><img
+                        class="img-responsive center-block img-semi-transparent"
+                        src="./Home_files/product-logo-22-87x87.png" width="87" height="87" alt=""></a></div>
+               <div class="col-sm-5 col-lg-4 col-xl-2"><a class="d-inline-block" href="#"><img
+                        class="img-responsive center-block img-semi-transparent"
+                        src="./Home_files/product-logo-23-121x81.png" width="121" height="81" alt=""></a></div>
+               <div class="col-sm-5 col-lg-4 col-xl-2"><a class="d-inline-block" href="#"><img
+                        class="img-responsive center-block img-semi-transparent"
+                        src="./Home_files/product-logo-24-203x36.png" width="203" height="36" alt=""></a></div>
+               <div class="col-sm-5 col-lg-4 col-xl-2"><a class="d-inline-block" href="#"><img
+                        class="img-responsive center-block img-semi-transparent"
+                        src="./Home_files/product-logo-25-124x61.png" width="124" height="61" alt=""></a></div>
+               <div class="col-sm-5 col-lg-4 col-xl-2"><a class="d-inline-block" href="#"><img
+                        class="img-responsive center-block img-semi-transparent"
+                        src="./Home_files/product-logo-26-134x55.png" width="134" height="55" alt=""></a></div>
+            </div>
+         </section> -->
+         <section class="section-80">
+            <div
+               class="row no-gutters align-items-sm-center justify-content-sm-center justify-content-lg-between list-inline-dashed-lg row-60"
+               id="brandImages">
+               <!-- Brand images will be inserted here dynamically -->
+            </div>
+         </section>
+
+         <section class="section-90 section-md-120 bg-selago">
+            <div class="inset-lg-left-35 inset-xxl-left-125 inset-lg-right-35 inset-xxl-right-125">
+               <div class="container container-wide-custom">
+                  <div class="row justify-content-sm-center align-items-sm-center justify-content-xxl-between">
+                     <div class="col-md-10 col-xl-5 col-xxl-4 text-left">
+                        <hr class="divider hr-lg-left-0 bg-bermuda">
+                        <div class="offset-top-20">
+                           <h3 class="text-center text-lg-left">A Few Words <br class="d-none d-xxl-inline-block"> About
+                              <span th:text="${mallModel.name}">
+                           </h3>
+                           <div class="offset-top-30">
+                              <p th:text="${mallModel.description}"></p>
+                           </div>
+                           <div class="offset-top-30 text-center text-lg-left"><a class="btn btn-width-175 btn-primary"
+                                 href="#">know
+                                 more</a></div>
+                        </div>
+                     </div>
+                     <div class="col-md-10 col-xl-7 col-xxl-8 offset-top-60 offset-xl-top-0">
+                        <div
+                           class="row justify-content-sm-center justify-content-md-start justify-content-lg-center inset-xxl-left-70 row-60">
+                           <div class="col-md-6 col-lg-4"><span
+                                 class="icon icon-lg icon-circle icon-white shadow-drop mdi mdi-wallet-giftcard text-primary"></span>
+                              <div class="offset-top-25 offset-md-top-35 inset-xxl-left-15 inset-xxl-right-15">
+                                 <h6>Mall Gift Cards</h6>
+                                 <hr class="divider divider-xs bg-bermuda offset-top-15">
+                                 <p class="offset-top-15 offset-md-top-25">The best gift solution is available at <span
+                                       th:text="mallModel.name"></span> shopping mall.</p>
+                              </div>
+                           </div>
+                           <div class="col-md-6 col-lg-4"><span
+                                 class="icon icon-lg icon-circle icon-white shadow-drop mdi mdi-wallet-travel text-primary"></span>
+                              <div class="offset-top-25 offset-md-top-35 inset-xxl-left-15 inset-xxl-right-15">
+                                 <h6>Lost and Found</h6>
+                                 <hr class="divider divider-xs bg-bermuda offset-top-15">
+                                 <p class="offset-top-15 offset-md-top-25">Did you lose an item while visiting the mall?
+                                    Call now <a class="text-nowrap text-gray-light" href="tel:#"></a></p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section class="section-80 section-lg-0 bg-shark">
+            <div class="row no-gutters justify-content-sm-center row-30 row-lg-0">
+
+               <!-- Iterate over each shop -->
+               <!-- <div th:each="shop : ${mallModel.shops}"> -->
+               <!-- Render only the first 4 coupons for each shop -->
+               <!-- <div class="col-sm-6 col-md-6 col-xl-3 inset-left-15 inset-right-15 inset-lg-left-0 inset-lg-right-0"> -->
+               <!-- <figure class="thumbnail-terry thumbnail-terry-modern"> -->
+               <!-- Iterate over each coupon in the shop using JavaScript -->
+               <!-- <div th:id="'coupons-' + ${shop.id}" style="display: none;"> -->
+               <!-- <div th:each="coupon,iterStat : ${shop.coupons}" th:if="${iterStat.index < 4}"> -->
+               <!-- Render coupon data as desired -->
+               <!-- <img th:src="${coupon.imgUrl}" alt=""> -->
+               <!-- <figcaption class="text-left"> -->
+               <!-- <div class="figcaption-caption"> -->
+               <!-- <h4 class="thumbnail-terry-title text-spacing-40" th:text="${coupon.displayName}"></h4> -->
+               <!-- <p class="thumbnail-terry-desc text-white-07 offset-top-5" th:text="${coupon.description}"></p> -->
+               <!-- </div> -->
+               <!-- <div class="thumbnail-terry-btn-wrap text-lg-right offset-top-10 offset-md-top-0"> -->
+               <!-- Assuming coupon links to a specific page -->
+               <!-- <a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" th:href="${coupon.link}"> -->
+               <!-- <span class="icon icon-xs mdi mdi-arrow-right d-none d-md-inline-block"></span>Learn More -->
+               <!-- </a> -->
+               <!-- </div> -->
+               <!-- </figcaption> -->
+               <!-- </div> -->
+               <!-- </div> -->
+               <!-- </figure> -->
+               <!-- Add a button to show more coupons -->
+               <!-- <button class="btn btn-primary" onclick="showMoreCoupons(${shop.id})">Show More Coupons</button> -->
+               <!-- </div> -->
+               <!-- </div> -->
+
+            </div>
+         </section>
+         <section class="section-80 section-md-120">
+            <div class="inset-lg-left-35 inset-xxl-left-125 inset-lg-right-35 inset-xxl-right-125">
+               <div class="container-wide container-wide-custom">
+                  <hr class="divider bg-bermuda">
+                  <div class="offset-top-20">
+                     <h3>Events</h3>
+                  </div>
+                  <div
+                     class="row justify-content-center justify-content-xl-start text-left offset-top-35 offset-md-top-60 row-50">
+                     <div class="col-lg-6" th:each="event : ${mallModel.events}">
+                        <div
+                           class="row justify-content-sm-center justify-content-xl-start row-30 text-center text-md-left">
+                           <div class="col-md-5 col-lg-10 col-xl-5 d-flex justify-content-center"><img
+                                 class="img-cover img-responsive" th:src="${event.imgUrl}" width="320" height="442"
+                                 alt=""></div>
+                           <div class="col-md-6 col-lg-10 col-xl-6">
+                              <ul class="list-inline list-inline-20">
+                                 <li><span
+                                       class="icon icon-normal icon-sm mdi mdi-calendar text-bermuda text-middle"></span><span
+                                       class="text-middle inset-left-10"
+                                       th:text="${#dates.format(event.startDate, 'dd MMM yyyy')}"></span></li>
+                                 <li><span
+                                       class="icon icon-normal icon-sm mdi mdi-calendar text-bermuda text-middle"></span><span
+                                       class="text-middle inset-left-10"
+                                       th:text="${#dates.format(event.endDate, 'dd MMM yyyy')}"></span></li>
+                              </ul>
+                              <div class="offset-top-25">
+                                 <h5><a><span th:text="${event.displayName}"></span></a></h5>
+                              </div>
+                              <div class="offset-top-25">
+                                 <p th:text="${event.description}"></p>
+                              </div>
+                              <div class="offset-top-25"><a class="btn btn-width-175 btn-primary-outline" href="#">know
+                                    more</a></div>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+                  <!-- <a class="btn btn-width-200 btn-bermuda offset-top-35 offset-md-top-65"
+                     href="https://livedemo00.template-help.com/wt_61211_v2/events.html">view all events</a> -->
+               </div>
+            </div>
+         </section>
+         
+       <div class="page-content section-60 section-md-120">
+         <!-- Shops-->
+         <section>
+           <div class="container-wide">
+             <div class="row justify-content-sm-center">
+               <div class="col-xxl-10">
+                 <div class="isotope-wrap">
+                   <div class="row">
+                     <!-- Isotope Filters-->
+                     <div class="col-xl-12 z-index-10">
+                       <div class="isotope-filters isotope-filters-horizontal">
+                         <ul class="list-inline list-inline-sm d-lg-block inset-md-left-15 inset-md-right-15">
+                           <li class="d-block d-sm-inline-block d-lg-none">
+                             <p>Choose your category:</p>
+                           </li>
+                           <li class="section-relative offset-top-20 offset-sm-top-0 d-block d-sm-inline-block d-lg-block">
+                             <button class="isotope-filters-toggle btn btn-primary-outline" data-custom-toggle="isotope-1" data-custom-toggle-disable-on-blur="true">Filter<span class="caret"></span></button>
+                             <ul class="list-sm-inline isotope-filters-list d-lg-block" id="isotope-1">
+                               <li><a class="active" data-isotope-filter="*" data-isotope-group="gallery" href="#">All Shops</a></li>
+                               <li><a data-isotope-filter="Clothes" data-isotope-group="gallery" href="#">Clothes</a></li>
+                               <li><a data-isotope-filter="Jewelry" data-isotope-group="gallery" href="#">Jewelry</a></li>
+                               <li><a data-isotope-filter="Gifts" data-isotope-group="gallery" href="#">Gifts</a></li>
+                               <li><a data-isotope-filter="Accessories" data-isotope-group="gallery" href="#">Accessories</a></li>
+                               <li><a data-isotope-filter="Grocery" data-isotope-group="gallery" href="#">Grocery</a></li>
+                               <li><a data-isotope-filter="Other" data-isotope-group="gallery" href="#">Other</a></li>
+                             </ul>
+                           </li>
+                         </ul>
+                       </div>
+                     </div>
+                     <!-- Isotope Content-->
+                     <div class="col-xl-12 offset-top-60">
+                        <div class="isotope isotope-modern" data-isotope-layout="fitRows" data-isotope-group="gallery">
+                            <div class="row row-40" data-photo-swipe-gallery="gallery">
+                                <!-- Loop through each shop -->
+                                <div class="col-12 col-md-6 col-lg-4 col-xl-3 isotope-item" data-filter="*" th:each="shop : ${mallModel.shops}">
+                                    <!-- Product-->
+                                    <div class="product thumbnail-robben thumbnail-robben-width-none">
+                                        <div class="product-body inset-left-10 inset-right-10 offset-top-30">
+                                            <img class="img-semi-transparent-inverse brandImage" id="brandImage" th:src="${shop.imgUrl}" width="109" height="100" alt="" th:data-shop-name="${shop.name}" data-toggle="modal" data-target="#imageModal">
+                                            <div class="offset-top-20">
+                                             <!-- <p th:text="${shop.name}"></p> -->
+                                             <!-- Loop through each brand of the shop -->
+                                             <div class="brand-images">
+                                                 <div class="row">
+                                                     <div th:each="brand, iteration : ${shop.brands}" class="col-6 col-sm-3">
+                                                         <!-- Display brand details -->
+                                                         <img th:src="${brand.imgUrl}" alt="Brand Image">
+                                                         <!-- Add other brand details as needed -->
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </section>
+         </div>
+
+      <!-- Attractions -->
+      <section class="section-80 section-md-120">
+         <div class="inset-lg-left-35 inset-xxl-left-125 inset-lg-right-35 inset-xxl-right-125">
+            <div class="container-wide container-wide-custom">
+               <hr class="divider bg-bermuda">
+               <div class="offset-top-20">
+                  <h3>Attractions</h3>
+               </div>
+               <div
+                  class="row justify-content-center justify-content-xl-start text-left offset-top-35 offset-md-top-60 row-50">
+                  <div class="col-lg-6" th:each="attraction : ${mallModel.attractions}">
+                     <div
+                        class="row justify-content-sm-center justify-content-xl-start row-30 text-center text-md-left">
+                        <div class="col-md-5 col-lg-10 col-xl-5 d-flex justify-content-center"><img
+                              class="img-cover img-responsive" th:src="${attraction.imgUrl}" width="320" height="442"
+                              alt=""></div>
+                        <div class="col-md-6 col-lg-10 col-xl-6">
+                           <div class="offset-top-25">
+                              <h5><a><span th:text="${attraction.displayName}"></span></a></h5>
+                           </div>
+                           <div class="offset-top-25">
+                              <p th:text="${attraction.location}"></p>
+                           </div>
+                           <div class="offset-top-25">
+                              <p th:text="${attraction.description}"></p>
+                           </div>
+                           <div class="offset-top-25"><a class="btn btn-width-175 btn-primary-outline" href="#">know
+                                 more</a></div>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+               <!-- <a class="btn btn-width-200 btn-bermuda offset-top-35 offset-md-top-65"
+                           href="https://livedemo00.template-help.com/wt_61211_v2/events.html">view all events</a> -->
+            </div>
+         </div>
+      </section>
+
+
+
+      <!-- Directions-->
+      <section class="section-80 section-md-120">
+
+         <div class="container-wide">
+            <hr class="divider bg-bermuda">
+            <div class="offset-top-20">
+               <h3>Directions</h3>
+            </div>
+            <div class="row justify-content-sm-center justify-content-xl-between">
+               <div
+                  class="col-md-10 col-xl-5 section-top-60 section-sm-bottom-60 section-lg-top-120 section-lg-bottom-120">
+                  <div class="inset-lg-left-10 inset-xl-left-45 inset-xxl-left-85">
+                     <div class="unit flex-row unit-spacing-xs">
+                        <div class="unit-left"></div>
+                        <div class="unit-body">
+                           <div class="offset-top-10">
+                              <h5 th:text="${mallModel.displayName}"></h5>
+                              <hr class="divider hr-left-0 bg-bermuda offset-top-15">
+                           </div>
+                        </div>
+                     </div>
+                     <div class="offset-top-20">
+                        <p th:text="${mallModel.description}"></p><br>
+                        <p th:text="${mallModel.location}"></p>
+                     </div>
+                  </div>
+               </div>
+               <div
+                  class="col-lg-10 col-xl-6 offset-top-90 offset-md-top-0 rd-google-map-fullwidth-wrap inset-left-0 inset-right-0 inset-lg-left-15 inset-lg-right-15">
+                  <!-- Google Map iframe -->
+                  <iframe th:src="${mallModel.additionalDetails}" width="100%" height="450" style="border:0;"
+                     allowfullscreen="" loading="lazy"></iframe>
+                  <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.1835324191456!2d72.91405497497801!3d19.09960278210973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c7cb91a08e4b%3A0x10408c61181384c3!2sR%20CITY!5e0!3m2!1sen!2sin!4v1708829263460!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+               </div>
+
+            </div>
+         </div>
+
+      </section>
+   </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="imageModalLabel">Brand Name</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <!-- Brand Image -->
+            <img alt="Brand Image" class="img-fluid" id="modalBrandImage">
+            <!-- Shop Details -->
+            <div>
+               <!-- Add Thymeleaf expressions to display shop details -->
+               <!-- <p>Shop Name: <span th:text="${shop.name}">Shop Name</span></p> -->
+               <p id="shopdescription">Brands: <span></span></p>
+               <!-- Add more shop details as needed -->
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
 <script>
-$(document).ready(function() {
-    // Function to open modal with larger image and description
-    function openModal(imageSrc, imageDescription) {
-        $('#modal-image').attr('src', imageSrc);
-        $('#image-description').text(imageDescription);
-        $('#image-modal').css('display', 'block');
-    }
+   $(document).ready(function () {
+      // Attach a click event handler to the brand image
+      $('.brandImage').click(function () {
+         // Get the shop details associated with the clicked image
+         var shopName = $(this).data('shop-name');
+         var imgUrl = $(this).attr('src');
+         var brands = $(this).data('brand-name');
 
-    // Close the modal when the close button or outside modal is clicked
-    $('.close, .modal').on('click', function() {
-        $('#image-modal').css('display', 'none');
-    });
+         // Populate modal with shop details
+         $('#imageModalLabel').text(shopName);
+         $('#modalBrandImage').attr('src', imgUrl);
+         $('#shopdescription').text(brands);
 
-    // Fetch WebImage data via AJAX
-    $.ajax({
-        url: 'backend-url/webimages',
-        method: 'GET',
-        success: function(data) {
-            // Populate thumbnails
-            $.each(data, function(index, image) {
-                $('.image-grid').append('<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + image.imgUrl + '" alt="' + image.name + '">');
-            });
+         // Show the modal
+         $('#imageModal').modal('show');
+      });
+   });
 
-            // Attach click event to each thumbnail
-            $('.image-grid img').on('click', function() {
-                openModal($(this).attr('src'), $(this).attr('alt'));
-            });
-        }
-    });
-});
+   // JavaScript function to show more coupons for a shop
+   function showMoreCoupons(shopId) {
+      // Show the hidden coupons for the specified shop
+      document.getElementById('coupons-' + shopId).style.display = 'block';
+      // Hide the "Show More Coupons" button
+      event.target.style.display = 'none';
+   }
 </script>
-    
+
+
 </div>

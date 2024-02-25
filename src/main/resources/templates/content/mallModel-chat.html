@@ -72,11 +72,15 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
         }
     }
+    let timeoutId;
     async function toggleRecording() {
         if (!isRecording) {
             startRecording();
+            // Schedule stopRecording after 5 seconds
+            timeoutId = setTimeout(stopRecording, 5000);
         } else {
             stopRecording();
+            clearTimeout(timeoutId); // Clear the timeout if recording is stopped manually
         }
         isRecording = !isRecording;
         updateButtonState();
@@ -194,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
     	try{
     		console.log("shop Ids: "+ shopIds);
     		$.ajax({
-				url: "/shop/all?ps=4&shopIds="+shopIds,
+				url: "/shop/all?ps=4&ids="+shopIds,
 				type: "GET",
 				success: function (data) {
 					// Populate grid with data
@@ -209,27 +213,101 @@ document.addEventListener('DOMContentLoaded', function() {
     	}    	
     }
     function fetchMallModels(message){
+		var container = $('#shopTableBody');
+		container.empty(); 
+    	var responseJson = null
     	try{
-    		var shopIds = JSON.parse(JSON.parse(message).content).response_json.shopId;
-    		console.log("shop Ids: "+ shopIds);
-    		$.ajax({
-				url: "/shop/all?ps=4&shopIds="+shopIds,
-				type: "GET",
-				success: function (data) {
-					// Populate grid with data
-					populateTable(data.content);
-				},
-				error: function (xhr, status, error) {
-					alert('Failed to load shop data: ' + error);
-				}
-			});
+    		responseJson = JSON.parse(JSON.parse(message).content).response_json
+    	} catch (err){
+    		console.log(err);
+    	}
+    	try{
+    		if(responseJson != null){
+	    		var shopIds = responseJson.shopId;
+	    		console.log("shop Ids: "+ shopIds);
+	    		if(shopIds != null && shopIds !== undefined && shopIds.length > 0){
+		    		$.ajax({
+						url: "/shop/all?ps=4&ids="+shopIds,
+						type: "GET",
+						success: function (data) {
+							// Populate grid with data
+							populateTable(data.content);
+						},
+						error: function (xhr, status, error) {
+							alert('Failed to load shop data: ' + error);
+						}
+					});
+	    		}
+	    	}
     	} catch (err) {
-    		
+    		console.log(err);
+    	}    	
+    	try{
+    		if(responseJson != null){
+	    		var attractionIds = responseJson.attractionId;
+	    		console.log("attraction Ids: "+ attractionIds);
+	    		if(attractionIds != null && attractionIds !== undefined && attractionIds.length > 0){
+		    		$.ajax({
+						url: "/attraction/all?ps=4&ids="+attractionIds,
+						type: "GET",
+						success: function (data) {
+							// Populate grid with data
+							populateTable(data.content);
+						},
+						error: function (xhr, status, error) {
+							alert('Failed to load attraction data: ' + error);
+						}
+					});
+	    		}
+	    	}
+    	} catch (err) {
+    		console.log(err);
+    	}    	
+    	try{
+    		if(responseJson != null){
+	    		var eventIds = responseJson.eventId;
+	    		console.log("event Ids: "+ eventIds);
+	    		if(eventIds != null && eventIds !== undefined && eventIds.length > 0){
+		    		$.ajax({
+						url: "/event/all?ps=4&ids="+eventIds,
+						type: "GET",
+						success: function (data) {
+							// Populate grid with data
+							populateTable(data.content);
+						},
+						error: function (xhr, status, error) {
+							alert('Failed to load event data: ' + error);
+						}
+					});
+	    		}
+	    	}
+    	} catch (err) {
+    		console.log(err);
+    	}   	
+    	try{
+    		if(responseJson != null){
+	    		var parkingIds = responseJson.parkingId;
+	    		console.log("parking Ids: "+ parkingIds);
+	    		if(parkingIds != null && parkingIds !== undefined && parkingIds.length > 0){
+		    		$.ajax({
+						url: "/parking/all?ps=4&ids="+parkingIds,
+						type: "GET",
+						success: function (data) {
+							// Populate grid with data
+							populateTable(data.content);
+						},
+						error: function (xhr, status, error) {
+							alert('Failed to load parking data: ' + error);
+						}
+					});
+	    		}
+	    	}
+    	} catch (err) {
+    		console.log(err);
     	}    	
     }
 	function populateTable(data) {
 		var container = $('#shopTableBody');
-		container.empty(); 
 		for (var i = 0; i < data.length; i += 2) {
 		    // Create a new row in the container
 		    var row = $('<div class="shopTableBodyContainerRow"></div>');
@@ -275,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	    }
 
 	    // Adding additional columns
-//	    row += '<td>' + shop.description + '</td>' +
+//		row += '<td>' + shop.description + '</td>' +
 //	        '<td class="editable" data-type="textarea" data-field="additionalDetails" data-id="' + shop.id + '" data-value="' + shop.additionalDetails + '">' + shop.additionalDetails + '</td>' +
 //	        '<td>' +
 //	        '<button class="btn btn-info edit-button" data-id="' + shop.id + '">Edit</button>&nbsp;' +

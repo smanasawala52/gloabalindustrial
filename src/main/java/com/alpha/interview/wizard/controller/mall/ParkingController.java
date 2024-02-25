@@ -30,8 +30,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.HtmlUtils;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
+import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.alpha.interview.wizard.model.mall.MallModel;
 import com.alpha.interview.wizard.model.mall.Parking;
 import com.alpha.interview.wizard.model.mall.util.ImageService;
@@ -111,15 +113,40 @@ public class ParkingController {
 	}
 
 	@GetMapping("/all")
-	public ResponseEntity<Page<Parking>> getAllParkings(
-			@RequestParam(defaultValue = "", name = "name", required = false) String name,
-			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
+	public ResponseEntity<Page<Parking>> getAllCategories(
+			@RequestParam(defaultValue = "", name = "floor", required = false) String floor,
+			@RequestParam(defaultValue = "", name = "block", required = false) String block,
+			@RequestParam(defaultValue = "floor", name = "s", required = false) String sort,
+			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp,
+			@RequestParam(defaultValue = "0", name = "ps", required = false) int ps,
+			@RequestParam(defaultValue = "", name = "ids", required = false) String ids) {
 		if (cp <= 0) {
 			cp = 0;
 		}
-		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
-				Sort.by("floor").ascending());
-		Page<Parking> parkings = parkingRepository.findAll(pageable);
+		if (ps <= 0) {
+			ps = PAGE_SIZE;
+		}
+		if (ps > PAGE_SIZE) {
+			ps = PAGE_SIZE;
+		}
+		Pageable pageable = PageRequest.of(cp, ps, Sort.by(sort).ascending());
+		Page<Parking> parkings = null;
+		if (ids != null && !ids.isBlank()) {
+			List<Long> lstShopIds = MallUtil.convertToLongList(ids);
+			parkings = parkingRepository.findByIds(lstShopIds, pageable);
+		} else if (floor != null && !floor.isBlank()) {
+			String escapedName = HtmlUtils.htmlEscape(floor);
+			if (block != null && !block.isBlank()) {
+				String escapedBlock = HtmlUtils.htmlEscape(block);
+				parkings = parkingRepository.findAllByFloorAndBlock(pageable,
+						escapedName.toLowerCase(), escapedBlock.toLowerCase());
+			} else {
+				parkings = parkingRepository.findAllByFloor(pageable,
+						escapedName.toLowerCase());
+			}
+		} else {
+			parkings = parkingRepository.findAll(pageable);
+		}
 		return ResponseEntity.ok(parkings);
 	}
 

@@ -21,4 +21,7 @@ public interface WebImageRepository extends JpaRepository<WebImage, Long> {
 	WebImage findByName(String name);
 	@Query("SELECT NEW WebImage(c.id, c.name) FROM WebImage c")
 	List<WebImage> getAllIdAndName();
+
+	@Query("SELECT s FROM WebImage s WHERE s.id IN :ids")
+	Page<WebImage> findByIds(@Param("ids") List<Long> ids, Pageable pageable);
 }

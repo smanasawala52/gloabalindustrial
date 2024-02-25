@@ -43,7 +43,8 @@ public class MallModelService implements SectorService {
 		Optional<MallModel> mallModelOptional = mallModelRepository
 				.findById(mallId);
 		if (mallModelOptional.isPresent()) {
-			String initSystemMessage = "Answer in less than 20 words and in this JSON Format {answer:'', mallId:'', shopId:[], attractionId:[]}.";
+			String initSystemMessage = "Answer in less than 20 words and in this JSON Format {'response_json': {'answer':'', "
+					+ "'mallId':'', 'shopId':[], 'attractionId':[]}}.";
 			List<String> input = MallUtil
 					.initalizeChatInput(mallModelOptional.get());
 			// mallModels.stream().forEach(
@@ -58,8 +59,8 @@ public class MallModelService implements SectorService {
 		// construct proper Question
 		StringBuilder queryJson = new StringBuilder();
 		queryJson.append("{");
-		queryJson.append("'response_json': '{\'answer\':\'\', "
-				+ "\'mallId\':\'\', \'shopId\':[]," + " \'attractionId\':[]}'");
+		queryJson.append("'response_json': {'answer':'', "
+				+ "'mallId':'', 'shopId':[], 'attractionId':[], 'eventId':[],, 'parkingId':[], 'otherAttractionId':[]}");
 		if (input != null && !input.isBlank()) {
 			queryJson.append(",'question':'").append(input).append("'");
 		}

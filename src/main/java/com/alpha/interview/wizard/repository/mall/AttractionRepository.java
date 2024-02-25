@@ -33,4 +33,8 @@ public interface AttractionRepository extends JpaRepository<Attraction, Long> {
 
 	@Query("SELECT NEW Attraction(m.id, m.name) FROM Attraction m JOIN m.products a WHERE a.id = :id")
 	List<Attraction> findByProductId(@Param("id") Long id);
+
+	@Query("SELECT s FROM Attraction s WHERE s.id IN :ids")
+	Page<Attraction> findByIds(@Param("ids") List<Long> ids, Pageable pageable);
+
 }

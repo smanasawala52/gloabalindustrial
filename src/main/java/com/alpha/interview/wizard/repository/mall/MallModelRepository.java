@@ -43,4 +43,7 @@ public interface MallModelRepository extends JpaRepository<MallModel, Long> {
 	@Query("SELECT NEW MallModel(m.id, m.name) FROM MallModel m JOIN m.otherAttractions a WHERE a.id = :id")
 	List<MallModel> findByOtherAttractionId(@Param("id") Long id);
 
+	@Query("SELECT s FROM MallModel s WHERE s.id IN :ids")
+	Page<MallModel> findByIds(@Param("ids") List<Long> ids, Pageable pageable);
+
 }

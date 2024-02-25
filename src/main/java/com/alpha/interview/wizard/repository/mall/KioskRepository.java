@@ -21,4 +21,7 @@ public interface KioskRepository extends JpaRepository<Kiosk, Long> {
 	Kiosk findByName(String name);
 	@Query("SELECT NEW Kiosk(c.id, c.name) FROM Kiosk c")
 	List<Kiosk> getAllIdAndName();
+
+	@Query("SELECT s FROM Kiosk s WHERE s.id IN :ids")
+	Page<Kiosk> findByIds(@Param("ids") List<Long> ids, Pageable pageable);
 }

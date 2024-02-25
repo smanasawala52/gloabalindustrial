@@ -119,14 +119,25 @@ public class CouponController {
 	@GetMapping("/all")
 	public ResponseEntity<Page<Coupon>> getAllCoupons(
 			@RequestParam(defaultValue = "", name = "name", required = false) String name,
-			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp) {
+			@RequestParam(defaultValue = "name", name = "s", required = false) String sort,
+			@RequestParam(defaultValue = "0", name = "cp", required = false) int cp,
+			@RequestParam(defaultValue = "0", name = "ps", required = false) int ps,
+			@RequestParam(defaultValue = "", name = "ids", required = false) String ids) {
 		if (cp <= 0) {
 			cp = 0;
 		}
-		Pageable pageable = PageRequest.of(cp, PAGE_SIZE,
-				Sort.by("name").ascending());
+		if (ps <= 0) {
+			ps = PAGE_SIZE;
+		}
+		if (ps > PAGE_SIZE) {
+			ps = PAGE_SIZE;
+		}
+		Pageable pageable = PageRequest.of(cp, ps, Sort.by(sort).ascending());
 		Page<Coupon> coupons = null;
-		if (name != null && !name.isEmpty()) {
+		if (ids != null && !ids.isBlank()) {
+			List<Long> lstShopIds = MallUtil.convertToLongList(ids);
+			coupons = couponRepository.findByIds(lstShopIds, pageable);
+		} else if (name != null && !name.isEmpty()) {
 			String escapedName = HtmlUtils.htmlEscape(name);
 			coupons = couponRepository.findAllByNameContaining(
 					escapedName.toLowerCase(), pageable);

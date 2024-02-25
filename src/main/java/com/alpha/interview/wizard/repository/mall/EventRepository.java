@@ -22,4 +22,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	@Query("SELECT NEW Event(c.id, c.name) FROM Event c")
 	List<Event> getAllIdAndName();
 
+	@Query("SELECT s FROM Event s WHERE s.id IN :ids")
+	Page<Event> findByIds(@Param("ids") List<Long> ids, Pageable pageable);
 }
