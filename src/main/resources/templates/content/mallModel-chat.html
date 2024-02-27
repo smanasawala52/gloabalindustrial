@@ -140,7 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     function convertToSpeech(inputText) {
-        fetch('/convertToSpeech', {
+    	var language = $('#mallModelLanguage').val();
+        fetch('/convertToSpeech?language='+language, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

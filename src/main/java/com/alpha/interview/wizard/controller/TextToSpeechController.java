@@ -29,10 +29,11 @@ public class TextToSpeechController {
 	}
 	@PostMapping("/convertToSpeech")
 	public ResponseEntity<byte[]> convertToSpeech(
-			@RequestParam String inputText) {
+			@RequestParam String inputText,
+			@RequestParam(defaultValue = "English", name = "language", required = false) String language) {
 		// Use TextToSpeechService to convert text to audio
 		byte[] audioData = textToSpeechServiceMap.get(textToSpeechServiceImpl)
-				.convertToSpeech(inputText);
+				.convertToSpeech(inputText, language);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
