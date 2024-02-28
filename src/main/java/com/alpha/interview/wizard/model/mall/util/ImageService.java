@@ -1,7 +1,5 @@
 package com.alpha.interview.wizard.model.mall.util;
 
-import java.io.IOException;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
@@ -11,7 +9,7 @@ public interface ImageService {
 	public String uploadImageFile(MultipartFile file,
 			ImageTypeConstants imageType, String name) throws Exception;
 	public byte[] getImage(ImageTypeConstants imageType, String name)
-			throws IOException;
+			throws Exception;
 
 	public default String getImagePath(ImageTypeConstants imageType,
 			String uploadDir) {

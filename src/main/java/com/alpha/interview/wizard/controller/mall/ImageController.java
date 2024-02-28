@@ -1,6 +1,5 @@
 package com.alpha.interview.wizard.controller.mall;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class ImageController {
 
 	@GetMapping("/image/{imageType}/{name}")
 	public ResponseEntity<Resource> getImage(@PathVariable String imageType,
-			@PathVariable String name) throws IOException {
+			@PathVariable String name) throws Exception {
 		byte[] imageBytes = imageServiceMap.get(imageServiceImpl)
 				.getImage(ImageTypeConstants.fromType(imageType), name);
 		ByteArrayResource resource = new ByteArrayResource(imageBytes);

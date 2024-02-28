@@ -1,6 +1,6 @@
 package com.alpha.interview.wizard.model.mall.util;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alpha.interview.wizard.constants.mall.constants.ImageTypeConstants;
 import com.alpha.interview.wizard.model.mall.constants.ImageServiceTypeConstants;
 import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 
@@ -40,9 +41,18 @@ public class GCPImageService implements ImageService {
 
 	@Override
 	public byte[] getImage(ImageTypeConstants imageType, String name)
-			throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+			throws Exception {
+		String fileName = cleanUp(name);
+		fileName = fileName.toLowerCase();
+		BlobId blobId = BlobId.of(bucketName,
+				getImagePath(imageType, bucketName) + "/" + fileName);
+		Blob blob = storage.get(blobId);
+
+		if (blob != null) {
+			return blob.getContent();
+		} else {
+			throw new FileNotFoundException("Image not found: " + fileName);
+		}
 	}
 
 	@Override

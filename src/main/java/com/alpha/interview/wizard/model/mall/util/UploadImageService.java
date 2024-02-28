@@ -55,7 +55,7 @@ public class UploadImageService implements ImageService {
 
 	@Override
 	public byte[] getImage(ImageTypeConstants imageType, String fileName)
-			throws IOException {
+			throws Exception {
 		try {
 			String path = getImagePath(imageType, uploadDir);
 			System.out.println(path + fileName);
