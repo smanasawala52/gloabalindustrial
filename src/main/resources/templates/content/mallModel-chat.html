@@ -375,13 +375,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		} catch (err){
 			console.log(err)
 		}
-		try{
-    		fetchMallModels(message);
+    	try{
+	        convertToSpeech(JSON.parse(JSON.parse(message).content).response_json.answer);
 		} catch (err){
 			console.log(err)
 		}
-    	try{
-	        convertToSpeech(JSON.parse(JSON.parse(message).content).response_json.answer);
+		try{
+    		fetchMallModels(message);
 		} catch (err){
 			console.log(err)
 		}
