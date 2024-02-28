@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alpha.interview.wizard.model.mall.TextToSpeech;
-import com.alpha.interview.wizard.model.mall.TextToSpeechKey;
-import com.alpha.interview.wizard.repository.mall.TextToSpeechRepository;
 import com.alpha.interview.wizard.service.text.TextToSpeechService;
 import com.alpha.interview.wizard.service.text.TextToSpeechServiceMapInitializer;
 
@@ -27,8 +24,6 @@ public class TextToSpeechController {
 	private final Map<String, TextToSpeechService> textToSpeechServiceMap;
 
 	@Autowired
-	private TextToSpeechRepository textToSpeechRepository;
-	@Autowired
 	public TextToSpeechController(
 			TextToSpeechServiceMapInitializer serviceMapInitializer) {
 		this.textToSpeechServiceMap = serviceMapInitializer.getServiceMap();
@@ -37,26 +32,26 @@ public class TextToSpeechController {
 	public ResponseEntity<byte[]> convertToSpeech(
 			@RequestParam String inputText,
 			@RequestParam(defaultValue = "English", name = "language", required = false) String language) {
-		// Use TextToSpeechService to convert text to audio
-		byte[] audioData = null;
-		TextToSpeechKey key = new TextToSpeechKey(language, inputText);
-		TextToSpeech textToSpeech = textToSpeechRepository.findById(key)
-				.orElse(null);
-		if (textToSpeech != null) {
-			return ResponseEntity.ok().body(textToSpeech.getAudioData());
-		} else {
-			audioData = textToSpeechServiceMap.get(textToSpeechServiceImpl)
-					.convertToSpeech(inputText, language);
-			try {
-				textToSpeech = new TextToSpeech();
-				textToSpeech.setId(key);
-				textToSpeech.setAudioData(audioData);
-				textToSpeechRepository.save(textToSpeech);
-			} catch (Exception e) {
-				System.err.println(e.getMessage());
-			}
-		}
-
+		byte[] audioData = textToSpeechServiceMap.get(textToSpeechServiceImpl)
+				.convertToSpeech(inputText, language);
+		// TextToSpeechKey key = new TextToSpeechKey(language, inputText);
+		// TextToSpeech textToSpeech = textToSpeechRepository.findById(key)
+		// .orElse(null);
+		// if (textToSpeech != null) {
+		// return ResponseEntity.ok().body(textToSpeech.getAudioData());
+		// } else {
+		// audioData = textToSpeechServiceMap.get(textToSpeechServiceImpl)
+		// .convertToSpeech(inputText, language);
+		// try {
+		// textToSpeech = new TextToSpeech();
+		// textToSpeech.setId(key);
+		// textToSpeech.setAudioData(audioData);
+		// textToSpeechRepository.save(textToSpeech);
+		// } catch (Exception e) {
+		// System.err.println(e.getMessage());
+		// }
+		// }
+		//
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 		headers.setContentDispositionFormData("attachment", "audio.mp3");
