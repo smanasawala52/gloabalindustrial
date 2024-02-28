@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isRecording) {
             startRecording();
             // Schedule stopRecording after 5 seconds
-            timeoutId = setTimeout(stopRecording, 5000);
+            timeoutId = setTimeout(toggleRecording, 5000);
         } else {
             stopRecording();
             clearTimeout(timeoutId); // Clear the timeout if recording is stopped manually
