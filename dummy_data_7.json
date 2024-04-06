@@ -1,0 +1,3338 @@
+[
+    {
+       "id":1,
+       "country":"R City",
+       "city":"Mumbai",
+       "name":"R city",
+       "description":"",
+       "displayName":"R City",
+       "location":"LBS Marg, Ghatkopar (West), Mumbai 400 086.",
+       "googleMap":"",
+       "imgUrl":"mall-images/mall/r_city.jpg",
+       "floors":"3",
+       "additionalDetails":"",
+       "timings":"",
+       "contactNumber":"",
+       "contactEmail":"",
+       "activeStatusKey":1,
+       "updateTimestamp":"2024-03-03T07:50:05.250+00:00",
+       "createTimestamp":"2024-03-03T07:50:05.250+00:00",
+       "images":[
+          
+       ],
+       "shops":[
+          {
+             "id":1,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Aldo",
+             "description":"",
+             "displayName":"ALDO",
+             "imgUrl":"mall-images/shop/aldo.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:20:12.822+00:00",
+             "createTimestamp":"2024-03-03T11:20:12.822+00:00",
+             "linked":false
+          },
+          {
+             "id":2,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Aldo accessories",
+             "description":"",
+             "displayName":"ALDO ACCESSORIES",
+             "imgUrl":"mall-images/shop/aldo_accessories.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:20:46.537+00:00",
+             "createTimestamp":"2024-03-03T11:20:46.537+00:00",
+             "linked":false
+          },
+          {
+             "id":3,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Gkb opticals",
+             "description":"",
+             "displayName":"GKB OPTICALS",
+             "imgUrl":"mall-images/shop/gkb_opticals.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:21:07.246+00:00",
+             "createTimestamp":"2024-03-03T11:21:07.246+00:00",
+             "linked":false
+          },
+          {
+             "id":4,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Reliance jewels",
+             "description":"",
+             "displayName":"RELIANCE JEWELS",
+             "imgUrl":"mall-images/shop/reliance_jewels.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:21:53.190+00:00",
+             "createTimestamp":"2024-03-03T11:21:53.190+00:00",
+             "linked":false
+          },
+          {
+             "id":5,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Swarovski",
+             "description":"",
+             "displayName":"SWAROVSKI",
+             "imgUrl":"mall-images/shop/swarovski.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:22:28.369+00:00",
+             "createTimestamp":"2024-03-03T11:22:28.369+00:00",
+             "linked":false
+          },
+          {
+             "id":6,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Croma",
+             "description":"",
+             "displayName":"CROMA",
+             "imgUrl":"mall-images/shop/croma.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:23:00.990+00:00",
+             "createTimestamp":"2024-03-03T11:23:00.990+00:00",
+             "linked":false
+          },
+          {
+             "id":7,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Dyson",
+             "description":"",
+             "displayName":"DYSON",
+             "imgUrl":"mall-images/shop/dyson.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:23:32.354+00:00",
+             "createTimestamp":"2024-03-03T11:23:32.354+00:00",
+             "linked":false
+          },
+          {
+             "id":8,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Maple",
+             "description":"",
+             "displayName":"MAPLE",
+             "imgUrl":"mall-images/shop/maple.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:23:58.007+00:00",
+             "createTimestamp":"2024-03-03T11:23:58.007+00:00",
+             "linked":false
+          },
+          {
+             "id":9,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Hamleys",
+             "description":"",
+             "displayName":"HAMLEYS",
+             "imgUrl":"mall-images/shop/hamleys.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:24:36.431+00:00",
+             "createTimestamp":"2024-03-03T11:24:36.431+00:00",
+             "linked":false
+          },
+          {
+             "id":10,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Agent jack",
+             "description":"",
+             "displayName":"AGENT JACK",
+             "imgUrl":"mall-images/shop/agent_jack.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:25:07.853+00:00",
+             "createTimestamp":"2024-03-03T11:25:07.853+00:00",
+             "linked":false
+          },
+          {
+             "id":11,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Grandmama's café",
+             "description":"",
+             "displayName":"GRANDMAMA'S CAFÉ",
+             "imgUrl":"mall-images/shop/grandmama_s_caf_.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:25:32.841+00:00",
+             "createTimestamp":"2024-03-03T11:25:32.841+00:00",
+             "linked":false
+          },
+          {
+             "id":12,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Hitchki",
+             "description":"",
+             "displayName":"HITCHKI",
+             "imgUrl":"mall-images/shop/hitchki.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:28:38.571+00:00",
+             "createTimestamp":"2024-03-03T11:28:38.571+00:00",
+             "linked":false
+          },
+          {
+             "id":13,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Pop tates",
+             "description":"",
+             "displayName":"POP TATES",
+             "imgUrl":"mall-images/shop/pop_tates.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:29:19.013+00:00",
+             "createTimestamp":"2024-03-03T11:29:19.013+00:00",
+             "linked":false
+          },
+          {
+             "id":14,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Yana sizzlers",
+             "description":"",
+             "displayName":"YANA SIZZLERS",
+             "imgUrl":"mall-images/shop/yana_sizzlers.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:29:58.907+00:00",
+             "createTimestamp":"2024-03-03T11:29:58.907+00:00",
+             "linked":false
+          },
+          {
+             "id":15,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Shoppers stop",
+             "description":"",
+             "displayName":"SHOPPERS STOP",
+             "imgUrl":"mall-images/shop/shoppers_stop.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:30:39.195+00:00",
+             "createTimestamp":"2024-03-03T11:30:39.195+00:00",
+             "linked":false
+          },
+          {
+             "id":16,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Westside",
+             "description":"",
+             "displayName":"WESTSIDE",
+             "imgUrl":"mall-images/shop/westside.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:31:06.980+00:00",
+             "createTimestamp":"2024-03-03T11:31:06.980+00:00",
+             "linked":false
+          },
+          {
+             "id":17,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Ancestry",
+             "description":"",
+             "displayName":"ANCESTRY",
+             "imgUrl":"mall-images/shop/ancestry.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:31:34.677+00:00",
+             "createTimestamp":"2024-03-03T11:31:34.677+00:00",
+             "linked":false
+          },
+          {
+             "id":18,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Lacoste",
+             "description":"",
+             "displayName":"LACOSTE",
+             "imgUrl":"mall-images/shop/lacoste.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:31:57.275+00:00",
+             "createTimestamp":"2024-03-03T11:31:57.275+00:00",
+             "linked":false
+          },
+          {
+             "id":19,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Ritu kumar",
+             "description":"",
+             "displayName":"RITU KUMAR",
+             "imgUrl":"mall-images/shop/ritu_kumar.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:32:21.284+00:00",
+             "createTimestamp":"2024-03-03T11:32:21.284+00:00",
+             "linked":false
+          },
+          {
+             "id":20,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Baggit",
+             "description":"",
+             "displayName":"BAGGIT",
+             "imgUrl":"mall-images/shop/baggit.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:33:19.402+00:00",
+             "createTimestamp":"2024-03-03T11:33:19.402+00:00",
+             "linked":false
+          },
+          {
+             "id":21,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Esbeda",
+             "description":"",
+             "displayName":"ESBEDA",
+             "imgUrl":"mall-images/shop/esbeda.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:33:38.151+00:00",
+             "createTimestamp":"2024-03-03T11:33:38.151+00:00",
+             "linked":false
+          },
+          {
+             "id":22,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Fossil",
+             "description":"",
+             "displayName":"FOSSIL",
+             "imgUrl":"mall-images/shop/fossil.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:33:58.111+00:00",
+             "createTimestamp":"2024-03-03T11:33:58.111+00:00",
+             "linked":false
+          },
+          {
+             "id":23,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Hidesign",
+             "description":"",
+             "displayName":"HIDESIGN",
+             "imgUrl":"mall-images/shop/hidesign.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:34:12.949+00:00",
+             "createTimestamp":"2024-03-03T11:34:12.949+00:00",
+             "linked":false
+          },
+          {
+             "id":24,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Kompanero",
+             "description":"",
+             "displayName":"KOMPANERO",
+             "imgUrl":"mall-images/shop/kompanero.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:34:35.208+00:00",
+             "createTimestamp":"2024-03-03T11:34:35.208+00:00",
+             "linked":false
+          },
+          {
+             "id":25,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Lavie",
+             "description":"",
+             "displayName":"LAVIE",
+             "imgUrl":"mall-images/shop/lavie.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:34:53.912+00:00",
+             "createTimestamp":"2024-03-03T11:34:53.912+00:00",
+             "linked":false
+          },
+          {
+             "id":26,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Sunglass hut",
+             "description":"",
+             "displayName":"SUNGLASS HUT",
+             "imgUrl":"mall-images/shop/sunglass_hut.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:35:14.737+00:00",
+             "createTimestamp":"2024-03-03T11:35:14.737+00:00",
+             "linked":false
+          },
+          {
+             "id":27,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Enrich",
+             "description":"",
+             "displayName":"ENRICH",
+             "imgUrl":"mall-images/shop/enrich.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:36:13.135+00:00",
+             "createTimestamp":"2024-03-03T11:36:13.135+00:00",
+             "linked":false
+          },
+          {
+             "id":28,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Jcb salon & spa",
+             "description":"",
+             "displayName":"JCB SALON & SPA",
+             "imgUrl":"mall-images/shop/jcb_salon_spa.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:36:33.617+00:00",
+             "createTimestamp":"2024-03-03T11:36:33.617+00:00",
+             "linked":false
+          },
+          {
+             "id":29,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Kama ayurveda",
+             "description":"",
+             "displayName":"KAMA AYURVEDA",
+             "imgUrl":"mall-images/shop/kama_ayurveda.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:36:52.563+00:00",
+             "createTimestamp":"2024-03-03T11:36:52.563+00:00",
+             "linked":false
+          },
+          {
+             "id":30,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Mama earth",
+             "description":"",
+             "displayName":"MAMA EARTH",
+             "imgUrl":"mall-images/shop/mama_earth.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:37:11.400+00:00",
+             "createTimestamp":"2024-03-03T11:37:11.400+00:00",
+             "linked":false
+          },
+          {
+             "id":31,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Nail spa",
+             "description":"",
+             "displayName":"NAIL SPA",
+             "imgUrl":"mall-images/shop/nail_spa.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:37:27.120+00:00",
+             "createTimestamp":"2024-03-03T11:37:27.120+00:00",
+             "linked":false
+          },
+          {
+             "id":32,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Nykaa luxe",
+             "description":"",
+             "displayName":"NYKAA LUXE",
+             "imgUrl":"mall-images/shop/nykaa_luxe.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:37:44.629+00:00",
+             "createTimestamp":"2024-03-03T11:37:44.629+00:00",
+             "linked":false
+          },
+          {
+             "id":33,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Blue stone",
+             "description":"",
+             "displayName":"BLUE STONE",
+             "imgUrl":"mall-images/shop/blue_stone.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:38:37.183+00:00",
+             "createTimestamp":"2024-03-03T11:38:37.183+00:00",
+             "linked":false
+          },
+          {
+             "id":34,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Candere",
+             "description":"",
+             "displayName":"CANDERE",
+             "imgUrl":"mall-images/shop/candere.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:38:55.491+00:00",
+             "createTimestamp":"2024-03-03T11:38:55.491+00:00",
+             "linked":false
+          },
+          {
+             "id":35,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Caratlane",
+             "description":"",
+             "displayName":"CARATLANE",
+             "imgUrl":"mall-images/shop/caratlane.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:39:15.840+00:00",
+             "createTimestamp":"2024-03-03T11:39:15.840+00:00",
+             "linked":false
+          },
+          {
+             "id":36,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Kisna",
+             "description":"",
+             "displayName":"KISNA",
+             "imgUrl":"mall-images/shop/kisna.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:39:37.043+00:00",
+             "createTimestamp":"2024-03-03T11:39:37.043+00:00",
+             "linked":false
+          },
+          {
+             "id":37,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Mia by tanishq",
+             "description":"",
+             "displayName":"MIA BY TANISHQ",
+             "imgUrl":"mall-images/shop/mia_by_tanishq.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:39:59.858+00:00",
+             "createTimestamp":"2024-03-03T11:39:59.858+00:00",
+             "linked":false
+          },
+          {
+             "id":38,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Orra",
+             "description":"",
+             "displayName":"ORRA",
+             "imgUrl":"mall-images/shop/orra.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:40:45.036+00:00",
+             "createTimestamp":"2024-03-03T11:40:45.036+00:00",
+             "linked":false
+          },
+          {
+             "id":39,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Tanishq",
+             "description":"",
+             "displayName":"TANISHQ",
+             "imgUrl":"mall-images/shop/tanishq.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:41:03.374+00:00",
+             "createTimestamp":"2024-03-03T11:41:03.374+00:00",
+             "linked":false
+          },
+          {
+             "id":40,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Waman hari pethe jewellers",
+             "description":"",
+             "displayName":"WAMAN HARI PETHE JEWELLERS",
+             "imgUrl":"mall-images/shop/waman_hari_pethe_jewellers.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:41:24.429+00:00",
+             "createTimestamp":"2024-03-03T11:41:24.429+00:00",
+             "linked":false
+          },
+          {
+             "id":41,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Ghatkopar social",
+             "description":"",
+             "displayName":"GHATKOPAR SOCIAL",
+             "imgUrl":"mall-images/shop/ghatkopar_social.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:44:02.723+00:00",
+             "createTimestamp":"2024-03-03T11:44:02.723+00:00",
+             "linked":false
+          },
+          {
+             "id":42,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Mcdonald's",
+             "description":"",
+             "displayName":"MCDONALD'S",
+             "imgUrl":"mall-images/shop/mcdonald_s.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:44:26.605+00:00",
+             "createTimestamp":"2024-03-03T11:44:26.605+00:00",
+             "linked":false
+          },
+          {
+             "id":43,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Starbucks",
+             "description":"",
+             "displayName":"STARBUCKS",
+             "imgUrl":"mall-images/shop/starbucks.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:44:49.325+00:00",
+             "createTimestamp":"2024-03-03T11:44:49.325+00:00",
+             "linked":false
+          },
+          {
+             "id":44,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Third wave café",
+             "description":"",
+             "displayName":"THIRD WAVE CAFÉ",
+             "imgUrl":"mall-images/shop/third_wave_caf_.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:45:11.286+00:00",
+             "createTimestamp":"2024-03-03T11:45:11.286+00:00",
+             "linked":false
+          },
+          {
+             "id":45,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"Ground Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Wagh bakri tea lounge",
+             "description":"",
+             "displayName":"WAGH BAKRI TEA LOUNGE",
+             "imgUrl":"mall-images/shop/wagh_bakri_tea_lounge.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:45:38.007+00:00",
+             "createTimestamp":"2024-03-03T11:45:38.007+00:00",
+             "linked":false
+          },
+          {
+             "id":46,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Lifestyle",
+             "description":"",
+             "displayName":"LIFESTYLE",
+             "imgUrl":"mall-images/shop/lifestyle.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:52:53.408+00:00",
+             "createTimestamp":"2024-03-03T11:52:53.408+00:00",
+             "linked":false
+          },
+          {
+             "id":47,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Marks & spencer",
+             "description":"",
+             "displayName":"MARKS & SPENCER",
+             "imgUrl":"mall-images/shop/marks_spencer.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:53:20.223+00:00",
+             "createTimestamp":"2024-03-03T11:53:20.223+00:00",
+             "linked":false
+          },
+          {
+             "id":48,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Pantaloons",
+             "description":"",
+             "displayName":"PANTALOONS",
+             "imgUrl":"mall-images/shop/pantaloons.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:53:53.851+00:00",
+             "createTimestamp":"2024-03-03T11:53:53.851+00:00",
+             "linked":false
+          },
+          {
+             "id":49,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"American eagle",
+             "description":"",
+             "displayName":"AMERICAN EAGLE",
+             "imgUrl":"mall-images/shop/american_eagle.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:54:14.022+00:00",
+             "createTimestamp":"2024-03-03T11:54:14.022+00:00",
+             "linked":false
+          },
+          {
+             "id":50,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Arrow",
+             "description":"",
+             "displayName":"ARROW",
+             "imgUrl":"mall-images/shop/arrow.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:54:38.429+00:00",
+             "createTimestamp":"2024-03-03T11:54:38.429+00:00",
+             "linked":false
+          },
+          {
+             "id":51,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Blackberrys",
+             "description":"",
+             "displayName":"BLACKBERRYS",
+             "imgUrl":"mall-images/shop/blackberrys.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:54:56.333+00:00",
+             "createTimestamp":"2024-03-03T11:54:56.333+00:00",
+             "linked":false
+          },
+          {
+             "id":52,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Cotton world",
+             "description":"",
+             "displayName":"COTTON WORLD",
+             "imgUrl":"mall-images/shop/cotton_world.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:55:15.739+00:00",
+             "createTimestamp":"2024-03-03T11:55:15.739+00:00",
+             "linked":false
+          },
+          {
+             "id":53,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Ethnix",
+             "description":"",
+             "displayName":"ETHNIX",
+             "imgUrl":"mall-images/shop/ethnix.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:56:04.377+00:00",
+             "createTimestamp":"2024-03-03T11:56:04.377+00:00",
+             "linked":false
+          },
+          {
+             "id":54,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Jockey men",
+             "description":"",
+             "displayName":"JOCKEY MEN",
+             "imgUrl":"mall-images/shop/jockey_men.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:56:32.093+00:00",
+             "createTimestamp":"2024-03-03T11:56:32.093+00:00",
+             "linked":false
+          },
+          {
+             "id":55,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Levis",
+             "description":"",
+             "displayName":"LEVIS",
+             "imgUrl":"mall-images/shop/levis.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:57:03.233+00:00",
+             "createTimestamp":"2024-03-03T11:57:03.233+00:00",
+             "linked":false
+          },
+          {
+             "id":56,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Louis philippe",
+             "description":"",
+             "displayName":"LOUIS PHILIPPE",
+             "imgUrl":"mall-images/shop/louis_philippe.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:57:22.489+00:00",
+             "createTimestamp":"2024-03-03T11:57:22.489+00:00",
+             "linked":false
+          },
+          {
+             "id":57,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Louis philippe sports",
+             "description":"",
+             "displayName":"LOUIS PHILIPPE SPORTS",
+             "imgUrl":"mall-images/shop/louis_philippe_sports.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:57:46.338+00:00",
+             "createTimestamp":"2024-03-03T11:57:46.338+00:00",
+             "linked":false
+          },
+          {
+             "id":58,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Manyavar",
+             "description":"",
+             "displayName":"MANYAVAR",
+             "imgUrl":"mall-images/shop/manyavar.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:59:25.349+00:00",
+             "createTimestamp":"2024-03-03T11:59:25.349+00:00",
+             "linked":false
+          },
+          {
+             "id":59,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Pepe jeans",
+             "description":"",
+             "displayName":"PEPE JEANS",
+             "imgUrl":"mall-images/shop/pepe_jeans.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T11:59:52.704+00:00",
+             "createTimestamp":"2024-03-03T11:59:52.704+00:00",
+             "linked":false
+          },
+          {
+             "id":60,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Peter england",
+             "description":"",
+             "displayName":"PETER ENGLAND",
+             "imgUrl":"mall-images/shop/peter_england.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:00:13.802+00:00",
+             "createTimestamp":"2024-03-03T12:00:13.802+00:00",
+             "linked":false
+          },
+          {
+             "id":61,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Raymond",
+             "description":"",
+             "displayName":"RAYMOND",
+             "imgUrl":"mall-images/shop/raymond.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:00:59.707+00:00",
+             "createTimestamp":"2024-03-03T12:00:59.707+00:00",
+             "linked":false
+          },
+          {
+             "id":62,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Simon carter",
+             "description":"",
+             "displayName":"SIMON CARTER",
+             "imgUrl":"mall-images/shop/simon_carter.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:01:18.546+00:00",
+             "createTimestamp":"2024-03-03T12:01:18.546+00:00",
+             "linked":false
+          },
+          {
+             "id":63,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Spykar",
+             "description":"",
+             "displayName":"SPYKAR",
+             "imgUrl":"mall-images/shop/spykar.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:01:39.566+00:00",
+             "createTimestamp":"2024-03-03T12:01:39.566+00:00",
+             "linked":false
+          },
+          {
+             "id":64,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"The souled store",
+             "description":"",
+             "displayName":"THE SOULED STORE",
+             "imgUrl":"mall-images/shop/the_souled_store.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:01:59.750+00:00",
+             "createTimestamp":"2024-03-03T12:01:59.750+00:00",
+             "linked":false
+          },
+          {
+             "id":65,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Van heusen",
+             "description":"",
+             "displayName":"VAN HEUSEN",
+             "imgUrl":"mall-images/shop/van_heusen.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:02:22.156+00:00",
+             "createTimestamp":"2024-03-03T12:02:22.156+00:00",
+             "linked":false
+          },
+          {
+             "id":66,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Delsey",
+             "description":"",
+             "displayName":"DELSEY",
+             "imgUrl":"mall-images/shop/delsey.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:02:53.408+00:00",
+             "createTimestamp":"2024-03-03T12:02:53.408+00:00",
+             "linked":false
+          },
+          {
+             "id":67,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Metro",
+             "description":"",
+             "displayName":"METRO",
+             "imgUrl":"mall-images/shop/metro.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:03:22.409+00:00",
+             "createTimestamp":"2024-03-03T12:03:22.409+00:00",
+             "linked":false
+          },
+          {
+             "id":68,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Miniso",
+             "description":"",
+             "displayName":"MINISO",
+             "imgUrl":"mall-images/shop/miniso.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:03:42.396+00:00",
+             "createTimestamp":"2024-03-03T12:03:42.396+00:00",
+             "linked":false
+          },
+          {
+             "id":69,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Samsonite",
+             "description":"",
+             "displayName":"SAMSONITE",
+             "imgUrl":"mall-images/shop/samsonite.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:04:02.239+00:00",
+             "createTimestamp":"2024-03-03T12:04:02.239+00:00",
+             "linked":false
+          },
+          {
+             "id":70,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Skechers",
+             "description":"",
+             "displayName":"SKECHERS",
+             "imgUrl":"mall-images/shop/skechers.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:04:23.531+00:00",
+             "createTimestamp":"2024-03-03T12:04:23.531+00:00",
+             "linked":false
+          },
+          {
+             "id":71,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Vip",
+             "description":"",
+             "displayName":"VIP",
+             "imgUrl":"mall-images/shop/vip.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:04:52.357+00:00",
+             "createTimestamp":"2024-03-03T12:04:52.357+00:00",
+             "linked":false
+          },
+          {
+             "id":72,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Bodhi luxury spa",
+             "description":"",
+             "displayName":"BODHI LUXURY SPA",
+             "imgUrl":"mall-images/shop/bodhi_luxury_spa.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:07:05.737+00:00",
+             "createTimestamp":"2024-03-03T12:07:05.737+00:00",
+             "linked":false
+          },
+          {
+             "id":73,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Bagline",
+             "description":"",
+             "displayName":"BAGLINE",
+             "imgUrl":"mall-images/shop/bagline.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:07:28.276+00:00",
+             "createTimestamp":"2024-03-03T12:07:28.276+00:00",
+             "linked":false
+          },
+          {
+             "id":74,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Bata",
+             "description":"",
+             "displayName":"BATA",
+             "imgUrl":"mall-images/shop/bata.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:07:46.424+00:00",
+             "createTimestamp":"2024-03-03T12:07:46.424+00:00",
+             "linked":false
+          },
+          {
+             "id":75,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Clarks",
+             "description":"",
+             "displayName":"CLARKS",
+             "imgUrl":"mall-images/shop/clarks.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:08:05.974+00:00",
+             "createTimestamp":"2024-03-03T12:08:05.974+00:00",
+             "linked":false
+          },
+          {
+             "id":76,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Crocs",
+             "description":"",
+             "displayName":"CROCS",
+             "imgUrl":"mall-images/shop/crocs.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:08:31.242+00:00",
+             "createTimestamp":"2024-03-03T12:08:31.242+00:00",
+             "linked":false
+          },
+          {
+             "id":77,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Heelboots",
+             "description":"",
+             "displayName":"HEELBOOTS",
+             "imgUrl":"mall-images/shop/heelboots.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:08:52.375+00:00",
+             "createTimestamp":"2024-03-03T12:08:52.375+00:00",
+             "linked":false
+          },
+          {
+             "id":78,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Bose",
+             "description":"",
+             "displayName":"BOSE",
+             "imgUrl":"mall-images/shop/bose.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:09:37.940+00:00",
+             "createTimestamp":"2024-03-03T12:09:37.940+00:00",
+             "linked":false
+          },
+          {
+             "id":79,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Cex",
+             "description":"",
+             "displayName":"CEX",
+             "imgUrl":"mall-images/shop/cex.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:10:05.339+00:00",
+             "createTimestamp":"2024-03-03T12:10:05.339+00:00",
+             "linked":false
+          },
+          {
+             "id":80,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Jbl",
+             "description":"",
+             "displayName":"JBL",
+             "imgUrl":"mall-images/shop/jbl.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:10:30.675+00:00",
+             "createTimestamp":"2024-03-03T12:10:30.675+00:00",
+             "linked":false
+          },
+          {
+             "id":81,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Osim",
+             "description":"",
+             "displayName":"OSIM",
+             "imgUrl":"mall-images/shop/osim.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:10:55.072+00:00",
+             "createTimestamp":"2024-03-03T12:10:55.072+00:00",
+             "linked":false
+          },
+          {
+             "id":82,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Robocura",
+             "description":"",
+             "displayName":"ROBOCURA",
+             "imgUrl":"mall-images/shop/robocura.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:11:17.318+00:00",
+             "createTimestamp":"2024-03-03T12:11:17.318+00:00",
+             "linked":false
+          },
+          {
+             "id":83,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Nike",
+             "description":"",
+             "displayName":"NIKE",
+             "imgUrl":"mall-images/shop/nike.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:13:00.933+00:00",
+             "createTimestamp":"2024-03-03T12:13:00.933+00:00",
+             "linked":false
+          },
+          {
+             "id":84,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Reebok",
+             "description":"",
+             "displayName":"REEBOK",
+             "imgUrl":"mall-images/shop/reebok.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:13:19.813+00:00",
+             "createTimestamp":"2024-03-03T12:13:19.813+00:00",
+             "linked":false
+          },
+          {
+             "id":85,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Max",
+             "description":"",
+             "displayName":"MAX",
+             "imgUrl":"mall-images/shop/max.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:13:51.950+00:00",
+             "createTimestamp":"2024-03-03T12:13:51.950+00:00",
+             "linked":false
+          },
+          {
+             "id":86,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Homestop",
+             "description":"",
+             "displayName":"HOMESTOP",
+             "imgUrl":"mall-images/shop/homestop.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:16:42.589+00:00",
+             "createTimestamp":"2024-03-03T12:16:42.589+00:00",
+             "linked":false
+          },
+          {
+             "id":87,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Allen solly",
+             "description":"",
+             "displayName":"ALLEN SOLLY",
+             "imgUrl":"mall-images/shop/allen_solly.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:17:06.680+00:00",
+             "createTimestamp":"2024-03-03T12:17:06.680+00:00",
+             "linked":false
+          },
+          {
+             "id":88,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"John players",
+             "description":"",
+             "displayName":"JOHN PLAYERS",
+             "imgUrl":"mall-images/shop/john_players.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:17:24.353+00:00",
+             "createTimestamp":"2024-03-03T12:17:24.353+00:00",
+             "linked":false
+          },
+          {
+             "id":89,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Mufti",
+             "description":"",
+             "displayName":"MUFTI",
+             "imgUrl":"mall-images/shop/mufti.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:17:45.975+00:00",
+             "createTimestamp":"2024-03-03T12:17:45.975+00:00",
+             "linked":false
+          },
+          {
+             "id":90,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Inc.5",
+             "description":"",
+             "displayName":"INC.5",
+             "imgUrl":"mall-images/shop/inc.5.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:18:22.542+00:00",
+             "createTimestamp":"2024-03-03T12:18:22.542+00:00",
+             "linked":false
+          },
+          {
+             "id":91,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Mochi",
+             "description":"",
+             "displayName":"MOCHI",
+             "imgUrl":"mall-images/shop/mochi.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:18:49.021+00:00",
+             "createTimestamp":"2024-03-03T12:18:49.021+00:00",
+             "linked":false
+          },
+          {
+             "id":92,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Mumuso",
+             "description":"",
+             "displayName":"MUMUSO",
+             "imgUrl":"mall-images/shop/mumuso.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:19:08.226+00:00",
+             "createTimestamp":"2024-03-03T12:19:08.226+00:00",
+             "linked":false
+          },
+          {
+             "id":93,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Neemans",
+             "description":"",
+             "displayName":"NEEMANS",
+             "imgUrl":"mall-images/shop/neemans.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:19:41.654+00:00",
+             "createTimestamp":"2024-03-03T12:19:41.654+00:00",
+             "linked":false
+          },
+          {
+             "id":94,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Trends footwear",
+             "description":"",
+             "displayName":"TRENDS FOOTWEAR",
+             "imgUrl":"mall-images/shop/trends_footwear.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:21:20.705+00:00",
+             "createTimestamp":"2024-03-03T12:21:20.705+00:00",
+             "linked":false
+          },
+          {
+             "id":95,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Wildcraft",
+             "description":"",
+             "displayName":"WILDCRAFT",
+             "imgUrl":"mall-images/shop/wildcraft.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:21:49.732+00:00",
+             "createTimestamp":"2024-03-03T12:21:49.732+00:00",
+             "linked":false
+          },
+          {
+             "id":96,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Woodland",
+             "description":"",
+             "displayName":"WOODLAND",
+             "imgUrl":"mall-images/shop/woodland.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:22:07.370+00:00",
+             "createTimestamp":"2024-03-03T12:22:07.370+00:00",
+             "linked":false
+          },
+          {
+             "id":97,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Aroma thai spa",
+             "description":"",
+             "displayName":"AROMA THAI SPA",
+             "imgUrl":"mall-images/shop/aroma_thai_spa.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:22:32.327+00:00",
+             "createTimestamp":"2024-03-03T12:22:32.327+00:00",
+             "linked":false
+          },
+          {
+             "id":98,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Lenskart",
+             "description":"",
+             "displayName":"LENSKART",
+             "imgUrl":"mall-images/shop/lenskart.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:23:04.582+00:00",
+             "createTimestamp":"2024-03-03T12:23:04.582+00:00",
+             "linked":false
+          },
+          {
+             "id":99,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Adidas",
+             "description":"",
+             "displayName":"ADIDAS",
+             "imgUrl":"mall-images/shop/adidas.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:23:39.804+00:00",
+             "createTimestamp":"2024-03-03T12:23:39.804+00:00",
+             "linked":false
+          },
+          {
+             "id":100,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Asics",
+             "description":"",
+             "displayName":"ASICS",
+             "imgUrl":"mall-images/shop/asics.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:23:55.126+00:00",
+             "createTimestamp":"2024-03-03T12:23:55.126+00:00",
+             "linked":false
+          },
+          {
+             "id":101,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"SOUTH WING",
+             "howToReach":"",
+             "name":"Decathlon",
+             "description":"",
+             "displayName":"DECATHLON",
+             "imgUrl":"mall-images/shop/decathlon.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:24:14.987+00:00",
+             "createTimestamp":"2024-03-03T12:24:14.987+00:00",
+             "linked":false
+          },
+          {
+             "id":102,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Hp world",
+             "description":"",
+             "displayName":"HP WORLD",
+             "imgUrl":"mall-images/shop/hp_world.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:24:43.670+00:00",
+             "createTimestamp":"2024-03-03T12:24:43.670+00:00",
+             "linked":false
+          },
+          {
+             "id":103,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Lenovo",
+             "description":"",
+             "displayName":"LENOVO",
+             "imgUrl":"mall-images/shop/lenovo.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:25:32.535+00:00",
+             "createTimestamp":"2024-03-03T12:25:32.535+00:00",
+             "linked":false
+          },
+          {
+             "id":104,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Nikon",
+             "description":"",
+             "displayName":"NIKON",
+             "imgUrl":"mall-images/shop/nikon.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:25:53.866+00:00",
+             "createTimestamp":"2024-03-03T12:25:53.866+00:00",
+             "linked":false
+          },
+          {
+             "id":105,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Oneplus",
+             "description":"",
+             "displayName":"ONEPLUS",
+             "imgUrl":"mall-images/shop/oneplus.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:26:15.753+00:00",
+             "createTimestamp":"2024-03-03T12:26:15.753+00:00",
+             "linked":false
+          },
+          {
+             "id":106,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Reliance digital",
+             "description":"",
+             "displayName":"RELIANCE DIGITAL",
+             "imgUrl":"mall-images/shop/reliance_digital.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:26:33.929+00:00",
+             "createTimestamp":"2024-03-03T12:26:33.929+00:00",
+             "linked":false
+          },
+          {
+             "id":107,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Samsung",
+             "description":"",
+             "displayName":"SAMSUNG",
+             "imgUrl":"mall-images/shop/samsung.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:27:05.926+00:00",
+             "createTimestamp":"2024-03-03T12:27:05.926+00:00",
+             "linked":false
+          },
+          {
+             "id":108,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Vivo",
+             "description":"",
+             "displayName":"VIVO",
+             "imgUrl":"mall-images/shop/vivo.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:27:28.832+00:00",
+             "createTimestamp":"2024-03-03T12:27:28.832+00:00",
+             "linked":false
+          },
+          {
+             "id":109,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Columbia sports",
+             "description":"",
+             "displayName":"COLUMBIA SPORTS",
+             "imgUrl":"mall-images/shop/columbia_sports.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:27:51.533+00:00",
+             "createTimestamp":"2024-03-03T12:27:51.533+00:00",
+             "linked":false
+          },
+          {
+             "id":110,
+             "founded":null,
+             "categories":[
+                
+             ],
+             "brands":[
+                
+             ],
+             "coupons":[
+                
+             ],
+             "products":[
+                
+             ],
+             "floor":"1st Floor",
+             "shopNumber":"",
+             "location":"NORTH WING",
+             "howToReach":"",
+             "name":"Puma",
+             "description":"",
+             "displayName":"PUMA",
+             "imgUrl":"mall-images/shop/puma.jpg",
+             "featured":false,
+             "additionalDetails":"",
+             "activeStatusKey":1,
+             "updateTimestamp":"2024-03-03T12:28:13.235+00:00",
+             "createTimestamp":"2024-03-03T12:28:13.235+00:00",
+             "linked":false
+          }
+       ],
+       "attractions":[
+          
+       ],
+       "parkings":[
+          
+       ],
+       "events":[
+          
+       ],
+       "otherAttractions":[
+          
+       ]
+    }
+ ]
