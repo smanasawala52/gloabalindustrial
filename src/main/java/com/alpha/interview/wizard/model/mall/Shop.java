@@ -66,6 +66,7 @@ public class Shop {
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
+	private String phone;
 	@Transient
 	private boolean linked = false;
 
@@ -188,6 +189,12 @@ public class Shop {
 	}
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }

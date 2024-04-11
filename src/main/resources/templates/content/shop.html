@@ -49,6 +49,11 @@
 						<textarea class="form-control" id="howToReach" name="howToReach"
 							placeholder="Enter howToReach"></textarea>
 					</div>
+					<div class="form-group">
+						<label for="phone">Phone Number</label>
+						<input type="text" class="form-control" id="phone" name="phone"
+							placeholder="Enter phone number with prefix +91"></textarea>
+					</div>
 					<button type="submit" class="btn btn-success">Save</button>
 				</form>
 			</div>
@@ -73,6 +78,7 @@
                         <th>Shop Number</th>
                         <th>Location</th>
                         <th>How to reach</th>
+                        <th>Phone</th>
                         <th>Brands</th>
                         <th>Categories</th>
 						<th>Action</th>
@@ -183,6 +189,7 @@
                                     '<td class="editable" data-type="text" data-field="shopNumber" data-id="' + shop.id + '" data-value="'+shop.shopNumber+'">' + shop.shopNumber + '</td>' +
                                     '<td class="editable" data-type="text" data-field="location" data-id="' + shop.id + '" data-value="'+shop.location+'">' + shop.location + '</td>' +
                                     '<td class="editable" data-type="textarea" data-field="howToReach" data-id="' + shop.id + '" data-value="'+shop.howToReach+'">' + shop.howToReach + '</td>' +
+                                    '<td class="editable" data-type="text" data-field="phone" data-id="' + shop.id + '" data-value="'+shop.phone+'">' + shop.phone + '</td>' +
                                     '<td>'+appendNamesCommaSeparated(shop.brands)+'<br><a href="/shop/brand/' + shop.id + '" class="btn btn-success">Add Brand</a>&nbsp;'+appendNamesCommaSeparated(shop.products)+'<br><a href="/shop/product/' + shop.id + '" class="btn btn-success">Add Product</a></td>'+
                                     '<td>'+appendNamesCommaSeparated(shop.categories)+'<br><a href="/shop/category/' + shop.id + '" class="btn btn-success">Add Category</a>&nbsp;'+appendNamesCommaSeparated(shop.coupons)+'<br><a href="/shop/coupon/' + shop.id + '" class="btn btn-success">Add Coupon</a></td>'+
                                     '<td>' +

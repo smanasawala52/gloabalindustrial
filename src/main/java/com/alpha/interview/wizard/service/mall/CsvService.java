@@ -27,7 +27,7 @@ public class CsvService {
 
 	public void processCsvFile(MultipartFile file) {
 		// System.out.println(file);
-		MallModel mallModel = new MallModel();
+		MallModel mallModel = new MallModel(null, null);
 		List<Shop> shops = new ArrayList<>();
 		int i = 0;
 		try (InputStreamReader reader = new InputStreamReader(
@@ -39,12 +39,12 @@ public class CsvService {
 					.withAllowMissingColumnNames().parse(reader);
 
 			for (CSVRecord record : records) {
-				Shop shop = new Shop();
+				Shop shop = new Shop(null, null);
 				try {
 					shop.setName(record.get(0));
 					List<Category> categories = new ArrayList<Category>();
 
-					Category category = new Category();
+					Category category = new Category(null, null);
 					category.setName(record.get("Category"));
 					categories.add(category);
 					shop.setCategories(categories);
