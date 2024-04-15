@@ -1,0 +1,186 @@
+<div th:fragment="content">
+<style>
+.bodyMall {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.headerMall {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+}
+
+nav {
+  background-color: #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+
+.search input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+.search button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.mall-image {
+  text-align: center;
+}
+
+.mall-image img {
+  width: 100%;
+  height: auto;
+}
+
+.floors {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.floors h2 {
+  margin-bottom: 10px;
+}
+
+.floors ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.floors li {
+  margin-bottom: 10px;
+}
+
+.parking {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+footer {
+  background-color: #f1f1f1;
+  text-align: center;
+  padding: 10px;
+}
+
+</style>
+<div class="bodyMall">
+<header>
+    <h1 id="header"></h1>
+</header>
+ 
+ <nav>
+    <ul>
+    	<li><a href="#" onclick="return false;">MAP</a></li>
+      <li><a href="#" onclick="return false;">SHOPS</a></li>
+      <li><a href="#" onclick="return false;">OFFERS</a></li>
+      <li><a href="#" onclick="return false;">EVENTS</a></li>
+      <li><a href="#" onclick="return false;">VAS</a></li>
+    </ul>
+    <div class="search">
+      <input type="text" placeholder="Enter Text to Search">
+      <button>GO</button>
+    </div>
+  </nav>
+  <section class="floors" id="floor-buttons">
+  </section>
+  <section id="homepageContainer">
+  </section>
+</div>
+<script th:inline="javascript">
+	function swapFloorImage(imgUrl){	
+		// alert(imgUrl);
+		$('#homepageContainer').html(`<img src='${imgUrl}' width="400" height="600" />`);
+	}
+    $(document).ready(function() {
+    	var mallModelJsonData;
+    	function getMallIdFromUrl() {
+    	    const url = window.location.href;
+    	    const urlParts = url.split('/');
+    	    return urlParts[urlParts.length - 2];
+    	  }
+    	function populateHomepage(){
+    		populateHomepageHeader();
+    		populateHomepageFloors();
+    	}
+    	
+    	
+    	function createFloorButton(floor) {
+	   		return $(`<button data-floor="${floor.imgUrl}" onclick='swapFloorImage("${floor.imgUrl}")'>${floor.imgSubType}</button>`);
+	   	}
+    	function populateHomepageFloors(){
+    		var floorData = mallModelJsonData.images.filter(function(object) {
+    			  return object.imgType === "FLOOR";
+    		});
+    		// alert(floorData);
+    		floorData.forEach(floor => {
+    		    const button = createFloorButton(floor);
+    		    $('#floor-buttons').append(button);
+    		  });
+    	}
+    	function populateHomepageHeader(){
+    		$('#header').text(mallModelJsonData.displayName +', ' + mallModelJsonData.city+', ' + mallModelJsonData.country);
+    	}
+    	function loadHomePage() {
+    		// Get the mall ID from the URL
+      	  const mallId = getMallIdFromUrl();
+      	  // Construct the complete URL with the ID
+      	  const mallDataUrl = `/mallmodel/${mallId}`;
+      	  // AJAX request to fetch JSON data
+      	  // alert(mallDataUrl);
+      	  $.ajax({
+      	    url: mallDataUrl,
+      	    dataType: 'json',
+      	    success: function(data) {
+      	      // Process the loaded JSON data (replace with your logic)
+      	      console.log(data); // Example: Log the data to the console
+      	      mallModelJsonData = data[0];
+      	      populateHomepage();
+      	    },
+      	    error: function(jqXHR, textStatus, errorThrown) {
+      	      console.error("Error fetching data:", textStatus, errorThrown);
+      	      // Handle errors appropriately (e.g., display an error message to the user)
+      	    }
+      	  });    		
+    	}
+    	loadHomePage();
+    });
+</script>
+</div>

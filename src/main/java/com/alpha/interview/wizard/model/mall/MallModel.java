@@ -55,7 +55,7 @@ public class MallModel {
 	private String timings;
 	@Column(length = 20)
 	private String contactNumber;
-	@Column(length = 20)
+	@Column(length = 50)
 	private String contactEmail;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;

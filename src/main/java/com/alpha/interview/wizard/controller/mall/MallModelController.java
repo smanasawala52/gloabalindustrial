@@ -119,6 +119,17 @@ public class MallModelController {
 		if (!mallModelOptional.isPresent()) {
 			model.addAttribute("contentTemplate", "mallModel");
 		} else {
+			model.addAttribute("contentTemplate", "mallModel-home");
+		}
+		return "common";
+	}
+	@GetMapping("/{id}/details")
+	public String mallModelDetails(@PathVariable Long id, Model model) {
+		Optional<MallModel> mallModelOptional = mallModelRepository
+				.findById(id);
+		if (!mallModelOptional.isPresent()) {
+			model.addAttribute("contentTemplate", "mallModel");
+		} else {
 			MallModel mallModel = mallModelOptional.get();
 			model.addAttribute("contentTemplate", "mallModel-display");
 			model.addAttribute("mallModel", mallModel);
