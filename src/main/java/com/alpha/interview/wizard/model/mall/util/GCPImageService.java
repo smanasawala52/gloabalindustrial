@@ -36,7 +36,7 @@ public class GCPImageService implements ImageService {
 						getImagePath(imageType, bucketName) + "/" + fileName)
 				.build();
 		Blob blob = storage.create(blobInfo, file.getBytes());
-		return blob.getName();
+		return "/image/" + imageType.getType() + "/" + fileName;
 	}
 
 	@Override

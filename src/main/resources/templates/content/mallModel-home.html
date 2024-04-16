@@ -108,19 +108,32 @@ footer {
  
  <nav>
     <ul>
-    	<li><a href="#" onclick="return false;">MAP</a></li>
-      <li><a href="#" onclick="return false;">SHOPS</a></li>
-      <li><a href="#" onclick="return false;">OFFERS</a></li>
-      <li><a href="#" onclick="return false;">EVENTS</a></li>
-      <li><a href="#" onclick="return false;">VAS</a></li>
+    	<li><a class="menu-item" data-id="floor-buttons" onclick="return false;">MAP</a></li>
+      <li><a class="menu-item" data-id="shops-buttons" onclick="return false;">SHOPS</a></li>
+      <li><a class="menu-item" data-id="offers-buttons" onclick="return false;">OFFERS</a></li>
+      <li><a class="menu-item" data-id="events-buttons" onclick="return false;">EVENTS</a></li>
+      <li><a class="menu-item" data-id="vas-buttons" onclick="return false;">VAS</a></li>
     </ul>
     <div class="search">
       <input type="text" placeholder="Enter Text to Search">
       <button>GO</button>
     </div>
   </nav>
-  <section class="floors" id="floor-buttons">
+  <section class="floors homepageButtons" id="floor-buttons">
   </section>
+  <section class="shops homepageButtons" id="shops-buttons">
+  	<button data-filter="shop" class="filterShops" >Shops</button>
+  	<button data-filter="food"  class="filterShops">Food</button>
+  	<button data-filter="attraction"  class="filterShops">Attraction</button>
+  	<button data-filter="more"  class="filterShops">More</button>
+  </section>
+  <section class="offers homepageButtons" id="offers-buttons">
+  </section>
+  <section class="events homepageButtons" id="events-buttons">
+  </section>
+  <section class="vas homepageButtons" id="vas-buttons">
+  </section>
+  
   <section id="homepageContainer">
   </section>
 </div>
@@ -137,11 +150,76 @@ footer {
     	    return urlParts[urlParts.length - 2];
     	  }
     	function populateHomepage(){
+    		hideAllButtons();
     		populateHomepageHeader();
     		populateHomepageFloors();
+    		populateHomepageShops();
+    	}
+    	var shopData = null;
+    	function filterShops(filter){
+    		shopData = null;
+    		if (filter === "shop") {
+    			shopData = mallModelJsonData.shops.filter(function(object) {
+    				return !object.categories.some(category => category.name === "Restaurant");
+	  	  		});
+    		} else if (filter === "food") {
+    			shopData = mallModelJsonData.shops.filter(function(object) {
+    				return object.categories.some(category => category.name === "Restaurant");
+	  	  		});
+    		} else if (filter === "attraction") {
+    			shopData = mallModelJsonData.attractions;
+    		} else if (filter !== '' || filter !== null || filter !== undefined) {
+    			shopData = mallModelJsonData.shops.filter(function(object) {
+    				return object.categories.some(category => category.name === filter);
+	  	  		});
+    		}
+    		// <div class="shops-grid">        </div>
+    		if(shopData != null){
+	    		console.log(shopData);
+	    		const shopGrid = $('<div class="shops-grid"></div>');
+	    		shopData.forEach(function(shop) {
+				    const shopItem = $('<div class="shop-item"></div>');
+				    shopItem.append($('<img src="' + shop.imgUrl + '" alt="' + shop.name + '">'));
+				    shopItem.append($('<h3>' + shop.displayName + '</h3>'));
+				    shopGrid.append(shopItem);
+				  });
+    			$('#homepageContainer').html('');
+		  		$('#homepageContainer').append(shopGrid); // Append the grid to the body
+    		}
+    	}
+    	function populateHomepageShops() {
+    		// filterShops("shop");
+    	}
+    	function showAllCategories() {
+    		
     	}
     	
-    	
+    	function hideAllButtons(){
+    		$('.homepageButtons').each(function(index, button) {
+    		    $(button).hide();
+    		  });
+    		$('.filterShops').each(function(index, button) {
+    			var filter = $(button).data('filter');
+    			console.log(filter);
+    			if(filter === "more"){
+    				showAllCategories()
+    			} else {
+	    			$(button).click(function() { // Use .click() for event handler
+	    			    filterShops(filter);
+	    			});
+    			}
+    		  });
+    		$('.menu-item').each(function(index, button) {
+   			  $(button).click(function() {
+   				$('.homepageButtons').each(function(index1, button1) {
+   	    		    $(button1).hide();
+   	    		  });
+   			    var sectionId = $(this).data('id'); // Get data-id attribute value
+   			    // Show section with matching id
+   			    $('#'+sectionId).show();
+   			  });
+   			});
+    	}
     	function createFloorButton(floor) {
 	   		return $(`<button data-floor="${floor.imgUrl}" onclick='swapFloorImage("${floor.imgUrl}")'>${floor.imgSubType}</button>`);
 	   	}
