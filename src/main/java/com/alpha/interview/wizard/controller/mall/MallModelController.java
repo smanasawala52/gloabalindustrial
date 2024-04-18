@@ -121,7 +121,7 @@ public class MallModelController {
 		} else {
 			model.addAttribute("contentTemplate", "mallModel-home");
 		}
-		return "common";
+		return "common-mall";
 	}
 	@GetMapping("/{id}/details")
 	public String mallModelDetails(@PathVariable Long id, Model model) {
