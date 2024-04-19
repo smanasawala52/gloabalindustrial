@@ -2,6 +2,7 @@ package com.alpha.interview.wizard.model.holiday;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,8 +27,8 @@ import lombok.ToString;
 @Entity
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
-public class WebHolidayImage {
-	public WebHolidayImage(Long id, String name) {
+public class HolidayCoupon {
+	public HolidayCoupon(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -39,12 +40,17 @@ public class WebHolidayImage {
 	private String description;
 	private String displayName;
 	private String imgUrl;
-	private String imgType;
+	@Column(length = 500)
+	private String additionalDetails;
+	private Date startDate;
+	private Date endDate;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
 	@Transient
 	private boolean linked = false;
+	// @ManyToMany(mappedBy = "coupons")
+	// private List<Shop> shops;
 
 	public boolean isLinked() {
 		return linked;
@@ -82,6 +88,24 @@ public class WebHolidayImage {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
+	public String getAdditionalDetails() {
+		return additionalDetails;
+	}
+	public void setAdditionalDetails(String additionalDetails) {
+		this.additionalDetails = additionalDetails;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 	public int getActiveStatusKey() {
 		return activeStatusKey;
 	}
@@ -100,10 +124,5 @@ public class WebHolidayImage {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-	public String getImgType() {
-		return imgType;
-	}
-	public void setImgType(String imgType) {
-		this.imgType = imgType;
-	}
+
 }

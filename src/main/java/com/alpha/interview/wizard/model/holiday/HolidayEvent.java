@@ -27,26 +27,35 @@ import lombok.ToString;
 @Entity
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
-public class Places {
-	public Places(Long id, String name) {
+public class HolidayEvent {
+	public HolidayEvent(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String name;
 	private String description;
 	private String displayName;
 	private String imgUrl;
 	@Column(length = 500)
 	private String additionalDetails;
+	private Date startDate;
+	private Date endDate;
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
 	@Transient
 	private boolean linked = false;
 
+	public boolean isLinked() {
+		return linked;
+	}
+	public void setLinked(boolean linked) {
+		this.linked = linked;
+	}
 	public Date getCreateTimestamp() {
 		return createTimestamp;
 	}
@@ -71,11 +80,29 @@ public class Places {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 	public String getAdditionalDetails() {
 		return additionalDetails;
 	}
 	public void setAdditionalDetails(String additionalDetails) {
 		this.additionalDetails = additionalDetails;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 	public int getActiveStatusKey() {
 		return activeStatusKey;
@@ -89,23 +116,10 @@ public class Places {
 	public void setUpdateTimestamp(Date updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
 	}
-	public String getImgUrl() {
-		return imgUrl;
-	}
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
 	public String getDisplayName() {
 		return displayName;
 	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-	public boolean isLinked() {
-		return linked;
-	}
-	public void setLinked(boolean linked) {
-		this.linked = linked;
-	}
-
 }

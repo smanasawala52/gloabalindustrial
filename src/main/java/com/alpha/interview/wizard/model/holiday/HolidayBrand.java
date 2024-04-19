@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import com.alpha.interview.wizard.constants.mall.constants.ActiveStatusConstants;
 import com.alpha.interview.wizard.controller.mall.util.MallUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -27,32 +26,27 @@ import lombok.ToString;
 @Entity
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
-public class Duration {
-	public Duration(Long id, String name) {
+public class HolidayBrand {
+	public HolidayBrand(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String name;
 	private String description;
 	private String displayName;
 	private String imgUrl;
 	@Column(length = 500)
 	private String additionalDetails;
-	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
 	@Transient
 	private boolean linked = false;
-
-	public Date getCreateTimestamp() {
-		return createTimestamp;
-	}
-	public void setCreateTimestamp(Date createTimestamp) {
-		this.createTimestamp = createTimestamp;
-	}
+	// @ManyToMany(mappedBy = "brands")
+	// private List<Shop> shops;
 	public Long getId() {
 		return id;
 	}
@@ -71,17 +65,17 @@ public class Duration {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 	public String getAdditionalDetails() {
 		return additionalDetails;
 	}
 	public void setAdditionalDetails(String additionalDetails) {
 		this.additionalDetails = additionalDetails;
-	}
-	public int getActiveStatusKey() {
-		return activeStatusKey;
-	}
-	public void setActiveStatusKey(int activeStatusKey) {
-		this.activeStatusKey = activeStatusKey;
 	}
 	public Date getUpdateTimestamp() {
 		return updateTimestamp;
@@ -89,11 +83,11 @@ public class Duration {
 	public void setUpdateTimestamp(Date updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
 	}
-	public String getImgUrl() {
-		return imgUrl;
+	public Date getCreateTimestamp() {
+		return createTimestamp;
 	}
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setCreateTimestamp(Date createTimestamp) {
+		this.createTimestamp = createTimestamp;
 	}
 	public String getDisplayName() {
 		return displayName;
@@ -107,5 +101,4 @@ public class Duration {
 	public void setLinked(boolean linked) {
 		this.linked = linked;
 	}
-
 }

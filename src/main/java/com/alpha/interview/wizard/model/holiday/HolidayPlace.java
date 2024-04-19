@@ -27,8 +27,8 @@ import lombok.ToString;
 @Entity
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @ToString
-public class Themes {
-	public Themes(Long id, String name) {
+public class HolidayPlace {
+	public HolidayPlace(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
