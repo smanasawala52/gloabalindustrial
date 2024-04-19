@@ -41,6 +41,7 @@ public class WebImage {
 	private String imgUrl;
 	private String imgType;
 	private String imgSubType;
+	private String deviceType = "DESKTOP";
 	private int activeStatusKey = ActiveStatusConstants.ACTIVE.getType();
 	private Date updateTimestamp;
 	private Date createTimestamp;
@@ -112,5 +113,11 @@ public class WebImage {
 	}
 	public void setImgSubType(String imgSubType) {
 		this.imgSubType = imgSubType;
+	}
+	public String getDeviceType() {
+		return deviceType;
+	}
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
 	}
 }

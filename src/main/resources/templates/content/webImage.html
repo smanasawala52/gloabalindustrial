@@ -33,6 +33,14 @@
 							placeholder="Enter webImage Image Sub Type - usally entered when selected Floor">
 					</div>
 					<div class="form-group">
+						<label for="imgType">Device Type</label>
+						<select class="form-control" id="deviceType" name="deviceType">
+						    <option value="DESKTOP">DESKTOP</option>
+						    <option value="MOBILE">MOBILE</option>
+						    <option value="TABLET">TABLET</option>
+						</select>
+					</div>
+					<div class="form-group">
 						<label for="description">Description</label>
 						<input type="text" class="form-control" id="description" name="description"
 							placeholder="Enter webImage description">
@@ -60,6 +68,7 @@
 						<th>Display Name</th>
 						<th>Type</th>
 						<th>SubType</th>
+						<th>Device Type</th>
 						<th>Description</th>
 						<th>Image</th>
 						<th>Action</th>
@@ -155,6 +164,7 @@
 									'<td class="editable" data-type="text" data-field="displayName" data-id="' + webImage.id + '" data-value="'+webImage.displayName+'">' + webImage.displayName + '</td>' +
 									'<td class="editable" data-type="text" data-field="imgType" data-id="' + webImage.id + '" data-value="'+webImage.imgType+'">' + webImage.imgType + '</td>' +
 									'<td class="editable" data-type="text" data-field="imgSubType" data-id="' + webImage.id + '" data-value="'+webImage.imgSubType+'">' + webImage.imgSubType + '</td>' +
+									'<td class="editable" data-type="text" data-field="deviceType" data-id="' + webImage.id + '" data-value="'+webImage.deviceType+'">' + webImage.deviceType + '</td>' +
 									'<td class="editable" data-type="text" data-field="description" data-id="' + webImage.id + '" data-value="'+webImage.description+'">' + webImage.description + '</td>' +
 									'<td data-id="' + webImage.id + '" data-value="'+webImage.imgUrl+'">' +
 										'<img onerror="this.src=\'/images/mall/noImage.jpg\';" src="' + webImage.imgUrl + '" width="50px" height="50px" class="view-image-btn" data-imgurl="' + webImage.imgUrl + '">'+
